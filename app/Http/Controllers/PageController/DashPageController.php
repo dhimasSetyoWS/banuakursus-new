@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PageController;
 use App\Http\Controllers\Controller;
 use App\Models\Period;
 use App\Models\Role;
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,10 +22,18 @@ class DashPageController extends Controller
     }
 
     public function manage_course() {
-        $course = Auth::user()->course()->paginate(10); // intelpehense anggap error di course(), kocak
+        $course = Auth::user()->course()->orderBy('id' , 'desc')->paginate(10); // intelpehense anggap error di course(), kocak
         $period = Period::all();
         return Inertia::render('Dashboard/ManageCourse', [
             'courses' => $course,
+            'periods' => $period
+        ]);
+    }
+    public function manage_course_edit(string $slug) {
+        $course = Course::firstWhere('slug' , $slug);
+        $period = Period::all();
+        return Inertia::render('Dashboard/Edit/EditCourse', [
+            'course' => $course,
             'periods' => $period
         ]);
     }

@@ -184,18 +184,17 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
                 <!-- 1 -->
-                <a href="#"
+                <Link v-for="a in courses.data" :href="route('course' , a.slug)"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <img src="#" class="w-full h-[200px] object-cover" alt="Belajar Vue.js Dasar" />
+                    <img src="https://placehold.co/1280x720/000000/ffffff?text=kursus" class="w-full h-[200px] object-cover" alt="Belajar Vue.js Dasar" />
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Belajar Vue.js Dasar</h3>
+                        <h3 class="text-lg font-semibold text-gray-800">{{ a.title_course }}</h3>
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 200.000</div>
-                        <div class="text-base font-bold text-blue-600">Rp 120.000</div>
+                        <div class="text-base font-bold text-blue-600">{{formatPrice(a.price)}}</div>
                     </div>
-                </a>
-
+                </Link>
                 <!-- 2 -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img src="#" class="w-full h-[200px] object-cover" alt="Membangun REST API dengan Laravel" />
                     <div class="p-4">
@@ -203,10 +202,10 @@
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 250.000</div>
                         <div class="text-base font-bold text-blue-600">Rp 150.000</div>
                     </div>
-                </a>
+                </a> -->
 
                 <!-- 3 -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img src="#" class="w-full h-[200px] object-cover" alt="React Native untuk Pemula" />
                     <div class="p-4">
@@ -214,10 +213,10 @@
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 300.000</div>
                         <div class="text-base font-bold text-blue-600">Rp 180.000</div>
                     </div>
-                </a>
+                </a> -->
 
                 <!-- 4 -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img src="#" class="w-full h-[200px] object-cover" alt="Desain Web Modern dengan Tailwind" />
                     <div class="p-4">
@@ -225,10 +224,10 @@
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 180.000</div>
                         <div class="text-base font-bold text-blue-600">Rp 90.000</div>
                     </div>
-                </a>
+                </a> -->
 
                 <!-- 5 -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img src="#" class="w-full h-[200px] object-cover" alt="Fundamental Node.js & Express" />
                     <div class="p-4">
@@ -236,10 +235,10 @@
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 220.000</div>
                         <div class="text-base font-bold text-blue-600">Rp 110.000</div>
                     </div>
-                </a>
+                </a> -->
 
                 <!-- 6 -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img src="#" class="w-full h-[200px] object-cover" alt="Dasar UI/UX untuk Developer" />
                     <div class="p-4">
@@ -247,10 +246,10 @@
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 180.000</div>
                         <div class="text-base font-bold text-blue-600">Rp 85.000</div>
                     </div>
-                </a>
+                </a> -->
 
                 <!-- 7 -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img src="#" class="w-full h-[200px] object-cover" alt="Next.js untuk Web App Profesional" />
                     <div class="p-4">
@@ -258,10 +257,10 @@
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 280.000</div>
                         <div class="text-base font-bold text-blue-600">Rp 160.000</div>
                     </div>
-                </a>
+                </a> -->
 
                 <!-- 8 -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img src="#" class="w-full h-[200px] object-cover" alt="Otomatisasi dengan Python" />
                     <div class="p-4">
@@ -269,19 +268,32 @@
                         <div class="mt-2 text-sm text-gray-500 line-through">Rp 190.000</div>
                         <div class="text-base font-bold text-blue-600">Rp 95.000</div>
                     </div>
-                </a>
+                </a> -->
             </div>
+        <Pagination :links="courses.links"/>
         </main>
     </HomeLayout>
 </template>
 
 <script setup>
+import Pagination from "@/Components/Global/Pagination.vue"
+import { route } from '../../../../vendor/tightenco/ziggy/src/js';
 import HomeLayout from '../../Layout/Homepage/HomeLayout.vue';
 
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
+    courses : Object
 })
+
+const formatter = new Intl.NumberFormat('id-ID', {
+    style: "currency",
+    currency: "IDR"
+});
+
+function formatPrice(price) {
+    return formatter.format(price)
+}
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@
     <header class="bg-white/70 backdrop-blur-lg shadow sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Logo -->
-            <a :href="('welcome')" class="ms-6">
+            <a :href="route('beranda')" class="ms-6">
                 <img src="/img/banuacourse-icon.png" alt="Banua Kursus" width="100" />
             </a>
 

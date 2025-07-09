@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Logic\CourseController;
 use App\Http\Controllers\PageController\HomepageController;
 use App\Http\Controllers\PageController\AuthViewController;
 use App\Http\Controllers\PageController\DashPageController;
@@ -11,6 +12,7 @@ Route::get('/', [HomepageController::class, 'welcome'])->name('beranda');
 Route::get('/catalog', [HomepageController::class, 'catalog'])->name('catalog');
 Route::get('/aboutus', [HomepageController::class, 'aboutus'])->name('aboutus');
 Route::get('/contact', [HomepageController::class, 'contact'])->name('contact');
+Route::get('/course/{slug}', [HomepageController::class, 'course'])->name('course');
 
 
 Route::middleware('guest')->group(function () {
@@ -23,6 +25,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth' , 'role:admin,superadmin'])->group(function () {
     Route::get('/dashboard', [DashPageController::class, 'main'])->name('dashboard');
     Route::get('/dashboard/manage-course', [DashPageController::class, 'manage_course'])->name('manage-course');
+    Route::post('/dashboard/manage-course/create', [CourseController::class, 'store'])->name('manage-course.store');
+    Route::get('/dashboard/manage-course/{slug}', [DashPageController::class, 'manage_course_edit'])->name('manage-course.edit');
+    Route::match(['patch' , 'put'], '/dashboard/update-course/{slug}', [CourseController::class, 'update'])->name('manage-course.update');
     Route::get('/dashboard/teacher', [DashPageController::class, 'teacher'])->name('teacher');
     Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
     Route::get('/dashboard/task', [DashPageController::class, 'task'])->name('task');

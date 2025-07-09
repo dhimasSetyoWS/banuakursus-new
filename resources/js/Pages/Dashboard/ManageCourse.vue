@@ -1,4 +1,3 @@
-
 <template>
     <Layout title="Manage Course">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -56,7 +55,8 @@
                         <tr v-if="courses.length == 0">
                             <td class="p-3">Anda belum membuat Courses !</td>
                         </tr>
-                        <tr v-for="data in courses.data" :key="data" class="border-b border-slate-200 hover:bg-slate-50">
+                        <tr v-for="data in courses.data" :key="data"
+                            class="border-b border-slate-200 hover:bg-slate-50">
                             <!-- Name -->
                             <td class="p-3">
                                 <div class="flex items-center gap-3">
@@ -72,7 +72,7 @@
                             <!-- Action -->
                             <td class="p-3">
                                 <div class="flex items-center justify-center gap-2">
-                                    <button @click="editCourse(data.course_id)"
+                                    <button @click="editCourse(data.slug)"
                                         class="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-md"><svg
                                             class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -94,7 +94,7 @@
                 <!-- {{ courses.links }} -->
             </div>
         </div>
-        <Pagination :links="courses.links"/>
+        <Pagination :links="courses.links" />
     </Layout>
     <!-- Modal -->
     <div v-if="isModal" class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
@@ -113,30 +113,33 @@
                                     <label for="namecourse" class="block text-sm font-medium text-slate-700">Nama
                                         Course</label>
                                     <div class="mt-1">
-                                        <input id="namecourse" v-model="form.title_course"
-                                            type="text" autocomplete="off" required
+                                        <input id="namecourse" v-model="form.title_course" type="text"
+                                            autocomplete="off" required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <label for="description" class="block text-sm font-medium text-slate-700">Deskripsi Course</label>
+                                    <label for="description" class="block text-sm font-medium text-slate-700">Deskripsi
+                                        Course</label>
                                     <div class="mt-1">
-                                        <input id="namecourse" v-model="form.description"
-                                            type="text" autocomplete="off" required
+                                        <input id="namecourse" v-model="form.description" type="text" autocomplete="off"
+                                            required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <label for="period_academic" class="block text-sm font-medium text-slate-700">Periode Akademik</label>
-                                        <select v-model="form.period_id" id="period_academic"
-                                            class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3">
-                                            <option value="" selected disabled>--Pilih Periode Akademik--</option>
-                                            <option v-for="period in periods" :key="period" :value="period.period_id"
-                                                class="">{{ period.period_name }}</option>
-                                        </select>
-                                    </div>
+                                    <label for="period_academic"
+                                        class="block text-sm font-medium text-slate-700">Periode Akademik</label>
+                                    <select v-model="form.period_id" id="period_academic"
+                                        class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3">
+                                        <option value="" selected disabled>--Pilih Periode Akademik--</option>
+                                        <option v-for="period in periods" :key="period" :value="period.period_id"
+                                            class="">{{ period.period_name }}</option>
+                                    </select>
+                                </div>
                                 <div class="mt-4">
-                                    <label for="harga" class="block text-sm font-medium text-slate-700">Harga Course</label>
+                                    <label for="harga" class="block text-sm font-medium text-slate-700">Harga
+                                        Course</label>
                                     <input @input="formatPrice" type="number" id="harga"
                                         class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3"
                                         required v-model="form.price">
@@ -178,7 +181,7 @@ const form = useForm({
     title_course: '',
     description: '',
     price: '',
-    period_id : ''
+    period_id: ''
 });
 // Format to currency
 
@@ -206,7 +209,7 @@ function toggleModal() {
 
 // Submit course
 const submit = async () => {
-    const a = await form.post(route('course.store'), {
+    const a = await form.post(route('manage-course.store'), {
         onSuccess: () => {
             form.reset()
             formatter.value = "Rp 0,00"
@@ -223,8 +226,8 @@ function deleteCourse(id) {
     router.delete(route('course.destroy', id)); // delete course
 }
 
-function editCourse(id) {
-    router.get(route('dashboard.edit', id));
+function editCourse(slug) {
+    router.get(route('manage-course.edit', slug));
 }
 </script>
 <style scoped></style>

@@ -304,9 +304,11 @@
             </div>
         </div>
     </div>
+    <FlashMessage/>
 </template>
 
 <script setup>
+import FlashMessage from "../../Components/Global/FlashMessage.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { route } from "../../../../vendor/tightenco/ziggy/src/js";

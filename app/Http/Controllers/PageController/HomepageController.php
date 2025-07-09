@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Route;
+use App\Models\Course;
 
 class HomepageController extends Controller
 {
@@ -27,6 +28,7 @@ class HomepageController extends Controller
             'timestamp' => now()->toDateTimeString(),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+            'courses' => Course::orderBy('created_at', 'desc')->paginate(8, ['id' , 'title_course', 'slug' , 'price']),
         ]);
     }
     public function aboutus()
@@ -45,6 +47,17 @@ class HomepageController extends Controller
             'timestamp' => now()->toDateTimeString(),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+        ]);
+    }
+    public function course(string $slug)
+    {
+        $course = Course::firstWhere('slug' , $slug);
+        return Inertia::render('Homepage/SingleCourse/Course', [
+            'namaAplikasi' => config('app.name'),
+            'timestamp' => now()->toDateTimeString(),
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'course' => $course
         ]);
     }
 }

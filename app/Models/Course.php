@@ -12,7 +12,7 @@ class Course extends Model
 {
     //
     use HasFactory;
-    protected $fillable = ['title_course' , 'description' , 'price' , 'user_id', 'period_id'];
+    protected $fillable = ['title_course', 'slug' , 'description' , 'price' , 'user_id', 'period_id'];
 
     public function course_sessions() : HasMany {
         return $this->hasMany(CourseSessions::class);

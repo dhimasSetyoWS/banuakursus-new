@@ -11,7 +11,6 @@
                     </p>
                 </div>
             </section>
-
             <section class="py-20">
                 <div class="max-w-6xl mx-auto px-8 grid md:grid-cols-2 gap-16 items-start fade-up">
                     <!-- Info Card -->
