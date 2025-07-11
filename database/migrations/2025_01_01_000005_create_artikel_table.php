@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 return new class extends Migration
 {
     /**
@@ -10,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_sessions', function (Blueprint $table) {
+        Schema::create('artikel', function (Blueprint $table) {
             $table->id();
-            $table->string('session_name', 80);
-            $table->text('description');
-            $table->enum('kategori' , ['artikel' , 'tugas']);
-            $table->foreignId('course_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('course_sessions_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('judul');
+            $table->longText('konten');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_modules');
+        Schema::dropIfExists('artikels');
     }
 };

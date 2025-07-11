@@ -20,6 +20,7 @@
         "@vueup/vue-quill": "^1.2.0",
         "animate.css": "^4.1.1",
         "sweetalert2": "^11.22.2",
-        "vue": "^3.5.17"
+        "vue": "^3.5.17",
+        "vue-quill": "^1.5.1"
     }
 }

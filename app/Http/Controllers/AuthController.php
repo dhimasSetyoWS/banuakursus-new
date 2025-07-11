@@ -58,7 +58,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             Session::flash('success', 'Anda berhasil Login!');
-            return redirect()->route('beranda');
+            if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2) {
+                return redirect()->intended(route('dashboard'))->with('success', 'Anda berhasil login!');
+            }
+            return redirect()->intended(route('beranda'))->with('success', 'Anda berhasil login!');
         } else {
             return redirect()->route('login')->with('error' , 'Gagal login!');
         }

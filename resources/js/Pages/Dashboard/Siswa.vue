@@ -4,7 +4,8 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800">Daftar siswa</h2>
-                    <p class="mt-1 text-sm text-slate-500">Berikut adalah semua siswa-siswa yang ada di banua kursus.</p>
+                    <p class="mt-1 text-sm text-slate-500">Berikut adalah semua siswa-siswa yang ada di banua kursus.
+                    </p>
                 </div>
                 <div class="mt-4 sm:mt-0">
                     <a @click="toggleModal" href="#"
@@ -36,11 +37,11 @@
                             <td class="px-6 py-4 font-bold">{{ index + 1 }}</td>
                             <td class="px-6 py-4">{{ teacher.name }}</td>
                             <td class="px-6 py-4">{{ teacher.email }}</td>
-                            <!-- <td class="px-6 py-4">
-                                    <span
-                                        class="inline-block px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">Selesai</span>
-                                </td> -->
-                            <td class="px-6 py-4">{{ formatDate(teacher.created_at) }}</td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-block px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">Selesai</span>
+                            </td>
+                            <td class="px-6 py-4">{{ teacher.created_at }}</td>
                             <td class="px-6 py-4 text-center">
                                 <button class="text-gray-500 hover:text-gray-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -77,33 +78,38 @@
                             <div class="bodyModal text-start">
                                 <form @submit.prevent="submit">
                                     <div>
-                                        <label for="namasiswa" class="block text-sm font-medium text-slate-700">Nama siswa</label>
-                                        <input id="namecourse" v-model="form.name"
-                                            type="text" autocomplete="off" required
+                                        <label for="namasiswa" class="block text-sm font-medium text-slate-700">Nama
+                                            siswa</label>
+                                        <input id="namecourse" v-model="form.name" type="text" autocomplete="off"
+                                            required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                     <div class="mt-4">
-                                        <label for="usernamasiswa" class="block text-sm font-medium text-slate-700">Username siswa</label>
-                                        <input id="usernamesiswa" v-model="form.username"
-                                            type="text" autocomplete="off" required
+                                        <label for="usernamasiswa"
+                                            class="block text-sm font-medium text-slate-700">Username siswa</label>
+                                        <input id="usernamesiswa" v-model="form.username" type="text" autocomplete="off"
+                                            required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                     <div class="mt-4">
-                                        <label for="email" class="block text-sm font-medium text-slate-700">Alamat Email</label>
-                                        <input id="email" v-model="form.email"
-                                            type="text" autocomplete="off" required
+                                        <label for="email" class="block text-sm font-medium text-slate-700">Alamat
+                                            Email</label>
+                                        <input id="email" v-model="form.email" type="text" autocomplete="off" required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                     <div class="mt-4">
-                                        <label for="pasword" class="block text-sm font-medium text-slate-700">Password</label>
-                                        <input id="password" v-model="form.password"
-                                            type="text" autocomplete="off" required
+                                        <label for="pasword"
+                                            class="block text-sm font-medium text-slate-700">Password</label>
+                                        <input id="password" v-model="form.password" type="password" autocomplete="off"
+                                            required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                     <div class="mt-4">
-                                        <label for="pasword_confirmation" class="block text-sm font-medium text-slate-700">Password Confirmation</label>
+                                        <label for="pasword_confirmation"
+                                            class="block text-sm font-medium text-slate-700">Password
+                                            Confirmation</label>
                                         <input id="password_confirmation" v-model="form.password_confirmation"
-                                            type="text" autocomplete="off" required
+                                            type="password" autocomplete="off" required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                 </form>
@@ -113,7 +119,7 @@
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                         <button @click="submit" type="button"
                             class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 sm:ml-3 sm:w-auto disabled:bg-gray-500">Tambah</button>
-                        <button @click="toggleModal" type="button"
+                        <button @click="cancelModal" type="button"
                             class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                     </div>
                 </div>
@@ -126,7 +132,7 @@ import Layout from '../../Layout/Dashboard/DashboardLayout.vue';
 import { ref } from 'vue';
 import { router, useForm } from '@inertiajs/vue3';
 defineProps({
-    students : Object
+    students: Object
 })
 
 const form = useForm({
@@ -138,7 +144,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('register.post'), {
+    form.post(route('student.store'), {
         onSuccess: () => {
             form.reset()
             toggleModal()
@@ -152,8 +158,13 @@ function toggleModal() {
     isModal.value = !isModal.value
 }
 
+function cancelModal() {
+    isModal.value = !isModal.value
+    form.reset()
+}
+
 function deleteUser(id) {
-    router.delete(route('user.destroy' , id))
+    router.delete(route('user.destroy', id))
 }
 </script>
 <style scoped></style>

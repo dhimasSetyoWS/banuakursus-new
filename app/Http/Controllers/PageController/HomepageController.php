@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Route;
 use App\Models\Course;
+use App\Models\User;
 
 class HomepageController extends Controller
 {
@@ -52,12 +53,16 @@ class HomepageController extends Controller
     public function course(string $slug)
     {
         $course = Course::firstWhere('slug' , $slug);
+        $creator = User::find($course->user_id)->name;
+        $sessions = $course->course_sessions()->get();
         return Inertia::render('Homepage/SingleCourse/Course', [
             'namaAplikasi' => config('app.name'),
             'timestamp' => now()->toDateTimeString(),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'course' => $course
+            'course' => $course,
+            'sessions' => $sessions,
+            'creator' => $creator
         ]);
     }
 }

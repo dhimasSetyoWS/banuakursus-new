@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Course;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -44,5 +45,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
             'agurooz_id' => 1,
         ]);
+
+        Course::factory()->count(15)->create();
     }
 }

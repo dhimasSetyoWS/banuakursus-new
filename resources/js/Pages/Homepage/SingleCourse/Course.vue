@@ -13,7 +13,7 @@
                             <div class="flex items-center gap-2">
                                 <img src="https://i.pravatar.cc/150?img=12" class="w-8 h-8 rounded-full"
                                     alt="Budi Santoso">
-                                <span class="font-medium">Oleh {{course.user_id}}</span>
+                                <span class="font-medium">Oleh {{creator}}</span>
                             </div>
                             <div class="flex items-center gap-1 text-yellow-500">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -89,68 +89,25 @@
                         </div>
                     </div>
 
+                    <!-- Session Course -->
                     <div>
-                        <h2 class="text-xl font-bold text-slate-900 mb-4">Materi Kursus</h2>
+                        <h2 class="text-xl font-bold text-slate-900 mb-4">Session Kursus</h2>
                         <div class="space-y-3">
-                            <div class="border border-slate-200 rounded-lg">
+                            <div v-if="sessions.length" v-for="session in sessions" class="border border-slate-200 rounded-lg">
                                 <button
-                                    class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200">
-                                    <span>Modul 1: Pengenalan Digital Marketing</span>
-                                    <svg class="w-5 h-5 transform transition-transform"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
+                                    class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 rounded">
+                                    <span>{{ session.session_name }}</span>
+                                    <span>{{ title(session.kategori) }}</span>
                                 </button>
-                                <div class="p-4 bg-white hidden">
-                                    <ul class="space-y-3 text-slate-600">
-                                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-indigo-500"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9a2.25 2.25 0 0 0-2.25 2.25v9A2.25 2.25 0 0 0 4.5 18.75Z" />
-                                            </svg> 1.1 - Selamat Datang di Kursus (3:15)</li>
-                                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-indigo-500"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9a2.25 2.25 0 0 0-2.25 2.25v9A2.25 2.25 0 0 0 4.5 18.75Z" />
-                                            </svg> 1.2 - Lanskap Digital Marketing Saat Ini (8:45)</li>
-                                    </ul>
-                                </div>
                             </div>
-                            <div class="border border-slate-200 rounded-lg">
+                            <div v-else>
                                 <button
-                                    class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200">
-                                    <span>Modul 2: Search Engine Optimization (SEO)</span>
-                                    <svg class="w-5 h-5 transform transition-transform"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
+                                    class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 rounded">
+                                    Saat ini tidak ada session di course ini
                                 </button>
-                                <div class="p-4 bg-white hidden"> </div>
-                            </div>
-                            <div class="border border-slate-200 rounded-lg">
-                                <button
-                                    class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200">
-                                    <span>Modul 3: Social Media Marketing (SMM)</span>
-                                    <svg class="w-5 h-5 transform transition-transform"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                </button>
-                                <div class="p-4 bg-white hidden"> </div>
                             </div>
                         </div>
-                        <p class="text-center mt-2 text-sm text-slate-500">*Untuk membuka/menutup modul, dibutuhkan
-                            sedikit Javascript.</p>
                     </div>
-
                 </div>
 
                 <div class="hidden lg:block">
@@ -220,7 +177,9 @@ import Layout from "@/Layout/Homepage/HomeLayout.vue"
 defineProps({
     canLogin : Boolean,
     canRegister : Boolean,
-    course : Object
+    course : Object,
+    sessions : Array,
+    creator : String,
 })
 
 const formatter = new Intl.NumberFormat('id-ID', {
@@ -230,5 +189,12 @@ const formatter = new Intl.NumberFormat('id-ID', {
 
 function formatPrice(price) {
     return formatter.format(price)
+}
+
+function title(str) {
+  if (!str) {
+      return ""
+  }
+  return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
 }
 </script>

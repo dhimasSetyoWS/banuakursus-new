@@ -52,4 +52,10 @@ class CourseController extends Controller
             return redirect()->route('manage-course')->with('error' , 'Kursus dengan judul ' . $judulLama . ' gagal di update!');
         }
     }
+
+    public function delete($slug) {
+        $judulLama = Course::firstWhere('slug', $slug)->title_course;
+        Course::where('slug' , $slug)->delete();
+        return redirect()->back()->with('success' , 'Kursus dengan judul ' . $judulLama . ' telah di hapus!');
+    }
 }
