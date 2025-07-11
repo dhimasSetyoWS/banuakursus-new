@@ -41,6 +41,11 @@
                                         class="block px-4 py-3 text-gray-700 hover:bg-gray-100">
                                     Dashboard
                                     </Link>
+                                    <Link v-else
+                                        :href="route('mycourse')"
+                                        class="block px-4 py-3 text-gray-700 hover:bg-gray-100">
+                                    My Course
+                                    </Link>
                                     <!-- Account Settings -->
                                     <Link :href="('profile.edit')"
                                         class="block px-4 py-3 text-gray-700 hover:bg-gray-100">

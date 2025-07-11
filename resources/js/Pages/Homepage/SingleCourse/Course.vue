@@ -8,12 +8,13 @@
                     <div class="mb-6">
                         <span
                             class="inline-block px-3 py-1 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full mb-2">Marketing</span>
-                        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">{{ course.title_course }}</h1>
+                        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">{{
+                            course.title_course }}</h1>
                         <div class="mt-4 flex items-center gap-4 text-sm">
                             <div class="flex items-center gap-2">
                                 <img src="https://i.pravatar.cc/150?img=12" class="w-8 h-8 rounded-full"
                                     alt="Budi Santoso">
-                                <span class="font-medium">Oleh {{creator}}</span>
+                                <span class="font-medium">Oleh {{ creator }}</span>
                             </div>
                             <div class="flex items-center gap-1 text-yellow-500">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -93,7 +94,8 @@
                     <div>
                         <h2 class="text-xl font-bold text-slate-900 mb-4">Session Kursus</h2>
                         <div class="space-y-3">
-                            <div v-if="sessions.length" v-for="session in sessions" class="border border-slate-200 rounded-lg">
+                            <div v-if="sessions.length" v-for="session in sessions"
+                                class="border border-slate-200 rounded-lg">
                                 <button
                                     class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 rounded">
                                     <span>{{ session.session_name }}</span>
@@ -117,7 +119,7 @@
                                 alt="Course thumbnail" class="w-full object-cover">
                             <div class="p-6">
                                 <h2 class="text-3xl font-bold text-slate-900 mb-4">{{ formatPrice(course.price) }}</h2>
-                                <button
+                                <button @click="daftar"
                                     class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                                     Daftar Kursus Sekarang
                                 </button>
@@ -173,13 +175,15 @@
 </template>
 <script setup>
 import Layout from "@/Layout/Homepage/HomeLayout.vue"
+import {usePage , router} from "@inertiajs/vue3";
+const page = usePage()
 
-defineProps({
-    canLogin : Boolean,
-    canRegister : Boolean,
-    course : Object,
-    sessions : Array,
-    creator : String,
+const props = defineProps({
+    canLogin: Boolean,
+    canRegister: Boolean,
+    course: Object,
+    sessions: Array,
+    creator: String,
 })
 
 const formatter = new Intl.NumberFormat('id-ID', {
@@ -191,10 +195,14 @@ function formatPrice(price) {
     return formatter.format(price)
 }
 
+function daftar() {
+    router.get(route('register.course' , props.course.slug))
+}
+
 function title(str) {
-  if (!str) {
-      return ""
-  }
-  return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
+    if (!str) {
+        return ""
+    }
+    return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
 }
 </script>

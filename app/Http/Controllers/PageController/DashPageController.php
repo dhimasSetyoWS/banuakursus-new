@@ -103,4 +103,16 @@ class DashPageController extends Controller
     {
         return Inertia::render('Dashboard/Create/CreateTugas');
     }
+
+    // Student Previlege
+    public function mycourse() {
+        $user = auth()->user();
+
+        if ($user) {
+            $registerData = $user->registeredCourses;
+        }
+        return Inertia::render('Dashboard/Student/MyCourse' , [
+            'courses' => $registerData,
+        ]);
+    }
 }

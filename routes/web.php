@@ -10,6 +10,8 @@ use App\Http\Controllers\Logic\SessionController;
 use App\Http\Controllers\PageController\HomepageController;
 use App\Http\Controllers\PageController\AuthViewController;
 use App\Http\Controllers\PageController\DashPageController;
+use App\Http\Controllers\Logic\TransactionController;
+
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('beranda');
 Route::get('/catalog', [HomepageController::class, 'catalog'])->name('catalog');
@@ -23,9 +25,21 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
     Route::get('/login', [AuthController::class, 'enter'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-});
 
+});
+// Admin Route
 Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
+    Route::get('/dashboard/task', [DashPageController::class, 'task'])->name('task');
+    Route::get('/dashboard/task/create', [DashPageController::class, 'task_create'])->name('task.create');
+    Route::get('/dashboard/article', [DashPageController::class, 'article'])->name('article');
+    Route::get('/dashboard/article/create', [DashPageController::class, 'article_create'])->name('article.create');
+    Route::get('/dashboard/teacher', [DashPageController::class, 'teacher'])->name('teacher');
+    Route::post('/dashboard/teacher', [AdminController::class, 'store_teacher'])->name('teacher.store');
+    Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
+    Route::post('/dashboard/student', [AdminController::class, 'store_student'])->name('student.store');
+});
+// Teacher and admin Route
+Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () {
     Route::get('/dashboard', [DashPageController::class, 'main'])->name('dashboard');
     Route::get('/dashboard/manage-course', [DashPageController::class, 'manage_course'])->name('manage-course');
     Route::post('/dashboard/manage-course/create', [CourseController::class, 'store'])->name('manage-course.store');
@@ -36,14 +50,11 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::post('/dashboard/session/{id}/store', [SessionController::class, 'store'])->name('session.store');
     Route::get('/dashboard/session/{id}/edit', [DashPageController::class, 'session_edit'])->name('session.edit');
     Route::post('/dashboard/session/{id}/update/{sessionId}', [SessionController::class, 'update'])->name('session.update');
-    Route::get('/dashboard/teacher', [DashPageController::class, 'teacher'])->name('teacher');
-    Route::post('/dashboard/teacher', [AdminController::class, 'store_teacher'])->name('teacher.store');
-    Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
-    Route::post('/dashboard/student', [AdminController::class, 'store_student'])->name('student.store');
-    Route::get('/dashboard/task', [DashPageController::class, 'task'])->name('task');
-    Route::get('/dashboard/task/create', [DashPageController::class, 'task_create'])->name('task.create');
-    Route::get('/dashboard/article', [DashPageController::class, 'article'])->name('article');
-    Route::get('/dashboard/article/create', [DashPageController::class, 'article_create'])->name('article.create');
+});
+
+Route::middleware(['auth' , 'role:student'])->group(function () {
+    Route::get('/register_course/{slug}' , [TransactionController::class, 'register_course'])->name('register.course');
+    Route::get('/dashboard/mycourse', [DashPageController::class , 'mycourse'])->name('mycourse');
 });
 
 Route::middleware('auth')->group(function () {

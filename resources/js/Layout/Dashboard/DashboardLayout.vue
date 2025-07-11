@@ -140,7 +140,7 @@
                                 </svg>
                                 Beranda
                                 </Link>
-                                <Link :href="('dashboard.manage', $page.props.auth.user.id)"
+                                <Link :href="route('manage-course')"
                                     class="flex items-center px-4 py-2 text-sm font-medium hover:bg-slate-100 rounded-md"
                                     :class="$page.url == '/dashboard/manage-course/' + $page.props.auth.user.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
                                 <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -166,29 +166,6 @@
                                 </svg>
                                 Siswa
                                 </Link>
-                                <Link :href="('dashboard.task')"
-                                    class="flex items-center px-4 py-2 text-sm font-medium hover:bg-slate-100 rounded-md"
-                                    :class="$page.url == '/dashboard/task' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
-                                <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                        <polyline points="14 2 14 8 20 8" />
-                                        <line x1="16" y1="13" x2="8" y2="13" />
-                                        <line x1="16" y1="17" x2="8" y2="17" />
-                                        <line x1="10" y1="9" x2="10" y2="9" />
-                                    </svg>
-                                Tugas
-                                </Link>
-                                <Link :href="('dashboard.artikel')"
-                                    class="flex items-center px-4 py-2 text-sm font-medium hover:bg-slate-100 rounded-md"
-                                    :class="$page.url == '/dashboard/article' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
-                                <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path
-                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" />
-                                </svg>
-                                Artikel
-                                </Link>
                             </div>
                         </div>
                         <!-- Sidebar Student -->
@@ -197,13 +174,12 @@
                                 :class="{ 'max-h-96 opacity-100': dropdownMenu, 'max-h-0 opacity-0': !dropdownMenu }">
                                 <Link :href="('mycourse')"
                                     class="flex items-center px-4 py-2 text-sm font-medium hover:bg-slate-100 rounded-md"
-                                    :class="$page.url == '/mycourse' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
+                                    :class="$page.url == '/dashboard/mycourse' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-3">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0 1 20.25 6v12A2.25 2.25 0 0 1 18 20.25H6A2.25 2.25 0 0 1 3.75 18V6A2.25 2.25 0 0 1 6 3.75h1.5m9 0h-9" />
                                 </svg>
-
                                 My Course
                                 </Link>
                             </div>

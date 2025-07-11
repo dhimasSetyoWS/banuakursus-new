@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -57,5 +57,11 @@ class User extends Authenticatable
     public function course() : HasMany
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function registeredCourses(): BelongsToMany
+    {
+        // Parameter: Model terkait, nama tabel pivot, foreign key model ini di pivot, foreign key model terkait di pivot
+        return $this->belongsToMany(Course::class, 'register_courses', 'user_id', 'course_id');
     }
 }
