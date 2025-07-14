@@ -25,13 +25,17 @@ class DashPageController extends Controller
         ]);
     }
 
-    public function manage_course()
+    public function manage_course(Request $request)
     {
-        $course = Auth::user()->course()->orderBy('created_at', 'desc')->paginate(10); // intelpehense anggap error di course(), kocak
+        // intelpehense anggap error di course(), kocak
+        $course = Auth::user()->course()->when($request->search, function ($query) use ($request) {
+            $query->where('title_course', 'like', '%' . $request->search . '%');
+        })->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
         $period = Period::all();
         return Inertia::render('Dashboard/ManageCourse', [
             'courses' => $course,
-            'periods' => $period
+            'periods' => $period,
+            'search' => $request->search
         ]);
     }
     public function manage_course_edit(string $slug)
@@ -93,7 +97,10 @@ class DashPageController extends Controller
     }
     public function article()
     {
-        return Inertia::render('Dashboard/Artikel');
+        $artikel = Artikel::all();
+        return Inertia::render('Dashboard/Artikel' , [
+            'artikel' => $artikel
+        ]);
     }
     public function article_create()
     {
@@ -102,6 +109,10 @@ class DashPageController extends Controller
     public function task_create()
     {
         return Inertia::render('Dashboard/Create/CreateTugas');
+    }
+
+    public function kategori() {
+        return Inertia::render('Dashboard/Kategori');
     }
 
     // Student Previlege

@@ -4,8 +4,9 @@
             <nav class="text-sm text-slate-500 mb-4">
                 <ol class="list-none p-0 inline-flex">
                     <li class="flex items-center">
-                        <Link :href="route('dashboard', $page.props.auth.user.id)" class="text-indigo-600 hover:text-indigo-800"> <i
-                                class="fas fa-home mr-1"></i>Beranda </Link>
+                        <Link :href="route('dashboard', $page.props.auth.user.id)"
+                            class="text-indigo-600 hover:text-indigo-800"> <i class="fas fa-home mr-1"></i>Beranda
+                        </Link>
                     </li>
                     <li class="flex items-center">
                         <span class="mx-2">/</span>
@@ -39,7 +40,7 @@
                         </button>
                         <Link :href="route('article.create')"
                             class="px-5 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                            <i class="fas fa-plus mr-2"></i>Tambah Baru
+                        <i class="fas fa-plus mr-2"></i>Tambah Baru
                         </Link>
                     </div>
                 </div>
@@ -58,20 +59,25 @@
                                     JUDUL ARTIKEL</th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                    KODE ARTIKEL</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                    KONTEN ARTIKEL</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     AKSI</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-slate-200">
-                            <tr>
+                            <tr v-if="artikel.length < 1">
                                 <td colspan="5"
                                     class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 text-center italic">
                                     Belum ada artikel
+                                </td>
+                            </tr>
+
+                            <tr v-else v-for="a,index in artikel">
+                                <td
+                                    class="px-6 py-4 font-bold">
+                                    {{index + 1}}
+                                </td>
+                                <td
+                                    class="px-6 py-4 font-bold">
+                                    {{a.judul}}
                                 </td>
                             </tr>
                         </tbody>
@@ -84,4 +90,10 @@
 
 <script setup>
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue"
+
+defineProps({
+    artikel: Array
+})
+
+
 </script>

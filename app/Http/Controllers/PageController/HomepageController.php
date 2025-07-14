@@ -22,14 +22,18 @@ class HomepageController extends Controller
             'canRegister' => Route::has('register'),
         ]);
     }
-    public function catalog()
+    public function catalog(Request $request)
     {
+        $course = Course::when($request->search, function ($query) use ($request) {
+            $query->where('title_course', 'like', '%' . $request->search . '%');
+        })->orderBy('created_at', 'desc')->paginate(8, ['id', 'title_course', 'slug', 'price'])->withQueryString();
         return Inertia::render('Homepage/Catalog', [
             'namaAplikasi' => config('app.name'),
             'timestamp' => now()->toDateTimeString(),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'courses' => Course::orderBy('created_at', 'desc')->paginate(8, ['id' , 'title_course', 'slug' , 'price']),
+            'courses' => $course,
+            'search' => $request->search,
         ]);
     }
     public function aboutus()
@@ -52,7 +56,7 @@ class HomepageController extends Controller
     }
     public function course(string $slug)
     {
-        $course = Course::firstWhere('slug' , $slug);
+        $course = Course::firstWhere('slug', $slug);
         $creator = User::find($course->user_id)->name;
         $sessions = $course->course_sessions()->get();
         return Inertia::render('Homepage/SingleCourse/Course', [

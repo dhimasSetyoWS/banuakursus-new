@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Logic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Str;
 class AdminController extends Controller
 {
     //
@@ -48,5 +49,15 @@ class AdminController extends Controller
         ]);
         Session::flash('success' , 'Murid berhasil dibuat !');
         return redirect()->route('student');
+    }
+
+    public function store_kategori(Request $request) {
+        $request->validate([
+            'artikel' => ['required' , 'string', 'max:100'],
+        ]);
+        Kategori::create([
+            'artikel' => $request->artikel,
+            'slug' => Str::slug($request->artikel),
+        ]);
     }
 }

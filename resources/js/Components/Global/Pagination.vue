@@ -8,8 +8,8 @@
                     class="mb-1 mr-1 px-4 py-3 text-gray-400 text-sm leading-4 border rounded" v-html="link.label" />
                 <!-- Jika kondisi di atas tidak memenuhi maka dia akan jalankan kondisi dibawah -->
                 <Link v-else :key="`link-${key}`"
-                    class="mb-1 mr-1 px-4 py-3 text-sm leading-4 hover:bg-[#EE3D3B] hover:text-black border focus:border-gray-600 rounded"
-                    :class="{ 'bg-[#630BD1] text-white': link.active }" :href="link.url" v-html="link.label" />
+                    class="mb-1 mr-1 px-4 py-3 text-sm leading-4 hover:text-white hover:bg-[#EE3D3B] border focus:border-gray-600 rounded"
+                    :class="{ 'bg-[#630BD1] text-white': link.active }" :href="link.url" v-html="link.label" preserve-scroll preserve-state/>
             </template>
         </div>
     </div>

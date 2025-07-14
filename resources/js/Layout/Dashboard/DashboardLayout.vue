@@ -1,4 +1,5 @@
 <template>
+
     <Head :title="title + ' - Dashboard'" />
     <div class="text-slate-800 fadeIn">
         <div class="flex h-screen bg-slate-50">
@@ -102,19 +103,21 @@
                                 </Link>
                                 <Link :href="route('task')"
                                     class="flex items-center px-4 py-2 text-sm font-medium hover:bg-slate-100 rounded-md"
-                                    :class="$page.url == '/dashboard/task' ||$page.url == '/dashboard/task/create'  ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
-                                <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                        <polyline points="14 2 14 8 20 8" />
-                                        <line x1="16" y1="13" x2="8" y2="13" />
-                                        <line x1="16" y1="17" x2="8" y2="17" />
-                                        <line x1="10" y1="9" x2="10" y2="9" />
-                                    </svg>
+                                    :class="$page.url == '/dashboard/task' || $page.url == '/dashboard/task/create' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
+                                <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                    <line x1="10" y1="9" x2="10" y2="9" />
+                                </svg>
                                 Tugas
                                 </Link>
                                 <Link :href="route('article')"
                                     class="flex items-center px-4 py-2 text-sm font-medium hover:bg-slate-100 rounded-md"
-                                    :class="$page.url == '/dashboard/article' || $page.url == '/dashboard/article/create'   ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
+                                    :class="$page.url == '/dashboard/article' || $page.url == '/dashboard/article/create' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
                                 <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -122,6 +125,18 @@
                                         d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" />
                                 </svg>
                                 Artikel
+                                </Link>
+                                <Link :href="route('kategori')"
+                                    class="flex items-center px-4 py-2 text-sm font-medium hover:bg-slate-100 rounded-md"
+                                    :class="$page.url == '/dashboard/kategori' || $page.url == '/dashboard/kategori/create' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600'">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-3">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+                                </svg>
+
+                                Kategori
                                 </Link>
                             </div>
                         </div>
@@ -280,7 +295,7 @@
             </div>
         </div>
     </div>
-    <FlashMessage/>
+    <FlashMessage />
 </template>
 
 <script setup>
@@ -290,7 +305,7 @@ import { ref } from "vue";
 import { route } from "../../../../vendor/tightenco/ziggy/src/js";
 
 defineProps({
-    title : String
+    title: String
 })
 
 const navHidden = ref(true)

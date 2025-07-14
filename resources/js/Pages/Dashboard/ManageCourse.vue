@@ -25,7 +25,7 @@
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.3-4.3" />
                 </svg>
-                <input type="text" placeholder="Cari berdasarkan nama kursus..."
+                <input v-model="searchQuery" type="text" placeholder="Cari berdasarkan nama kursus..."
                     class="w-full pl-10 pr-4 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
         </div>
@@ -62,7 +62,8 @@
                                 <div class="flex items-center gap-3">
                                     <!-- <img src="https://placehold.co/100x60/8b5cf6/ffffff?text=WEB" alt="Kursus"
                                         class="w-20 h-12 object-cover rounded-md"> -->
-                                    <a :href="route('course' , data.slug)" class="font-semibold">{{ data.title_course }}</a>
+                                    <a :href="route('course', data.slug)" class="font-semibold">{{ data.title_course
+                                        }}</a>
                                 </div>
                             </td>
                             <!-- Desc -->
@@ -163,17 +164,32 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue";
 import Pagination from "@/Components/Global/Pagination.vue";
-import { ref } from "vue";
+import { ref,watch } from "vue";
 import { useForm, router } from "@inertiajs/vue3"
-import { route } from "../../../../vendor/tightenco/ziggy/src/js";
-defineProps({
+import { debounce } from "lodash";
+
+
+
+const props = defineProps({
     courses: {
         type: Object
     },
     periods: {
         type: Array
+    },
+    search: {
+        type: String
     }
 })
+
+const searchQuery = ref(props.search)
+
+watch(searchQuery,
+    debounce((q) => router.get(route('manage-course'),
+        { search: q }, { preserveState: true, preserveScroll: true }
+    ), 200) // debounce dari lodash akan mengeksekusi code setelah kita berhenti menginput di input field
+    // jadi kan kalau kita cuman pakai watch dia akan jalankan callback function setiap kali ada perubahan pada parameter pertama, yakni searchQuery, nah dengan kita gunakan debouunce, maka itu tidak akan terjadi
+);
 
 const formatted = ref("Rp 0,00")
 
@@ -189,7 +205,7 @@ const form = useForm({
 const formatter = new Intl.NumberFormat('id-ID', {
     style: "currency",
     currency: "IDR",
-    minimumFractionDigits : 0
+    minimumFractionDigits: 0
 });
 
 function formatPrice() {

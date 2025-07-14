@@ -2,9 +2,12 @@
     <HomeLayout :canLogin="canLogin" :canRegister="canRegister" title="Catalog">
         <main class="max-w-[1200px] mx-auto px-6 py-20 fade-up">
             <section class="mb-24 max-w-3xl mx-auto text-left sm:text-center">
-                <h2 class="font-poppins font-extrabold text-5xl text-[#1e293b] mb-4 leading-tight">Katalog <span class="text-[#2563eb]">Kursus</span></h2>
+                <h2 class="font-poppins font-extrabold text-5xl text-[#1e293b] mb-4 leading-tight">Katalog <span
+                        class="text-[#2563eb]">Kursus</span></h2>
                 <p class="text-[#475569] text-lg leading-relaxed max-w-2xl mx-auto">
-                    Banua Kursus menyediakan berbagai kelas untuk mengembangkan skill Anda, mulai dari teknologi, bahasa, kreativitas, hingga pengembangan diri. Temukan kelas yang tepat untuk meningkatkan kemampuan Anda!
+                    Banua Kursus menyediakan berbagai kelas untuk mengembangkan skill Anda, mulai dari teknologi,
+                    bahasa, kreativitas, hingga pengembangan diri. Temukan kelas yang tepat untuk meningkatkan kemampuan
+                    Anda!
                 </p>
             </section>
             <section id="courses" class="mt-8 mb-20">
@@ -17,8 +20,8 @@
                     <a href="#" aria-label="UI/UX & Web Design category">
                         <div class="interactive-card category-card">
                             <img alt="UI/UX & Web Design icon with blue background and white UI text" class="w-14 h-14"
-                                width="56" height="56"
-                                src="https://cdn-icons-png.flaticon.com/128/13191/13191231.png" loading="lazy" />
+                                width="56" height="56" src="https://cdn-icons-png.flaticon.com/128/13191/13191231.png"
+                                loading="lazy" />
                             <div class="category-text select-none font-bold">
                                 UI/UX & Web<br />
                                 Design
@@ -42,8 +45,8 @@
                     <a href="#" aria-label="Mobile Development category">
                         <div class="interactive-card category-card">
                             <img alt="Mobile Development icon with blue background and white M letter" class="w-14 h-14"
-                                height="56" src="https://cdn-icons-png.flaticon.com/128/5608/5608615.png"
-                                width="56" loading="lazy" />
+                                height="56" src="https://cdn-icons-png.flaticon.com/128/5608/5608615.png" width="56"
+                                loading="lazy" />
                             <div class="category-text select-none font-bold">
                                 Mobile<br />
                                 Development
@@ -54,9 +57,8 @@
                     <a href="#" aria-label="Data Analysis category">
                         <div class="interactive-card category-card">
                             <img alt="Data Analysis icon with purple background and white D letter" class="w-14 h-14"
-                                height="56"
-                                src="https://cdn-icons-png.flaticon.com/128/11083/11083341.png"
-                                width="56" loading="lazy" />
+                                height="56" src="https://cdn-icons-png.flaticon.com/128/11083/11083341.png" width="56"
+                                loading="lazy" />
                             <div class="category-text select-none font-bold">
                                 Data<br />
                                 Analysis
@@ -66,7 +68,9 @@
 
                     <a href="#" aria-label="Bahasa Asing category">
                         <div class="interactive-card category-card">
-                            <img alt="Language icon" class="w-14 h-14" height="56" src="https://cdn-icons-png.flaticon.com/512/2361/2361139.png" width="56" loading="lazy" />
+                            <img alt="Language icon" class="w-14 h-14" height="56"
+                                src="https://cdn-icons-png.flaticon.com/512/2361/2361139.png" width="56"
+                                loading="lazy" />
                             <div class="category-text select-none font-bold">
                                 Bahasa<br />
                                 Asing
@@ -76,7 +80,9 @@
 
                     <a href="#" aria-label="Kreativitas & Desain category">
                         <div class="interactive-card category-card">
-                            <img alt="Creativity icon" class="w-14 h-14" height="56" src="https://cdn-icons-png.flaticon.com/128/4661/4661316.png" width="56" loading="lazy" />
+                            <img alt="Creativity icon" class="w-14 h-14" height="56"
+                                src="https://cdn-icons-png.flaticon.com/128/4661/4661316.png" width="56"
+                                loading="lazy" />
                             <div class="category-text select-none font-bold">
                                 Kreativitas &<br />
                                 Desain
@@ -86,7 +92,9 @@
 
                     <a href="#" aria-label="Bisnis & Kewirausahaan category">
                         <div class="interactive-card category-card">
-                            <img alt="Business icon" class="w-14 h-14" height="56" src="https://cdn-icons-png.flaticon.com/512/2920/2920063.png" width="56" loading="lazy" />
+                            <img alt="Business icon" class="w-14 h-14" height="56"
+                                src="https://cdn-icons-png.flaticon.com/512/2920/2920063.png" width="56"
+                                loading="lazy" />
                             <div class="category-text select-none font-bold">
                                 Bisnis &<br />
                                 Kewirausahaan
@@ -96,7 +104,9 @@
 
                     <a href="#" aria-label="Pengembangan Diri category">
                         <div class="interactive-card category-card">
-                            <img alt="Self-improvement icon" class="w-14 h-14" height="56" src="https://cdn-icons-png.flaticon.com/512/2311/2311545.png" width="56" loading="lazy" />
+                            <img alt="Self-improvement icon" class="w-14 h-14" height="56"
+                                src="https://cdn-icons-png.flaticon.com/512/2311/2311545.png" width="56"
+                                loading="lazy" />
                             <div class="category-text select-none font-bold">
                                 Pengembangan<br />
                                 Diri
@@ -107,31 +117,35 @@
             </section>
 
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-                <h3 class="font-poppins font-semibold text-2xl text-black border-b-4 border-black inline-block pb-2 mb-4 sm:mb-0">
+                <h3
+                    class="font-poppins font-semibold text-2xl text-black border-b-4 border-black inline-block pb-2 mb-4 sm:mb-0">
                     Terbaru Dirilis
                 </h3>
                 <div class="relative w-full sm:w-1/3">
                     <input type="text" placeholder="Cari kursus..."
                         class="w-full pl-10 pr-4 py-2 rounded-lg border-2 border-gray-400 focus:outline-none focus:border-blue-500 transition-colors duration-200"
                         v-model="searchQuery">
-                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                <Link v-for="a in courses.data" :href="route('course' , a.slug)"
+                <Link v-for="a in courses.data" :href="route('course', a.slug)"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <img src="https://placehold.co/1280x720/000000/ffffff?text=kursus" class="w-full h-[200px] object-cover" alt="Belajar Vue.js Dasar" />
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-800">{{ a.title_course }}</h3>
-                        <div class="mt-2 text-sm text-gray-500 line-through">Rp 200.000</div>
-                        <div class="text-base font-bold text-blue-600">{{formatPrice(a.price)}}</div>
-                    </div>
-                </Link>
+                <img src="https://placehold.co/1280x720/000000/ffffff?text=kursus" class="w-full h-[200px] object-cover"
+                    alt="Belajar Vue.js Dasar" />
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-800">{{ a.title_course }}</h3>
+                    <div class="mt-2 text-sm text-gray-500 line-through">Rp 200.000</div>
+                    <div class="text-base font-bold text-blue-600">{{ formatPrice(a.price) }}</div>
                 </div>
+                </Link>
+            </div>
             <Pagination :links="courses.links" />
         </main>
     </HomeLayout>
@@ -139,19 +153,31 @@
 
 <script setup>
 import Pagination from "@/Components/Global/Pagination.vue"
-import { route } from '../../../../vendor/tightenco/ziggy/src/js';
 import HomeLayout from '../../Layout/Homepage/HomeLayout.vue';
+import { ref, watch } from "vue";
+import { router } from "@inertiajs/vue3";
+import { debounce } from "lodash";
 
-defineProps({
+const props = defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
-    courses : Object
+    courses: Object,
+    search : String
 })
+
+const searchQuery = ref(props.search)
+
+watch(searchQuery,
+    debounce((q) => router.get(route('catalog'),
+        { search: q }, { preserveState: true, preserveScroll: true }
+    ), 200) // debounce dari lodash akan mengeksekusi code setelah kita berhenti menginput di input field
+    // jadi kan kalau kita cuman pakai watch dia akan jalankan callback function setiap kali ada perubahan pada parameter pertama, yakni searchQuery, nah dengan kita gunakan debouunce, maka itu tidak akan terjadi
+);
 
 const formatter = new Intl.NumberFormat('id-ID', {
     style: "currency",
     currency: "IDR",
-    minimumFractionDigits : 0
+    minimumFractionDigits: 0
 });
 
 function formatPrice(price) {

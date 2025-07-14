@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Logic\AdminController;
+use App\Http\Controllers\Logic\ArtikelController;
 use App\Http\Controllers\Logic\CourseController;
 use App\Http\Controllers\Logic\SessionController;
 use App\Http\Controllers\PageController\HomepageController;
@@ -33,10 +34,13 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/dashboard/task/create', [DashPageController::class, 'task_create'])->name('task.create');
     Route::get('/dashboard/article', [DashPageController::class, 'article'])->name('article');
     Route::get('/dashboard/article/create', [DashPageController::class, 'article_create'])->name('article.create');
+    Route::post('/dashboard/article/store', [ArtikelController::class, 'store'])->name('article.store');
     Route::get('/dashboard/teacher', [DashPageController::class, 'teacher'])->name('teacher');
     Route::post('/dashboard/teacher', [AdminController::class, 'store_teacher'])->name('teacher.store');
     Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
     Route::post('/dashboard/student', [AdminController::class, 'store_student'])->name('student.store');
+    Route::get('/dashboard/kategori' , [DashPageController::class , 'kategori'])->name('kategori');
+    Route::post('/dashboard/kategori' , [AdminController::class , 'store_kategori'])->name('kategori.store');
 });
 // Teacher and admin Route
 Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () {

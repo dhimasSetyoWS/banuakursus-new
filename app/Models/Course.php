@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Database\Factories\CourseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
 class Course extends Model
 {
     //
@@ -17,6 +16,10 @@ class Course extends Model
 
     public function course_sessions() : HasMany {
         return $this->hasMany(CourseSessions::class);
+    }
+
+    public function kategori() : BelongsTo {
+        return $this->belongsTo(Kategori::class);
     }
 
     public function user() : BelongsTo {
