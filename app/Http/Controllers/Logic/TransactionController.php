@@ -13,7 +13,6 @@ class TransactionController extends Controller
     public function register_course(string $slug) {
         $course = Course::where('slug' , $slug)->firstOrFail();
         $user = auth()->user();
-
         if ($user->registeredCourses->contains($course->id)) {
             return back()->with('error', 'Anda sudah terdaftar di kursus ini.');
         }

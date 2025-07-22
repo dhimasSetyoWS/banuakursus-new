@@ -34,10 +34,11 @@
                                 alt="Course thumbnail" class="w-full object-cover">
                             <div class="p-6">
                                 <h2 class="text-3xl font-bold text-slate-900 mb-4">{{ formatPrice(course.price) }}</h2>
-                                <button
+                                <button v-if="!isRegister"
                                     class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                                     Daftar Kursus Sekarang
                                 </button>
+                                <button v-else class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">Lanjut Belajar</button>
                                 <ul class="mt-4 space-y-2 text-sm text-slate-600">
                                     <li class="flex items-center gap-3"><svg
                                             class="w-5 h-5 text-indigo-500 flex-shrink-0"
@@ -119,10 +120,11 @@
                                 alt="Course thumbnail" class="w-full object-cover">
                             <div class="p-6">
                                 <h2 class="text-3xl font-bold text-slate-900 mb-4">{{ formatPrice(course.price) }}</h2>
-                                <button @click="daftar"
+                                <button v-if="!isRegister" @click="daftar"
                                     class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                                     Daftar Kursus Sekarang
                                 </button>
+                                <button v-else class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">Lanjut Belajar</button>
                                 <h3 class="text-md font-semibold mt-6 mb-2">Kursus ini termasuk:</h3>
                                 <ul class="space-y-2 text-sm text-slate-600">
                                     <li class="flex items-center gap-3"><svg
@@ -184,6 +186,7 @@ const props = defineProps({
     course: Object,
     sessions: Array,
     creator: String,
+    isRegister : Boolean
 })
 
 const formatter = new Intl.NumberFormat('id-ID', {

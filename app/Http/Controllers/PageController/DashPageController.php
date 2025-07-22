@@ -39,9 +39,18 @@ class DashPageController extends Controller
             'search' => $request->search
         ]);
     }
-    public function manage_course_edit(string $slug)
+    public function manage_course_edit(Request $request, string $slug)
     {
-        $course = Course::firstWhere('slug', $slug);
+        // Mulai satu instance query builder
+        $coursesQuery = Course::query();
+
+        // Kondisi 1: Filter berdasarkan Nama/Judul Kursus
+        // Jika $request->search ada, tambahkan kondisi ke $coursesQuery
+        $coursesQuery->when($request->search, function ($query) use ($request) {
+            $query->where('title_course', 'like', '%' . $request->search . '%');
+        });
+
+        $course = $coursesQuery->firstWhere('slug', $slug);
         $period = Period::all();
         $sessions = CourseSessions::where('course_id', $course->id)->get();
         return Inertia::render('Dashboard/Edit/EditCourse', [

@@ -81,6 +81,23 @@ class HomepageController extends Controller
         $course = Course::firstWhere('slug', $slug);
         $creator = User::find($course->user_id)->name;
         $sessions = $course->course_sessions()->get();
+        // 2. Ambil user yang sedang login
+        $user = auth()->user(); // Ini akan mengembalikan instance User atau null
+
+        // 3. Lakukan pengecekan status pendaftaran
+        $isRegistered = false;
+        if ($user) { // Pastikan user sudah login
+            // Eager load relasi registeredCourses user, jika belum di-load secara global
+            // Agar contains() tidak memicu N+1 query jika ini dipanggil berkali-kali di loop
+            $user->loadMissing('registeredCourses'); // loadMissing hanya akan load jika belum ada
+
+            // Cek apakah koleksi kursus yang terdaftar pada user mengandung ID kursus ini
+            $isRegistered = $user->registeredCourses->contains($course->id);
+            // Alternatif yang lebih spesifik jika Anda hanya butuh cek ini:
+            // $isRegistered = $user->registeredCourses()->where('course_id', $course->id)->exists();
+        }
+
+
         return Inertia::render('Homepage/SingleCourse/Course', [
             'namaAplikasi' => config('app.name'),
             'timestamp' => now()->toDateTimeString(),
@@ -88,7 +105,8 @@ class HomepageController extends Controller
             'canRegister' => Route::has('register'),
             'course' => $course,
             'sessions' => $sessions,
-            'creator' => $creator
+            'creator' => $creator,
+            'isRegister' => $isRegistered
         ]);
     }
 }

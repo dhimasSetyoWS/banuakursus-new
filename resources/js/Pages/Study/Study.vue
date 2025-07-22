@@ -1,133 +1,226 @@
 <template>
 
     <Head title="Study" />
-    <div class="flex flex-col h-screen">
-        <header class="h-16 bg-white border-b border-slate-200 flex-shrink-0">
-            <div class="container mx-auto h-full flex items-center justify-between px-6">
-                <a :href="route('mycourse')"
-                    class="text-sm font-medium text-slate-600 hover:text-blue-600 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    <div class="hidden sm:block">
-                        Kembali ke Dashboard
-                    </div>
-                </a>
-                <div class="flex items-center gap-3 text-sm">
-                    <span class="text-slate-500">Progres Kamu: 15%</span>
-                    <div class="w-32 bg-slate-200 rounded-full h-2">
-                        <div class="bg-blue-600 h-2 rounded-full" style="width: 15%;"></div>
-                    </div>
+    <nav class="w-full fixed top-0 left-0 z-40 bg-white py-3 sm:py-6 px-6 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-4">
+            <button @click="toggleSidebar" class="p-2 -ml-2 text-gray-600 hover:text-blue-600 lg:hidden">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <h1 class="text-lg font-semibold text-gray-800 hidden md:block cursor-default">{{ course.title_course }}</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <a :href="route('mycourse')"
+                class="text-blue-600 font-semibold hover:text-blue-800 transition text-sm md:text-lg flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> Kembali
+            </a>
+        </div>
+    </nav>
+
+    <aside
+        :class="['w-80 bg-white shadow-lg p-6 overflow-y-auto h-screen fixed left-0 top-0 border-r pt-24 transform transition-transform duration-300 ease-in-out lg:transform-none z-10', { '-translate-x-full': isSidebarHidden }]">
+        <h2 @click="activeItem = null" class="text-2xl font-bold mb-6 text-center text-blue-600 cursor-pointer truncate"
+            :title="course.title_course">
+            Daftar Materi
+            <hr class="mt-2">
+        </h2>
+        <div class="space-y-4">
+            <div v-for="(session, sessionName) in groupedSessions" :key="sessionName">
+                <div class="ml-4 mt-2 space-y-2">
+                    <button v-for="item in session.items" :key="item.id" @click="loadItem(item)"
+                        :class="['w-full text-left sub-module flex items-center', { 'active': activeItem && item.id === activeItem.id }]">
+                        <i
+                            :class="['w-4 text-center', item.kategori === 'artikel' ? 'fa-solid fa-file-lines' : 'fa-solid fa-clipboard-list']"></i>
+                        <span class="ml-2">{{ item.kategori === 'artikel' ? item.artikel.judul : item.tugas.title
+                        }}</span>
+                    </button>
                 </div>
             </div>
-        </header>
+        </div>
+    </aside>
 
-        <div class="flex flex-1 overflow-hidden">
-            <aside class="w-full md:w-80 lg:w-96 bg-white border-r border-slate-200 flex-shrink-0 flex flex-col">
-                <div class="p-4 border-b border-slate-200">
-                    <h2 class="font-bold text-slate-800">Materi Kursus : <span class="text-indigo-800">{{
-                            course.title_course }}</span></h2>
-                    <p class="font-bold text-slate-800">Kategori : <span
-                            class="text-indigo-800 font-normal">{{
-                            course.kategori.kategori }}</span></p>
-                </div>
-                <div class="flex-1 overflow-y-auto">
-                    <div class="space-y-1 p-2">
-                        <div>
-                            <div class="pl-4 mt-1 space-y-1">
-                                <a v-for="a, index in course.course_sessions" @click="changeSession(a.id)" href="javascript:"
-                                    class="flex items-center gap-3 p-3 text-sm font-semibold text-blue-700 rounded-lg" :class="index == session_rn ? 'bg-blue-50' : ''">
-                                    <svg class="w-5 h-5 text-blue-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m9.15 12.75h3.879a2.25 2.25 0 0 0 2.121-3.321l-3.456-6.854a2.25 2.25 0 0 0-2.121-1.321H8.25M4.5 16.5v-2.625a3.375 3.375 0 0 1 3.375-3.375h1.5A1.125 1.125 0 0 0 10.5 7.125v-1.5a3.375 3.375 0 0 1 3.375-3.375H15M4.5 16.5h3.879a2.25 2.25 0 0 1 2.121-3.321l3.456-6.854a2.25 2.25 0 0 1 2.121-1.321H15">
-                                        </path>
-                                    </svg>
-                                    <span>{{ a.session_name }}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+    <div
+        :class="['flex-1 p-8 space-y-8 pt-24 transition-all duration-300 ease-in-out', { 'lg:ml-80': !isSidebarHidden }]">
+        <div v-if="activeItem" class="bg-white p-6 md:p-10 rounded-2xl shadow-xl min-h-screen">
+            <div v-if="activeItem.kategori === 'artikel'">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">{{ activeItem.artikel.judul }}</h1>
+                <div class="article-content prose" v-html="activeItem.artikel.konten"></div>
+            </div>
+            <div v-else-if="activeItem.kategori === 'tugas'">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">{{ activeItem.tugas.title }}</h1>
+                <p class="text-sm text-gray-500 mb-6">Tenggat: {{ new
+                    Date(activeItem.tugas.due_date).toLocaleDateString('id-ID', {
+                        weekday: 'long', year: 'numeric',
+                        month: 'long', day: 'numeric'
+                    }) }}</p>
+                <div class="article-content" v-html="activeItem.tugas.description"></div>
+            </div>
+        </div>
 
-            <main class="flex-1 bg-white overflow-y-auto">
-                <div class="max-w-4xl mx-auto p-6 md:p-8">
-                    <div class="mb-6">
-                        <p class="text-sm text-blue-600 font-semibold">Modul 1: Pengenalan</p>
-                        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mt-1">1.2 Pengenalan Search Engine
-                            Optimization (SEO)</h1>
-                    </div>
-                    <div v-if="'artikel' in course.course_sessions[session_rn]">
-                        <article class="prose prose-slate max-w-none lg:prose-lg" v-html="course.course_sessions[session_rn].artikel.konten">
-                        </article>
-                    </div>
-
-                    <div class="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 p-2 bg-white rounded-full">
-                                <svg class="w-6 h-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-900">Instruksi Tugas</h3>
-                                <p class="mt-1 text-slate-600">Setelah memahami materi, silakan kumpulkan file hasil
-                                    riset keyword Anda dalam format `.pdf` atau `.docx` sebelum tanggal deadline.</p>
-                                <div class="mt-4">
-                                    <button
-                                        class="px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">Unggah
-                                        Tugas</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-between items-center mt-12 pt-6 border-t border-slate-200">
-                        <a href="#"
-                            class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-100">
-                            &larr; Sesi Sebelumnya
-                        </a>
-                        <a href="#"
-                            class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-lg hover:bg-blue-700">
-                            Lanjut ke Tugas &rarr;
-                        </a>
-                    </div>
-                </div>
-            </main>
+        <div v-else
+            class="text-center text-gray-500 py-20 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center z-0">
+            <i class="fas fa-hand-point-left text-6xl text-blue-400 mb-6 animate-pulse z-0"></i>
+            <p class="text-2xl font-semibold text-gray-700">Selamat Datang di Kursus {{ course.title_course }}!</p>
+            <p>Pilih materi atau tugas dari sidebar untuk memulai.</p>
         </div>
     </div>
-
 </template>
+
 <script setup>
-import {ref} from "vue";
+import { ref, computed, onMounted, nextTick } from 'vue'; // <-- Pastikan nextTick diimpor
 
 const props = defineProps({
-    'course': Object,
-})
+    course: Object,
+});
 
-const session_rn = ref(0)
+// --- State untuk UI ---
+const isSidebarHidden = ref(true);
+const activeItem = ref(null);
+const moduleExpandedState = ref({});
 
-function changeSession(id) {
-    const idFound = props.course.course_sessions.findIndex((session) => session.id == id)
-    console.log(idFound)
-    session_rn.value = idFound
+// --- Computed Property untuk mengelompokkan data ---
+const groupedSessions = computed(() => {
+    if (!props.course || !props.course.course_sessions) {
+        return {};
+    }
+    return props.course.course_sessions.reduce((acc, item) => {
+        const sessionName = item.session_name;
+        if (!acc[sessionName]) {
+            acc[sessionName] = { items: [] };
+        }
+        acc[sessionName].items.push(item);
+        return acc;
+    }, {});
+});
+
+// --- Methods untuk Interaktivitas ---
+const loadItem = (item) => {
+    activeItem.value = item;
+
+    if (window.innerWidth < 1024) {
+        isSidebarHidden.value = true;
+    }
+
+    // <-- TAMBAHAN: Tunggu DOM update, lalu scroll ke atas
+    nextTick(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+};
+
+const toggleModule = (sessionName) => {
+    moduleExpandedState.value[sessionName] = !moduleExpandedState.value[sessionName];
+};
+
+const toggleSidebar = () => {
+    isSidebarHidden.value = !isSidebarHidden.value;
+};
+
+// --- Lifecycle Hook ---
+onMounted(() => {
+    const handleResize = () => {
+        if (window.innerWidth < 1024) {
+            isSidebarHidden.value = true;
+        } else {
+            isSidebarHidden.value = false;
+        }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    const firstSessionName = Object.keys(groupedSessions.value)[0];
+    if (firstSessionName) {
+        moduleExpandedState.value[firstSessionName] = true;
+    }
+});
+</script>
+
+<style>
+/* CSS tetap sama, tidak perlu diubah */
+
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #f8fafc;
 }
 
+.article-content h1,
+.article-content h2,
+.article-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
 
-</script>
-<style>
+.article-content p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
 
-.prose iframe {
+.article-content ul,
+.article-content ol {
+    list-style-position: inside;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.article-content strong,
+.article-content b {
+    font-weight: 700;
+}
+
+.article-content em,
+.article-content i {
+    font-style: italic;
+}
+
+.article-content pre {
+    background-color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
+}
+
+.article-content iframe {
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
     border-radius: 0.75rem;
 }
 
+.toggle-module {
+    padding: 12px 15px;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+    color: #334155;
+}
+
+.toggle-module:hover {
+    background-color: #e2e8f0;
+}
+
+.sub-module {
+    padding: 10px 15px;
+    border-radius: 6px;
+    color: #475569;
+}
+
+.sub-module:hover {
+    background-color: #e0f2fe;
+    color: #0c4a6e;
+}
+
+.sub-module.active {
+    background-color: #bfdbfe;
+    font-weight: 600;
+    color: #1e40af;
+}
+
+.bg-white {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 </style>
