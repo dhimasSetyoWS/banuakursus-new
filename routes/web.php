@@ -12,7 +12,7 @@ use App\Http\Controllers\PageController\HomepageController;
 use App\Http\Controllers\PageController\AuthViewController;
 use App\Http\Controllers\PageController\DashPageController;
 use App\Http\Controllers\Logic\TransactionController;
-
+use App\Http\Controllers\Logic\KategoriController;
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('beranda');
 Route::get('/catalog', [HomepageController::class, 'catalog'])->name('catalog');
@@ -40,7 +40,9 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
     Route::post('/dashboard/student', [AdminController::class, 'store_student'])->name('student.store');
     Route::get('/dashboard/kategori' , [DashPageController::class , 'kategori'])->name('kategori');
-    Route::post('/dashboard/kategori' , [AdminController::class , 'store_kategori'])->name('kategori.store');
+    Route::post('/dashboard/kategori' , [KategoriController::class , 'store'])->name('kategori.store');
+    Route::delete('/dashboard/kategori/delete/{kategori}', [KategoriController::class , 'delete'])->name('kategori.delete');
+    Route::patch('/dashboard/kategori/update/{kategori}', [KategoriController::class , 'update'])->name('kategori.update');
 });
 // Teacher and admin Route
 Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () {
@@ -54,11 +56,13 @@ Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () 
     Route::post('/dashboard/session/{id}/store', [SessionController::class, 'store'])->name('session.store');
     Route::get('/dashboard/session/{id}/edit', [DashPageController::class, 'session_edit'])->name('session.edit');
     Route::post('/dashboard/session/{id}/update/{sessionId}', [SessionController::class, 'update'])->name('session.update');
+    Route::delete('/dashboard/session/delete/{id}', [SessionController::class, 'delete'])->name('session.delete');
 });
 
 Route::middleware(['auth' , 'role:student'])->group(function () {
     Route::get('/register_course/{slug}' , [TransactionController::class, 'register_course'])->name('register.course');
     Route::get('/dashboard/mycourse', [DashPageController::class , 'mycourse'])->name('mycourse');
+    Route::get('/study/{slug}', [DashPageController::class , 'study'])->name('study');
 });
 
 Route::middleware('auth')->group(function () {

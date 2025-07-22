@@ -1,7 +1,7 @@
 <template>
     <a :href="href">
         <div class="interactive-card category-card">
-            <img alt="icon" class="w-14 h-14" height="56"
+            <img v-if="img" alt="icon" class="w-14 h-14" height="56"
                 :src="img" width="56" loading="lazy" />
             <div class="category-text select-none font-bold">
                 {{name}}
@@ -25,8 +25,9 @@ defineProps({
     /* very light blue-white */
     border-radius: 1rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid transparent;
+    border: 2px solid #1e293b;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .interactive-card:hover,

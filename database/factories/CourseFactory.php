@@ -23,7 +23,8 @@ class CourseFactory extends Factory
             'description' => fake()->paragraph(5),
             'price' => fake()->randomDigit(),
             'user_id' => 1,
-            'period_id' => 2
+            'period_id' => 2,
+            'kategori_id' => fake()->randomElement([1,2,3,4,5,6,7,8]),
         ];
     }
 

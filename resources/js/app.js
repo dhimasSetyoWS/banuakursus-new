@@ -8,6 +8,10 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { Head, Link } from "@inertiajs/vue3";
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { QuillEditor } from "@vueup/vue-quill";
+
+const cleanApp = () => {
+  document.getElementById('app').removeAttribute('data-page');
+};
 createInertiaApp({
     title: title => `${title} - Banua Kursus`,
     resolve: (name) =>
@@ -28,4 +32,4 @@ createInertiaApp({
         color: "#4B5563",
         showSpinner: true,
     },
-});
+}).then(cleanApp);

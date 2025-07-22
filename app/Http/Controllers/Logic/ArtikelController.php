@@ -22,4 +22,7 @@ class ArtikelController extends Controller
 
         return redirect()->route('article')->with('success' , 'Berhasil tambah Artikel!');
     }
+    public function delete(Artikel $artikel) {
+        $artikel->delete();
+    }
 }

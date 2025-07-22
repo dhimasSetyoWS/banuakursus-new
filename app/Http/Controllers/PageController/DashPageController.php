@@ -8,6 +8,7 @@ use App\Models\Period;
 use App\Models\Role;
 use App\Models\Course;
 use App\Models\CourseSessions;
+use App\Models\Kategori;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -61,7 +62,7 @@ class DashPageController extends Controller
     {
         $courseSession = CourseSessions::where('id', $sessionId)->firstOrFail();
         $course = $courseSession->course;
-        if($courseSession->kategori == 'artikel') {
+        if ($courseSession->kategori == 'artikel') {
             $artikel = $courseSession->artikel;
         } elseif ($courseSession->kategori == 'tugas') {
             $tugas = $courseSession->tugas;
@@ -97,8 +98,9 @@ class DashPageController extends Controller
     }
     public function article()
     {
-        $artikel = Artikel::all();
-        return Inertia::render('Dashboard/Artikel' , [
+        // $artikel = Artikel::all();
+        $artikel = Artikel::with('course_sessions.course')->get();
+        return Inertia::render('Dashboard/Artikel', [
             'artikel' => $artikel
         ]);
     }
@@ -111,19 +113,39 @@ class DashPageController extends Controller
         return Inertia::render('Dashboard/Create/CreateTugas');
     }
 
-    public function kategori() {
-        return Inertia::render('Dashboard/Kategori');
+    public function kategori()
+    {
+        $kategori =  Kategori::all();
+        return Inertia::render('Dashboard/Kategori', [
+            'kategori' => $kategori
+        ]);
     }
 
     // Student Previlege
-    public function mycourse() {
+    public function mycourse()
+    {
         $user = auth()->user();
 
         if ($user) {
             $registerData = $user->registeredCourses;
         }
-        return Inertia::render('Dashboard/Student/MyCourse' , [
+        return Inertia::render('Dashboard/Student/MyCourse', [
             'courses' => $registerData,
+        ]);
+    }
+    public function study($slug)
+    {
+        $course = Course::where('slug', $slug)
+            ->with(
+                [
+                    'course_sessions' => function ($query) { // di dalam course_sessions ambil query, kemudian ambil query artikel dan tugas, jadi query relation ke artikel dan tugas juga terinclude ke dalam $course
+                        $query->with('artikel', 'tugas');
+                    },
+                    'kategori'
+                ]
+            )->firstOrFail();
+        return Inertia::render('Study/Study', [
+            'course' => $course->only(['id' , 'title_course' , 'slug' , 'kategori', 'course_sessions']),
         ]);
     }
 }

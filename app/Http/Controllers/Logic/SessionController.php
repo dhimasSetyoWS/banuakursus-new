@@ -100,4 +100,12 @@ class SessionController extends Controller
         $slug = Course::findOrFail($id)->slug;
         return redirect()->route('manage-course.edit', $slug)->with('success', 'Session telah ter-update!');
     }
+    public function delete($id) {
+        $session = CourseSessions::find($id);
+        $a = $session->delete();
+        if ($a) {
+            return redirect()->back()->with('success', 'Session telah dihapus!');
+        }
+        return redirect()->back()->with('error', 'Session gagal dihapus!');
+    }
 }

@@ -59,6 +59,9 @@
                                     JUDUL ARTIKEL</th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    KURSUS</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     AKSI</th>
                             </tr>
                         </thead>
@@ -78,6 +81,14 @@
                                 <td
                                     class="px-6 py-4 font-bold">
                                     {{a.judul}}
+                                </td>
+                                <td v-if="a.course_sessions"
+                                    class="px-6 py-4 font-bold">
+                                    {{a.course_sessions.course.title_course}}
+                                </td>
+                                <td v-else
+                                    class="px-6 py-4 font-bold">
+                                    Artikel Publik
                                 </td>
                             </tr>
                         </tbody>

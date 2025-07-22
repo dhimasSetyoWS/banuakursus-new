@@ -17,102 +17,9 @@
                 </h3>
 
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-8">
-                    <a href="#" aria-label="UI/UX & Web Design category">
-                        <div class="interactive-card category-card">
-                            <img alt="UI/UX & Web Design icon with blue background and white UI text" class="w-14 h-14"
-                                width="56" height="56" src="https://cdn-icons-png.flaticon.com/128/13191/13191231.png"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                UI/UX & Web<br />
-                                Design
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" aria-label="Website Development category">
-                        <div class="interactive-card category-card">
-                            <img alt="Website Development icon with green background and white W letter"
-                                class="w-14 h-14" height="56"
-                                src="https://cdn-icons-png.flaticon.com/128/12492/12492519.png" width="56"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                Website<br />
-                                Development
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" aria-label="Mobile Development category">
-                        <div class="interactive-card category-card">
-                            <img alt="Mobile Development icon with blue background and white M letter" class="w-14 h-14"
-                                height="56" src="https://cdn-icons-png.flaticon.com/128/5608/5608615.png" width="56"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                Mobile<br />
-                                Development
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" aria-label="Data Analysis category">
-                        <div class="interactive-card category-card">
-                            <img alt="Data Analysis icon with purple background and white D letter" class="w-14 h-14"
-                                height="56" src="https://cdn-icons-png.flaticon.com/128/11083/11083341.png" width="56"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                Data<br />
-                                Analysis
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" aria-label="Bahasa Asing category">
-                        <div class="interactive-card category-card">
-                            <img alt="Language icon" class="w-14 h-14" height="56"
-                                src="https://cdn-icons-png.flaticon.com/512/2361/2361139.png" width="56"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                Bahasa<br />
-                                Asing
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" aria-label="Kreativitas & Desain category">
-                        <div class="interactive-card category-card">
-                            <img alt="Creativity icon" class="w-14 h-14" height="56"
-                                src="https://cdn-icons-png.flaticon.com/128/4661/4661316.png" width="56"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                Kreativitas &<br />
-                                Desain
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" aria-label="Bisnis & Kewirausahaan category">
-                        <div class="interactive-card category-card">
-                            <img alt="Business icon" class="w-14 h-14" height="56"
-                                src="https://cdn-icons-png.flaticon.com/512/2920/2920063.png" width="56"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                Bisnis &<br />
-                                Kewirausahaan
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" aria-label="Pengembangan Diri category">
-                        <div class="interactive-card category-card">
-                            <img alt="Self-improvement icon" class="w-14 h-14" height="56"
-                                src="https://cdn-icons-png.flaticon.com/512/2311/2311545.png" width="56"
-                                loading="lazy" />
-                            <div class="category-text select-none font-bold">
-                                Pengembangan<br />
-                                Diri
-                            </div>
-                        </div>
-                    </a>
+                    <CategoryCard v-for="a in kategori"
+                        :class="c_search == a.slug ? 'outline outline-blue-600 rounded-[1rem]' : ''"
+                        @click="category_search(a.slug)" href="javascript:" :name="a.kategori" />
                 </div>
             </section>
 
@@ -135,16 +42,21 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                <Link v-for="a in courses.data" :href="route('course', a.slug)"
+                <Link v-if="courses.data.length" v-for="a in courses.data" :href="route('course', a.slug)"
                     class="block bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <img src="https://placehold.co/1280x720/000000/ffffff?text=kursus" class="w-full h-[200px] object-cover"
-                    alt="Belajar Vue.js Dasar" />
+                <div class="relative">
+                    <img src="https://placehold.co/1280x720/000000/ffffff?text=kursus" class="w-full h-[200px] object-cover"
+                        alt="Belajar Vue.js Dasar" />
+                    <span v-if="a.kategori" class="mt-1 py-0.5 px-2 text-white self-center text-xs absolute top-0 right-0 mx-1 bg-blue-600 rounded-full">{{a.kategori.kategori}}</span>
+                </div>
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-gray-800">{{ a.title_course }}</h3>
-                    <div class="mt-2 text-sm text-gray-500 line-through">Rp 200.000</div>
                     <div class="text-base font-bold text-blue-600">{{ formatPrice(a.price) }}</div>
                 </div>
                 </Link>
+                <div v-else>
+                    <p class="text-lg font-bold">Tidak ada kursus !</p>
+                </div>
             </div>
             <Pagination :links="courses.links" />
         </main>
@@ -157,19 +69,37 @@ import HomeLayout from '../../Layout/Homepage/HomeLayout.vue';
 import { ref, watch } from "vue";
 import { router } from "@inertiajs/vue3";
 import { debounce } from "lodash";
+import CategoryCard from "@/Components/Global/CategoryCard.vue"
 
 const props = defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
     courses: Object,
-    search : String
+    search: String,
+    kategori: Array,
+    c_search: String
 })
+
+function category_search(c) {
+    if (props.c_search === c) {
+        c = null;
+    }
+    router.get(route('catalog'),
+        {
+            ...(props.search ? { search: props.search } : {}),
+            category: c
+        },
+        { preserveState: true, preserveScroll: true })
+}
 
 const searchQuery = ref(props.search)
 
 watch(searchQuery,
     debounce((q) => router.get(route('catalog'),
-        { search: q }, { preserveState: true, preserveScroll: true }
+        {
+            search: q,
+            ...(props.c_search ? { category: props.c_search } : {})
+        }, { preserveState: true, preserveScroll: true }
     ), 200) // debounce dari lodash akan mengeksekusi code setelah kita berhenti menginput di input field
     // jadi kan kalau kita cuman pakai watch dia akan jalankan callback function setiap kali ada perubahan pada parameter pertama, yakni searchQuery, nah dengan kita gunakan debouunce, maka itu tidak akan terjadi
 );

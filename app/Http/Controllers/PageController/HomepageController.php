@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Route;
 use App\Models\Course;
+use App\Models\Kategori;
 use App\Models\User;
 
 class HomepageController extends Controller
@@ -24,9 +25,28 @@ class HomepageController extends Controller
     }
     public function catalog(Request $request)
     {
-        $course = Course::when($request->search, function ($query) use ($request) {
+        // Mulai satu instance query builder
+        $coursesQuery = Course::query();
+
+        // Kondisi 1: Filter berdasarkan Nama/Judul Kursus
+        // Jika $request->search ada, tambahkan kondisi ke $coursesQuery
+        $coursesQuery->when($request->search, function ($query) use ($request) {
             $query->where('title_course', 'like', '%' . $request->search . '%');
-        })->orderBy('created_at', 'desc')->paginate(8, ['id', 'title_course', 'slug', 'price'])->withQueryString();
+        });
+
+        // Kondisi 2: Filter berdasarkan Kategori (slug)
+        // Jika $request->category ada, tambahkan kondisi ke $coursesQuery yang SAMA
+        $coursesQuery->when($request->category, function ($query) use ($request) {
+            // Pastikan relasi di model Course Anda bernama 'kategori' (huruf kecil)
+            $query->whereRelation('kategori', 'slug', $request->category);
+        });
+
+        // Sekarang, terapkan eager loading, pengurutan, dan pagination pada $coursesQuery yang sudah dibangun
+        $course = $coursesQuery->with('kategori') // Eager load relasi kategori
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(8, ['id', 'kategori_id', 'price', 'slug', 'title_course', 'user_id'])
+                                ->withQueryString();
+        $kategori = Kategori::all();
         return Inertia::render('Homepage/Catalog', [
             'namaAplikasi' => config('app.name'),
             'timestamp' => now()->toDateTimeString(),
@@ -34,6 +54,8 @@ class HomepageController extends Controller
             'canRegister' => Route::has('register'),
             'courses' => $course,
             'search' => $request->search,
+            'kategori' => $kategori,
+            'c_search' => $request->category
         ]);
     }
     public function aboutus()

@@ -9,6 +9,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Course;
+use App\Models\Kategori;
+use Illuminate\Support\Str;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -46,6 +48,40 @@ class DatabaseSeeder extends Seeder
             'agurooz_id' => 1,
         ]);
 
+        Kategori::create([
+            'kategori' => 'UI/UX & Web Design',
+            'slug' => Str::slug('UI/UX & Web Design'),
+        ]);
+        Kategori::create([
+            'kategori' => 'Website Development',
+            'slug' => Str::slug('Website Development'),
+        ]);
+        Kategori::create([
+            'kategori' => 'Mobile Development',
+            'slug' => Str::slug('Mobile Development'),
+        ]);
+        Kategori::create([
+            'kategori' => 'Data Analysis',
+            'slug' => Str::slug('Data Analysis'),
+        ]);
+        Kategori::create([
+            'kategori' => 'Bahasa Asing',
+            'slug' => Str::slug('Bahasa Asing'),
+        ]);
+        Kategori::create([
+            'kategori' => 'Kreativitas & Desain',
+            'slug' => Str::slug('Kreativitas & Desain'),
+        ]);
+        Kategori::create([
+            'kategori' => 'Bisnis & Kewirausahaan',
+            'slug' => Str::slug('Bisnis & Kewirausahaan'),
+        ]);
+        Kategori::create([
+            'kategori' => 'Pengembangan Diri',
+            'slug' => Str::slug('Pengembangan Diri'),
+        ]);
+
         Course::factory()->count(15)->create();
+
     }
 }
