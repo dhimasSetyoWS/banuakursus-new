@@ -120,10 +120,20 @@
                                     </div>
                                 </div>
                                 <div class="mt-4">
+                                    <label for="category" class="block text-sm font-medium text-slate-700">Kategori
+                                        Course</label>
+                                    <div class="mt-1">
+                                        <select class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3" v-model="form.kategori_id" id="category">
+                                            <option value="">--Pilih Kategori--</option>
+                                            <option v-for="a,index in kategori" :value="a.id">{{ a.kategori }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
                                     <label for="description" class="block text-sm font-medium text-slate-700">Deskripsi
                                         Course</label>
                                     <div class="mt-1">
-                                        <input id="namecourse" v-model="form.description" type="text" autocomplete="off"
+                                        <input id="description" v-model="form.description" type="text" autocomplete="off"
                                             required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
@@ -179,6 +189,9 @@ const props = defineProps({
     },
     search: {
         type: String
+    },
+    kategori : {
+        type : Array
     }
 })
 
@@ -198,7 +211,8 @@ const form = useForm({
     title_course: '',
     description: '',
     price: '',
-    period_id: ''
+    period_id: '',
+    kategori_id : ''
 });
 // Format to currency
 

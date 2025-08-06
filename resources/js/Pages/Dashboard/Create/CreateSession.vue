@@ -24,13 +24,13 @@
                         <legend class="sr-only">Pilih kategori sesi</legend>
                         <div class="flex items-center gap-8">
                             <div class="flex items-center">
-                                <input id="kategori-materi" value="artikel" v-model="form.kategori" type="radio"
+                                <input id="kategori-materi" value="artikel" v-model="kategori_active" type="radio"
                                     class="h-4 w-4 text-blue-600 border-slate-300 focus:ring-blue-500">
                                 <label for="kategori-materi"
                                     class="ml-3 block text-sm font-medium text-slate-800">Artikel/Materi</label>
                             </div>
                             <div class="flex items-center">
-                                <input id="kategori-tugas" value="tugas" v-model="form.kategori" type="radio"
+                                <input id="kategori-tugas" value="tugas" v-model="kategori_active" type="radio"
                                     class="h-4 w-4 text-blue-600 border-slate-300 focus:ring-blue-500">
                                 <label for="kategori-tugas"
                                     class="ml-3 block text-sm font-medium text-slate-800">Tugas</label>
@@ -63,22 +63,24 @@
                     </div>
                 </div>
 
-                <div v-if="form.kategori == 'artikel'">
+                <div v-if="kategori_active == 'artikel'">
                     <label class="block text-sm font-medium text-slate-700">Isi Materi/Artikel</label>
                     <div class="mt-1">
-                        <QuillEditor toolbar="full" v-model:content="form.artikel_konten" contentType="html" style="height: 200px;" />
+                        <QuillEditor toolbar="full" v-model:content="form.artikel_konten" contentType="html"
+                            style="height: 200px;" />
                     </div>
                 </div>
 
-                <div v-if="form.kategori == 'tugas'">
+                <div v-if="kategori_active == 'tugas'">
                     <label class="block text-sm font-medium text-slate-700">Instrukti Tugas</label>
                     <div class="mt-1">
-                        <QuillEditor toolbar="full" v-model:content="form.isi_tugas" contentType="html" style="height: 200px;" />
+                        <QuillEditor toolbar="full" v-model:content="form.isi_tugas" contentType="html"
+                            style="height: 200px;" />
                     </div>
                     <label for="deadline" class="block text-sm font-medium text-slate-700">Tanggal
                         Deadline</label>
                     <div class="mt-1">
-                        <input type="datetime-local" name="deadline" id="deadline"
+                        <input type="datetime-local" v-model="form.tenggat_waktu" id="deadline"
                             class="w-full sm:w-1/2 px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
@@ -100,19 +102,32 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue"
 import { useForm } from "@inertiajs/vue3";
+import {watch, ref} from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 
 const props = defineProps({
     'course': Object
 })
 
+const kategori_active = ref("");
+
 const form = useForm({
     session_name: "",
     description: "",
-    kategori: "",
-    artikel_konten: "",
-    isi_tugas: "",
+    kategori: kategori_active.value,
+    artikel_konten : "",
+    isi_tugas : "",
+    tenggat_waktu : ""
 })
+
+watch(kategori_active, (newKategori) => {
+    form.kategori = newKategori;
+
+    // 2. Reset semua field kondisional yang mungkin tidak relevan lagi
+    form.artikel_konten = "";
+    form.isi_tugas = "";
+    form.tenggat_waktu = "";
+});
 
 function submit() {
     form.post(route('session.store', props.course.id), {

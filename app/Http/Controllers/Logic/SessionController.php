@@ -49,6 +49,7 @@ class SessionController extends Controller
                 'nama_tugas' => $request->session_name,
                 'isi_tugas' => $request->isi_tugas,
                 'tenggat_waktu' => $request->tenggat_waktu,
+                'course_sessions_id' => $courseSession->id
             ]);
         }
         $slug = Course::findOrFail($id)->slug;
@@ -83,7 +84,6 @@ class SessionController extends Controller
             } elseif ($request->kategori == 'tugas') {
                 // Validasi untuk Tugas
                 $request->validate([
-
                     'isi_tugas' => ['required', 'string'],
                     'tenggat_waktu' => ['nullable', 'date'],
                 ]);

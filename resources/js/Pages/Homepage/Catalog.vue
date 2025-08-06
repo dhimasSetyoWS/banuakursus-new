@@ -15,7 +15,6 @@
                     class="font-poppins font-semibold text-2xl text-black mb-8 border-b-4 border-black inline-block pb-2">
                     Jelajahi Kategori
                 </h3>
-
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-8">
                     <CategoryCard v-for="a in kategori"
                         :class="c_search == a.slug ? 'outline outline-blue-600 rounded-[1rem]' : ''"
@@ -93,7 +92,6 @@ function category_search(c) {
 }
 
 const searchQuery = ref(props.search)
-
 watch(searchQuery,
     debounce((q) => router.get(route('catalog'),
         {

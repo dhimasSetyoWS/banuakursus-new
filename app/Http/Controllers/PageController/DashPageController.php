@@ -33,10 +33,12 @@ class DashPageController extends Controller
             $query->where('title_course', 'like', '%' . $request->search . '%');
         })->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
         $period = Period::all();
+        $kategori = Kategori::all();
         return Inertia::render('Dashboard/ManageCourse', [
             'courses' => $course,
             'periods' => $period,
-            'search' => $request->search
+            'search' => $request->search,
+            'kategori' => $kategori
         ]);
     }
     public function manage_course_edit(Request $request, string $slug)

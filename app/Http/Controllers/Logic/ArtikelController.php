@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 class ArtikelController extends Controller
 {
     //
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
-            'judul' => ['required' , 'string'],
-            'konten' => ['required' , 'string'],
+            'judul' => ['required', 'string'],
+            'konten' => ['required', 'string'],
         ]);
 
         Artikel::create([
@@ -20,9 +21,31 @@ class ArtikelController extends Controller
             'konten' => $request->konten,
         ]);
 
-        return redirect()->route('article')->with('success' , 'Berhasil tambah Artikel!');
+        return redirect()->route('article')->with('success', 'Berhasil tambah Artikel!');
     }
-    public function delete(Artikel $artikel) {
+
+    public function edit(Artikel $artikel)
+    {
+        echo $artikel;
+    }
+
+    public function update(Request $request, Artikel $artikel)
+    {
+        $request->validate([
+            'judul' => ['required', 'string'],
+            'konten' => ['required', 'string'],
+        ]);
+
+        $artikel->update([
+            'judul' => $request->judul,
+            'konten' => $request->konten,
+        ]);
+
+        return redirect()->route('article')->with('success', 'Berhasil edit Artikel');
+    }
+
+    public function delete(Artikel $artikel)
+    {
         $artikel->delete();
     }
 }

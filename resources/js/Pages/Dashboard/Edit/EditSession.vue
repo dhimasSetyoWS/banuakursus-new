@@ -75,7 +75,7 @@
                     <label for="deadline" class="block text-sm font-medium text-slate-700">Tanggal
                         Deadline</label>
                     <div class="mt-1">
-                        <input type="datetime-local" name="deadline" id="deadline"
+                        <input type="datetime-local" v-model="form.tenggat_waktu" id="deadline"
                             class="w-full sm:w-1/2 px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
@@ -98,6 +98,7 @@
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue"
 import { useForm } from "@inertiajs/vue3";
 import { QuillEditor } from "@vueup/vue-quill";
+import {ref, watch} from "vue";
 
 const props = defineProps({
     'course' : Object,
@@ -106,13 +107,21 @@ const props = defineProps({
     'tugas' : Object
 })
 
+const kategori_active = ref(props.session.kategori);
+
 const form = useForm({
     session_name: props.session.session_name,
     description: props.session.description,
     kategori: props.session.kategori,
     artikel_konten : props.artikel.konten,
-    isi_tugas : props.tugas.isi_tugas
+    isi_tugas : props.tugas.isi_tugas,
+    tenggat_waktu : props.tugas.tenggat_waktu
 })
+
+watch(kategori_active, (newKategori) => {
+    form.kategori = newKategori;
+
+});
 
 function submit () {
     form.post(route('session.update' , [props.course.id , props.session.id]), {

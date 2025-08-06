@@ -13,12 +13,14 @@ use App\Http\Controllers\PageController\AuthViewController;
 use App\Http\Controllers\PageController\DashPageController;
 use App\Http\Controllers\Logic\TransactionController;
 use App\Http\Controllers\Logic\KategoriController;
+use App\Http\Controllers\Logic\TaskController;
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('beranda');
 Route::get('/catalog', [HomepageController::class, 'catalog'])->name('catalog');
 Route::get('/aboutus', [HomepageController::class, 'aboutus'])->name('aboutus');
 Route::get('/contact', [HomepageController::class, 'contact'])->name('contact');
 Route::get('/course/{slug}', [HomepageController::class, 'course'])->name('course');
+Route::get('/profile/edit', [HomepageController::class, 'course'])->name('profile.edit');
 
 
 Route::middleware('guest')->group(function () {
@@ -32,9 +34,16 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/dashboard/task', [DashPageController::class, 'task'])->name('task');
     Route::get('/dashboard/task/create', [DashPageController::class, 'task_create'])->name('task.create');
+    Route::post('/dashboard/task/store', [TaskController::class, 'store'])->name('task.store');
+    Route::get('/dashboard/task/edit/{id}', [TaskController::class, 'edit'])->name('task.edit');
+    Route::match(['put' , 'patch'], '/dashboard/task/update/{tugas}', [TaskController::class, 'update'])->name('task.update');
+    Route::delete('/dashboard/task/delete/{tugas}', [TaskController::class, 'delete'])->name('task.delete');
     Route::get('/dashboard/article', [DashPageController::class, 'article'])->name('article');
     Route::get('/dashboard/article/create', [DashPageController::class, 'article_create'])->name('article.create');
     Route::post('/dashboard/article/store', [ArtikelController::class, 'store'])->name('article.store');
+    Route::get('/dashboard/article/edit/{artikel}', [ArtikelController::class, 'edit'])->name('article.edit');
+    Route::match(['put' , 'patch'],'/dashboard/article/update/{artikel}', [ArtikelController::class, 'update'])->name('article.update');
+    Route::delete('/dashboard/article/delete/{artikel}', [ArtikelController::class, 'delete'])->name('article.delete');
     Route::get('/dashboard/teacher', [DashPageController::class, 'teacher'])->name('teacher');
     Route::post('/dashboard/teacher', [AdminController::class, 'store_teacher'])->name('teacher.store');
     Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
