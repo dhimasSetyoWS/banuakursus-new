@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 return new class extends Migration
 {
     /**
@@ -10,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_sessions', function (Blueprint $table) {
+        Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->string('session_name', 80);
-            $table->timestamp('start_session');
-            $table->timestamp('akhir_session');
-            $table->foreignId('course_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->longText('content');
+            $table->foreignId('course_sessions_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_modules');
+        Schema::dropIfExists('materials');
     }
 };

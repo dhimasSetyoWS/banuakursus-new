@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('tugas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_sessions_id')->unique()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('nama_tugas');
             $table->text('isi_tugas');
             $table->dateTime('tenggat_waktu')->nullable();
