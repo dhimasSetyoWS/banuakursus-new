@@ -46,8 +46,12 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::delete('/dashboard/article/delete/{artikel}', [ArtikelController::class, 'delete'])->name('article.delete');
     Route::get('/dashboard/teacher', [DashPageController::class, 'teacher'])->name('teacher');
     Route::post('/dashboard/teacher', [AdminController::class, 'store_teacher'])->name('teacher.store');
+    Route::match(['patch', 'put'], '/dashboard/teacher/{user}', [AdminController::class, 'update_user'])->name('teacher.update');
+    Route::delete('/dashboard/teacher/{user}', [AdminController::class, 'delete_user'])->name('teacher.delete');
     Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
     Route::post('/dashboard/student', [AdminController::class, 'store_student'])->name('student.store');
+    Route::match(['patch' , 'put'],'/dashboard/student/{user}', [AdminController::class, 'update_user'])->name('student.update');
+    Route::delete('/dashboard/student/{user}', [AdminController::class, 'delete_user'])->name('student.delete');
     Route::get('/dashboard/kategori' , [DashPageController::class , 'kategori'])->name('kategori');
     Route::post('/dashboard/kategori' , [KategoriController::class , 'store'])->name('kategori.store');
     Route::delete('/dashboard/kategori/delete/{kategori}', [KategoriController::class , 'delete'])->name('kategori.delete');

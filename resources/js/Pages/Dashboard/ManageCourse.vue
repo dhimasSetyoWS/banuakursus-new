@@ -63,11 +63,11 @@
                                     <!-- <img src="https://placehold.co/100x60/8b5cf6/ffffff?text=WEB" alt="Kursus"
                                         class="w-20 h-12 object-cover rounded-md"> -->
                                     <a :href="route('course', data.slug)" class="font-semibold">{{ data.title_course
-                                        }}</a>
+                                    }}</a>
                                 </div>
                             </td>
                             <!-- Desc -->
-                            <td class="p-3">{{ data.description }}</td>
+                            <td class="p-3" v-html="limitString(data.description, 100)"></td>
                             <!-- Price -->
                             <td class="p-3">{{ formatter.format(data.price) }}</td>
                             <!-- Action -->
@@ -123,9 +123,11 @@
                                     <label for="category" class="block text-sm font-medium text-slate-700">Kategori
                                         Course</label>
                                     <div class="mt-1">
-                                        <select class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3" v-model="form.kategori_id" id="category">
+                                        <select
+                                            class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3"
+                                            v-model="form.kategori_id" id="category">
                                             <option value="">--Pilih Kategori--</option>
-                                            <option v-for="a,index in kategori" :value="a.id">{{ a.kategori }}</option>
+                                            <option v-for="a, index in kategori" :value="a.id">{{ a.kategori }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -133,8 +135,8 @@
                                     <label for="description" class="block text-sm font-medium text-slate-700">Deskripsi
                                         Course</label>
                                     <div class="mt-1">
-                                        <input id="description" v-model="form.description" type="text" autocomplete="off"
-                                            required
+                                        <input id="description" v-model="form.description" type="text"
+                                            autocomplete="off" required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
                                 </div>
@@ -174,7 +176,7 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue";
 import Pagination from "@/Components/Global/Pagination.vue";
-import { ref,watch } from "vue";
+import { ref, watch } from "vue";
 import { useForm, router } from "@inertiajs/vue3"
 import { debounce } from "lodash";
 
@@ -190,8 +192,8 @@ const props = defineProps({
     search: {
         type: String
     },
-    kategori : {
-        type : Array
+    kategori: {
+        type: Array
     }
 })
 
@@ -212,7 +214,7 @@ const form = useForm({
     description: '',
     price: '',
     period_id: '',
-    kategori_id : ''
+    kategori_id: ''
 });
 // Format to currency
 
@@ -228,6 +230,12 @@ function formatPrice() {
 
 // End of format
 
+function limitString(str, maxLength, suffix = '...') {
+    if (str.length <= maxLength) {
+        return str;
+    }
+    return str.substring(0, maxLength) + suffix;
+}
 
 // Toggle Modal
 function toggleModal() {

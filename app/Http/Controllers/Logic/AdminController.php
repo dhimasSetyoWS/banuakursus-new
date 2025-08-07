@@ -10,10 +10,12 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+
 class AdminController extends Controller
 {
-    //
-    public function store_teacher(Request $request) {
+    // Teacher
+    public function store_teacher(Request $request)
+    {
         $a = $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:' . User::class,
@@ -28,11 +30,12 @@ class AdminController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => 3,
         ]);
-        Session::flash('success' , 'Guru berhasil dibuat !');
+        Session::flash('success', 'Guru berhasil dibuat !');
         return redirect()->route('teacher');
     }
-
-    public function store_student(Request $request) {
+    // Student
+    public function store_student(Request $request)
+    {
         $a = $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:' . User::class,
@@ -47,17 +50,53 @@ class AdminController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => 4,
         ]);
-        Session::flash('success' , 'Murid berhasil dibuat !');
+        Session::flash('success', 'Murid berhasil dibuat !');
         return redirect()->route('student');
     }
-
-    public function store_kategori(Request $request) {
+    // Update and delete
+    public function update_user(Request $request, User $user)
+    {
+        // unique format = unique:table,column,except,idColumn
         $request->validate([
-            'artikel' => ['required' , 'string', 'max:100'],
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'email' => 'required|string|lowercase|email|max:255|unique:users,email,' . $user->id
         ]);
-        Kategori::create([
-            'artikel' => $request->artikel,
-            'slug' => Str::slug($request->artikel),
-        ]);
+        switch ($user->role_id) {
+            case 3:
+                $role_name = "Guru";
+                break;
+            case 4:
+                $role_name = "Siswa";
+                break;
+
+            default:
+                $role_name = "User";
+                break;
+        }
+        if ($user->update($request->only('name' , 'username' , 'email'))) {
+            return redirect()->back()->with('success', "Data $role_name berhasil di update");
+        }
+        return redirect()->back()->with('Error', "Data $role_name gagal di update");
+    }
+
+    public function delete_user(User $user)
+    {
+        switch ($user->role_id) {
+            case 3:
+                $role_name = "Guru";
+                break;
+            case 4:
+                $role_name = "Siswa";
+                break;
+
+            default:
+                $role_name = "User";
+                break;
+        }
+        if ($user->delete()) {
+            return redirect()->back()->with('success', "Data $role_name berhasil di hapus");
+        }
+        return redirect()->back()->with('error', "Data $role_name gagal di hapus");
     }
 }

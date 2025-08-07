@@ -46,6 +46,11 @@ class ArtikelController extends Controller
 
     public function delete(Artikel $artikel)
     {
-        $artikel->delete();
+        if($artikel->delete()) {
+            return redirect()->back()->with('success' , 'Artikel berhasil di hapus');
+        }
+        return redirect()->back()->with('error' , 'Artikel gagal di hapus');
+
+
     }
 }
