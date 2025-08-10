@@ -61,7 +61,8 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
 Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () {
     Route::get('/dashboard', [DashPageController::class, 'main'])->name('dashboard');
     Route::get('/dashboard/manage-course', [DashPageController::class, 'manage_course'])->name('manage-course');
-    Route::post('/dashboard/manage-course/create', [CourseController::class, 'store'])->name('manage-course.store');
+    Route::get('/dashboard/manage-course/create' , [DashPageController::class, 'create_course'])->name('manage-course.create');
+    Route::post('/dashboard/manage-course/store', [CourseController::class, 'store'])->name('manage-course.store');
     Route::get('/dashboard/manage-course/{slug}', [DashPageController::class, 'manage_course_edit'])->name('manage-course.edit');
     Route::match(['patch', 'put'], '/dashboard/update-course/{slug}', [CourseController::class, 'update'])->name('manage-course.update');
     Route::delete('/dashboard/manage-course/{slug}/delete', [CourseController::class, 'delete'])->name('manage-course.delete');

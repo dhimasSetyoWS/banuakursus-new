@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('session_name', 80);
             $table->timestamp('start_session');
-            $table->timestamp('akhir_session');
+            $table->timestamp('end_session');
             $table->foreignId('course_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

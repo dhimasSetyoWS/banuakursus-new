@@ -1,5 +1,5 @@
 <template>
-    <Head title="Register"/>
+    <Head title="Login"/>
     <div class="bg-slate-100">
         <div class="flex items-center justify-center min-h-screen">
             <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">

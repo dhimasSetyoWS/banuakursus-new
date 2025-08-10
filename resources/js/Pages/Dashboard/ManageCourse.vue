@@ -6,7 +6,7 @@
                 <p class="mt-1 text-sm text-slate-500">Kelola semua kursus yang ada di platform Banua Kursus.</p>
             </div>
             <div class="mt-4 sm:mt-0">
-                <a @click="toggleModal" href="#"
+                <a @click="createCourse" href="#"
                     class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor">
@@ -63,7 +63,7 @@
                                     <!-- <img src="https://placehold.co/100x60/8b5cf6/ffffff?text=WEB" alt="Kursus"
                                         class="w-20 h-12 object-cover rounded-md"> -->
                                     <a :href="route('course', data.slug)" class="font-semibold">{{ data.title_course
-                                    }}</a>
+                                        }}</a>
                                 </div>
                             </td>
                             <!-- Desc -->
@@ -98,87 +98,14 @@
         <Pagination :links="courses.links" />
     </Layout>
     <!-- Modal -->
-    <div v-if="isModal" class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
-    <div v-if="isModal" id="modal" class="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-            <div
-                class="relative transform overflow-hidden rounded-lg bg-white text-center shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="mt-3 text-center sm:mt-0 sm:ml-4">
-                        <div class="headModal w-full border-b mb-3 pb-3">
-                            <h3 class="font-semibold text-gray-900" id="dialog-title">Tambah Kursus</h3>
-                        </div>
-                        <div class="bodyModal text-start">
-                            <form @submit.prevent="submit">
-                                <div>
-                                    <label for="namecourse" class="block text-sm font-medium text-slate-700">Nama
-                                        Course</label>
-                                    <div class="mt-1">
-                                        <input id="namecourse" v-model="form.title_course" type="text"
-                                            autocomplete="off" required
-                                            class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <label for="category" class="block text-sm font-medium text-slate-700">Kategori
-                                        Course</label>
-                                    <div class="mt-1">
-                                        <select
-                                            class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3"
-                                            v-model="form.kategori_id" id="category">
-                                            <option value="">--Pilih Kategori--</option>
-                                            <option v-for="a, index in kategori" :value="a.id">{{ a.kategori }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <label for="description" class="block text-sm font-medium text-slate-700">Deskripsi
-                                        Course</label>
-                                    <div class="mt-1">
-                                        <input id="description" v-model="form.description" type="text"
-                                            autocomplete="off" required
-                                            class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <label for="period_academic"
-                                        class="block text-sm font-medium text-slate-700">Periode Akademik</label>
-                                    <select v-model="form.period_id" id="period_academic"
-                                        class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3">
-                                        <option value="" selected disabled>--Pilih Periode Akademik--</option>
-                                        <option v-for="period in periods" :key="period" :value="period.period_id"
-                                            class="">{{ period.period_name }}</option>
-                                    </select>
-                                </div>
-                                <div class="mt-4">
-                                    <label for="harga" class="block text-sm font-medium text-slate-700">Harga
-                                        Course</label>
-                                    <input @input="formatPrice" type="number" id="harga"
-                                        class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3"
-                                        required v-model="form.price">
-                                    <small class="text-gray-600">Format dalam Currency</small>
-                                    <p class="text-lg ms-2 ps-3 mt-2 text-gray-600 border-s">{{ formatted }}</p>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <button :disable="form.processing" @click="submit" type="button"
-                        class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 sm:ml-3 sm:w-auto disabled:bg-gray-500">Tambah</button>
-                    <button @click="toggleModal" type="button"
-                        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
 <script setup>
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue";
 import Pagination from "@/Components/Global/Pagination.vue";
 import { ref, watch } from "vue";
-import { useForm, router } from "@inertiajs/vue3"
+import { router } from "@inertiajs/vue3"
 import { debounce } from "lodash";
+import { create } from "lodash";
 
 
 
@@ -208,14 +135,6 @@ watch(searchQuery,
 
 const formatted = ref("Rp 0,00")
 
-const isModal = ref(false);
-const form = useForm({
-    title_course: '',
-    description: '',
-    price: '',
-    period_id: '',
-    kategori_id: ''
-});
 // Format to currency
 
 const formatter = new Intl.NumberFormat('id-ID', {
@@ -237,30 +156,15 @@ function limitString(str, maxLength, suffix = '...') {
     return str.substring(0, maxLength) + suffix;
 }
 
-// Toggle Modal
-function toggleModal() {
-    isModal.value = !isModal.value
+// Create Course
+function createCourse() {
+    router.get(route('manage-course.create'));
 }
-
-// Submit course
-const submit = async () => {
-    const a = await form.post(route('manage-course.store'), {
-        onSuccess: () => {
-            form.reset()
-            formatter.value = "Rp 0,00"
-        }
-    });
-    setTimeout(function () {
-        isModal.value = false
-    }, 2000)
-};
-
-
 // Delete course
 function deleteCourse(slug) {
     router.delete(route('manage-course.delete', slug)); // delete course
 }
-
+// Edit course
 function editCourse(slug) {
     router.get(route('manage-course.edit', slug));
 }

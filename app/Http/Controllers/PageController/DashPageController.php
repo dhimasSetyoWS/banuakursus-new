@@ -32,13 +32,17 @@ class DashPageController extends Controller
         $course = Auth::user()->course()->when($request->search, function ($query) use ($request) {
             $query->where('title_course', 'like', '%' . $request->search . '%');
         })->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
-        $period = Period::all();
-        $kategori = Kategori::all();
         return Inertia::render('Dashboard/ManageCourse', [
             'courses' => $course,
-            'periods' => $period,
             'search' => $request->search,
-            'kategori' => $kategori
+        ]);
+    }
+    public function create_course() {
+        $kategori = Kategori::all();
+        $periods = Period::all();
+        return Inertia::render('Dashboard/Create/CreateCourse', [
+            'kategori' => $kategori,
+            'periods' => $periods
         ]);
     }
     public function manage_course_edit(Request $request, string $slug)
@@ -51,14 +55,15 @@ class DashPageController extends Controller
         $coursesQuery->when($request->search, function ($query) use ($request) {
             $query->where('title_course', 'like', '%' . $request->search . '%');
         });
-
+        $kategori = Kategori::all();
         $course = $coursesQuery->firstWhere('slug', $slug);
         $period = Period::all();
         $sessions = CourseSessions::where('course_id', $course->id)->get();
         return Inertia::render('Dashboard/Edit/EditCourse', [
             'course' => $course,
             'periods' => $period,
-            'sessions' => $sessions
+            'sessions' => $sessions,
+            'kategori' => $kategori
         ]);
     }
 
