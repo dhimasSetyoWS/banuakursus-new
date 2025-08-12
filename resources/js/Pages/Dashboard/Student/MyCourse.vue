@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div class="mt-auto space-y-2">
-                            <a href="#"
+                            <a :href="route('study' , a.slug)"
                                 class="block w-full text-center px-4 py-2 bg-blue-50 text-blue-700 text-sm font-semibold rounded-lg hover:bg-blue-100">Lanjutkan
                                 Belajar</a>
                             <button @click="detail(a.slug)"

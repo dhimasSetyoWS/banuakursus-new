@@ -7,7 +7,7 @@
                     <p class="mt-1 text-sm text-slate-500">Berikut adalah semua guru-guru yang ada di banua kursus.</p>
                 </div>
                 <div class="mt-4 sm:mt-0">
-                    <a @click="toggleModal" href="#"
+                    <a @click="createGuru" href="#"
                         class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor">
@@ -25,7 +25,6 @@
                             <th class="px-6 py-4">No</th>
                             <th class="px-6 py-4">Nama Guru</th>
                             <th class="px-6 py-4">Email</th>
-                            <th class="px-6 py-4">Status</th>
                             <th class="px-6 py-4">Tanggal Daftar</th>
                             <th class="px-6 py-4 text-center">Aksi</th>
                         </tr>
@@ -36,20 +35,16 @@
                             <td class="px-6 py-4 font-bold">{{ index + 1 }}</td>
                             <td class="px-6 py-4">{{ teacher.name }}</td>
                             <td class="px-6 py-4">{{ teacher.email }}</td>
-                            <td class="px-6 py-4">
-                                <span
-                                    class="inline-block px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">Selesai</span>
-                            </td>
-                            <td class="px-6 py-4">{{ teacher.created_at }}</td>
+                            <td class="px-6 py-4">{{ getDate(teacher.created_at) }}</td>
                             <td class="px-6 py-4 text-center">
-                                <button class="text-gray-500 hover:text-gray-800">
+                                <button @click="editGuru(teacher.id)" class="text-gray-500 hover:text-gray-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-auto">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                     </svg>
                                 </button>
-                                <button @click="deleteUser(teacher.id)" class="text-red-500 hover:text-red-800">
+                                <button @click="deleteGuru(teacher.id)" class="text-red-500 hover:text-red-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-auto">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -72,7 +67,14 @@
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4">
                             <div class="headModal w-full border-b mb-3 pb-3">
-                                <h3 class="font-semibold text-gray-900" id="dialog-title">Tambah Guru</h3>
+                                <h3 class="font-semibold text-gray-900" id="dialog-title">
+                                    <div v-if="!isEdit">
+                                        Tambah Guru
+                                    </div>
+                                    <div v-else>
+                                        Edit Guru
+                                    </div>
+                                </h3>
                             </div>
                             <div class="bodyModal text-start">
                                 <form @submit.prevent="submit">
@@ -96,20 +98,22 @@
                                         <input id="email" v-model="form.email" type="text" autocomplete="off" required
                                             class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     </div>
-                                    <div class="mt-4">
-                                        <label for="pasword"
-                                            class="block text-sm font-medium text-slate-700">Password</label>
-                                        <input id="password" v-model="form.password" type="password" autocomplete="off"
-                                            required
-                                            class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                    <div class="mt-4">
-                                        <label for="pasword_confirmation"
-                                            class="block text-sm font-medium text-slate-700">Password
-                                            Confirmation</label>
-                                        <input id="password_confirmation" v-model="form.password_confirmation"
-                                            type="password" autocomplete="off" required
-                                            class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <div v-if="!isEdit">
+                                        <div class="mt-4">
+                                            <label for="pasword"
+                                                class="block text-sm font-medium text-slate-700">Password</label>
+                                            <input id="password" v-model="form.password" type="password"
+                                                autocomplete="off" required
+                                                class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                        <div class="mt-4">
+                                            <label for="pasword_confirmation"
+                                                class="block text-sm font-medium text-slate-700">Password
+                                                Confirmation</label>
+                                            <input id="password_confirmation" v-model="form.password_confirmation"
+                                                type="password" autocomplete="off" required
+                                                class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -117,7 +121,16 @@
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                         <button @click="submit" type="button"
-                            class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 sm:ml-3 sm:w-auto disabled:bg-gray-500">Tambah</button>
+                            class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 sm:ml-3 sm:w-auto disabled:bg-gray-500">
+                            <div v-if="isEdit">
+                                Edit
+                            </div>
+                            <div v-else>
+                                Tambah
+                            </div>
+                        </button>
+
+
                         <button @click="cancelModal" type="button"
                             class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                     </div>
@@ -130,9 +143,12 @@
 import Layout from '../../Layout/Dashboard/DashboardLayout.vue';
 import { ref } from 'vue';
 import { router, useForm } from '@inertiajs/vue3';
-defineProps({
+const props = defineProps({
     teachers: Object
 })
+// get id user for update parameter
+const UserIdUpdate = ref(null);
+
 
 const form = useForm({
     name: '',
@@ -143,26 +159,61 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('teacher.store'), {
-        onSuccess: () => {
-            form.reset()
-            toggleModal()
-        }
-    });
+    if (isEdit) {
+        form.patch(route('teacher.update', UserIdUpdate.value), {
+            onSuccess: () => {
+                form.reset()
+                toggleModal()
+            },
+            onError: () => {
+                console.error(form.errors);
+            }
+        });
+    } else {
+        form.post(route('teacher.store'), {
+            onSuccess: () => {
+                form.reset()
+                toggleModal()
+            }
+        });
+    }
 }
-
+const isEdit = ref(false);
 // Toggle Modal
 const isModal = ref(false);
 function toggleModal() {
     isModal.value = !isModal.value
 }
 
+function getDate(date) {
+    const waktuData = new Date(date);
+    return waktuData.toLocaleString('id-ID' , {timeZone : 'Asia/Makassar', day : "numeric",month : "long" , year : "numeric"});
+}
+
+function createGuru() {
+    isEdit.value = false;
+    toggleModal();
+
+}
+
+function editGuru(id) {
+    const a = props.teachers.findIndex((teacher) => id == teacher.id);
+    form.name = props.teachers[a].name;
+    form.email = props.teachers[a].email;
+    form.username = props.teachers[a].username;
+    UserIdUpdate.value = props.teachers[a].id;
+    isEdit.value = true;
+    // form.kategori = props.kategori[a].kategori
+    // idUpdated.value = props.kategori[a].id
+    // console.log(idUpdated.value)
+    toggleModal()
+}
 function cancelModal() {
     isModal.value = !isModal.value
     form.reset()
 }
-function deleteUser(id) {
-    router.delete(route('user.destroy', id))
+function deleteGuru(id) {
+    router.delete(route('teacher.delete', id))
 }
 </script>
 <style scoped></style>

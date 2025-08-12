@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class CourseSessions extends Model
 {
     //
-    protected $fillable = ['session_name' , 'description' , 'kategori' , 'course_id'];
+    protected $fillable = ['session_name' , 'start_session' , 'end_session' , 'course_id'];
     public $timestamps = false;
 
     public function course(): BelongsTo {

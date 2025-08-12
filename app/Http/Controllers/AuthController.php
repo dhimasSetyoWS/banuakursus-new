@@ -38,11 +38,9 @@ class AuthController extends Controller
 
         if ($user) {
             $request->session()->regenerate();
-            return redirect()->route('beranda')->with('success', 'Anda berhasil daftar!');
-        } else {
-            return redirect()->back()->with('error', 'Gagal mendaftar!');
+            return redirect()->route('mycourse')->with('success', 'Anda berhasil daftar!');
         }
-        return redirect(route('beranda', absolute: false));
+        return redirect()->back()->with('error', 'Gagal mendaftar!');
     }
 
     public function enter() {
@@ -58,10 +56,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             Session::flash('success', 'Anda berhasil Login!');
-            if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2) {
+            if (Auth::user()->role_id != 4) {
                 return redirect()->intended(route('dashboard'))->with('success', 'Anda berhasil login!');
             }
-            return redirect()->intended(route('beranda'))->with('success', 'Anda berhasil login!');
+            return redirect()->intended(route('mycourse'))->with('success', 'Anda berhasil login!');
         } else {
             return redirect()->route('login')->with('error' , 'Gagal login!');
         }

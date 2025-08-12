@@ -65,11 +65,11 @@
                     </template>
 
                     <template v-else>
-                        <Link :href="('login')"
+                        <Link :href="route('login')"
                             class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
                         Masuk
                         </Link>
-                        <Link v-if="canRegister" :href="('register')"
+                        <Link v-if="canRegister" :href="route('register')"
                             class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Daftar
                         </Link>
                     </template>
@@ -108,19 +108,19 @@
                 class="md:hidden bg-gradient-to-br from-white to-gray-100 px-8 pt-6 pb-10 space-y-6 shadow-2xl rounded-b-2xl">
                 <!-- Navigation Links -->
                 <div class="flex flex-col space-y-6 text-lg font-semibold">
-                    <Link :href="('welcome')" class="flex items-center text-gray-700 hover:text-indigo-600"
+                    <Link :href="route('beranda')" class="flex items-center text-gray-700 hover:text-indigo-600"
                         @click="toggleMobile">
                     Beranda
                     </Link>
-                    <Link :href="('catalog')" class="flex items-center text-gray-700 hover:text-indigo-600"
+                    <Link :href="route('catalog')" class="flex items-center text-gray-700 hover:text-indigo-600"
                         @click="toggleMobile">
                     Katalog Kursus
                     </Link>
-                    <Link :href="('aboutus')" class="flex items-center text-gray-700 hover:text-indigo-600"
+                    <Link :href="route('aboutus')" class="flex items-center text-gray-700 hover:text-indigo-600"
                         @click="toggleMobile">
                     Tentang Kami
                     </Link>
-                    <Link :href="('contact')" class="flex items-center text-gray-700 hover:text-indigo-600"
+                    <Link :href="route('contact')" class="flex items-center text-gray-700 hover:text-indigo-600"
                         @click="toggleMobile">
                     Kontak
                     </Link>
@@ -132,16 +132,16 @@
                         <Link v-if="$page.props.auth.user.role_id != 4" :href="('dashboard', $page.props.auth.user.id)"
                             class="block text-gray-700 hover:text-indigo-600 text-lg font-medium" @click="toggleMobile">
                         Dashboard</Link>
-                        <Link :href="('logout')" method="post"
+                        <Link :href="route('logout')" method="post"
                             class="block text-red-600 hover:text-red-800 text-lg font-medium" @click="toggleMobile">
                         Keluar</Link>
                     </template>
 
                     <template v-else>
-                        <Link :href="('login')" class="block text-gray-700 hover:text-indigo-600 text-lg font-medium"
+                        <Link :href="route('login')" class="text-center block text-gray-700 hover:text-indigo-600 text-lg font-medium"
                             @click="toggleMobile">
                         Masuk</Link>
-                        <Link v-if="canRegister" :href="('register')"
+                        <Link v-if="canRegister" :href="route('register')"
                             class="block bg-indigo-600 text-white text-center py-3 rounded-lg hover:bg-indigo-700 transition"
                             @click="toggleMobile">
                         Daftar

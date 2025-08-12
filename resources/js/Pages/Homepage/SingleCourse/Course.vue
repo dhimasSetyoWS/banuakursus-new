@@ -34,10 +34,13 @@
                                 alt="Course thumbnail" class="w-full object-cover">
                             <div class="p-6">
                                 <h2 class="text-3xl font-bold text-slate-900 mb-4">{{ formatPrice(course.price) }}</h2>
-                                <button
+                                <button v-if="!isRegister"
                                     class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                                     Daftar Kursus Sekarang
                                 </button>
+                                <button v-else @click="lanjut"
+                                    class="w-full py-3 px-5 text-gray-600 border-2 border-indigo-600 font-semibold rounded-lg hover:scale-105 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">Lanjut
+                                    Belajar</button>
                                 <ul class="mt-4 space-y-2 text-sm text-slate-600">
                                     <li class="flex items-center gap-3"><svg
                                             class="w-5 h-5 text-indigo-500 flex-shrink-0"
@@ -85,8 +88,7 @@
 
                     <div class="bg-white border border-slate-200 rounded-lg p-6 mb-8">
                         <h2 class="text-xl font-bold text-slate-900 mb-4">Deskripsi Kursus</h2>
-                        <div class="space-y-4 text-slate-600 prose">
-                            {{ course.description }}
+                        <div class="space-y-4 text-slate-600 prose" v-html="course.description">
                         </div>
                     </div>
 
@@ -94,20 +96,60 @@
                     <div>
                         <h2 class="text-xl font-bold text-slate-900 mb-4">Session Kursus</h2>
                         <div class="space-y-3">
-                            <div v-if="sessions.length" v-for="session in sessions"
-                                class="border border-slate-200 rounded-lg">
-                                <button
-                                    class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 rounded">
-                                    <span>{{ session.session_name }}</span>
-                                    <span>{{ title(session.kategori) }}</span>
-                                </button>
+                            <div v-if="sessions.length" class="border border-slate-200 rounded-lg" v-for="data, index in sessions"
+                                :key="data.id">
+                                <div class="flex items-center justify-between bg-slate-50 p-3">
+                                    <div class="flex items-center gap-3">
+                                        <button type="button" @click="toggleAccordion(index + 1)"
+                                            class="p-1.5 rounded-md hover:bg-slate-200">
+                                            <svg class="w-5 h-5 text-slate-500 transition-transform duration-300"
+                                                :class="{ 'rotate-90': openAccordionId === index + 1 }"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.168 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <div>
+                                            <span class="font-semibold text-sm">{{ data.session_name }}</span>
+                                            <span
+                                                class="ml-2 px-2 py-0.5 text-xs font-medium text-green-700 bg-green-100 rounded-full">Sesi
+                                                {{ index + 1 }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <ButtonEdit />
+                                        <ButtonDelete />
+                                    </div>
+                                </div>
+                                <div class="px-3 accordion-content" :class="{ 'open': openAccordionId === index + 1 }">
+                                    <div class="border-t border-slate-200 space-y-2 pt-3">
+                                        <div
+                                            class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
+                                            <span class="text-slate-600">Materi : </span>
+                                            <div class="flex items-center gap-2">
+                                                <ButtonEdit />
+                                                <ButtonDelete />
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
+                                            <span class="text-slate-600">Kuis : </span>
+                                            <span class="text-xs text-slate-400"></span>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
+                                            <span class="text-slate-600">Tugas : </span>
+                                            <span class="text-xs text-slate-400"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                            <div v-else>
-                                <button
-                                    class="w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 rounded">
-                                    Saat ini tidak ada session di course ini
-                                </button>
-                            </div>
+                            <div v-else class="font-semibold text-sm bg-slate-50 p-3 rounded-lg border border-slate-200">Tidak
+                                ada
+                                sesi saat ini.</div>
                         </div>
                     </div>
                 </div>
@@ -119,10 +161,13 @@
                                 alt="Course thumbnail" class="w-full object-cover">
                             <div class="p-6">
                                 <h2 class="text-3xl font-bold text-slate-900 mb-4">{{ formatPrice(course.price) }}</h2>
-                                <button @click="daftar"
-                                    class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                                <button v-if="!isRegister" @click="daftar"
+                                    class="w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">
                                     Daftar Kursus Sekarang
                                 </button>
+                                <button v-else @click="lanjut"
+                                    class="w-full py-3 px-5 text-gray-600 border-2 border-indigo-600 font-semibold rounded-lg hover:scale-105 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">Lanjut
+                                    Belajar</button>
                                 <h3 class="text-md font-semibold mt-6 mb-2">Kursus ini termasuk:</h3>
                                 <ul class="space-y-2 text-sm text-slate-600">
                                     <li class="flex items-center gap-3"><svg
@@ -175,8 +220,14 @@
 </template>
 <script setup>
 import Layout from "@/Layout/Homepage/HomeLayout.vue"
-import {usePage , router} from "@inertiajs/vue3";
+import { usePage, router } from "@inertiajs/vue3";
+import {ref} from "vue";
 const page = usePage()
+const openAccordionId = ref(1)
+
+const toggleAccordion = (id) => {
+    openAccordionId.value = openAccordionId.value === id ? null : id;
+};
 
 const props = defineProps({
     canLogin: Boolean,
@@ -184,6 +235,7 @@ const props = defineProps({
     course: Object,
     sessions: Array,
     creator: String,
+    isRegister: Boolean
 })
 
 const formatter = new Intl.NumberFormat('id-ID', {
@@ -196,7 +248,11 @@ function formatPrice(price) {
 }
 
 function daftar() {
-    router.get(route('register.course' , props.course.slug))
+    router.get(route('register.course', props.course.slug))
+}
+
+function lanjut() {
+    router.get(route('study', props.course.slug))
 }
 
 function title(str) {
@@ -206,3 +262,22 @@ function title(str) {
     return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
 }
 </script>
+
+<style scoped>
+.accordion-content {
+    overflow: hidden;
+    max-height: 0;
+    transition: all 0.3s;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.accordion-content.open {
+    max-height: 1000px;
+    /* Atur ketinggian maksimal yang cukup besar */
+    padding-top: 0.75rem;
+    /* 12px */
+    padding-bottom: 0.75rem;
+    /* 12px */
+}
+</style>

@@ -16,41 +16,17 @@ class SessionController extends Controller
     {
         $request->validate([
             'session_name' => ['required', 'string', 'max:120'],
-            'description' => ['required', 'string'],
-            'kategori' => ['required', 'string', 'in:artikel,tugas'],
+            'start_session' => ['required' , 'date'],
+            'end_session' => ['required' , 'date']
         ]);
 
         $courseSession = CourseSessions::create([
             'session_name' => $request->session_name,
-            'description' => $request->description,
-            'kategori' => $request->kategori,
+            'start_session' => $request->start_session,
+            'end_session' => $request->end_session,
             'course_id' => $id
         ]);
 
-        if ($request->kategori == 'artikel') {
-            // Validasi untuk Artikel
-
-            $request->validate([
-                'artikel_konten' => ['required', 'string'],
-            ]);
-            $artikel = Artikel::create([
-                'judul' => $request->session_name,
-                'konten' => $request->artikel_konten,
-                'course_sessions_id' => $courseSession->id
-            ]);
-        } elseif ($request->kategori == 'tugas') {
-            // Validasi untuk Tugas
-
-            $request->validate([
-                'isi_tugas' => ['required', 'string'],
-                'tenggat_waktu' => ['nullable', 'date'],
-            ]);
-            $tugas = Tugas::create([
-                'nama_tugas' => $request->session_name,
-                'isi_tugas' => $request->isi_tugas,
-                'tenggat_waktu' => $request->tenggat_waktu,
-            ]);
-        }
         $slug = Course::findOrFail($id)->slug;
         return redirect()->route('manage-course.edit', $slug)->with('success', 'Session baru telah ditambahkan!');
     }
@@ -83,7 +59,6 @@ class SessionController extends Controller
             } elseif ($request->kategori == 'tugas') {
                 // Validasi untuk Tugas
                 $request->validate([
-
                     'isi_tugas' => ['required', 'string'],
                     'tenggat_waktu' => ['nullable', 'date'],
                 ]);
@@ -99,5 +74,13 @@ class SessionController extends Controller
         }
         $slug = Course::findOrFail($id)->slug;
         return redirect()->route('manage-course.edit', $slug)->with('success', 'Session telah ter-update!');
+    }
+    public function delete($id) {
+        $session = CourseSessions::find($id);
+        $a = $session->delete();
+        if ($a) {
+            return redirect()->back()->with('success', 'Session telah dihapus!');
+        }
+        return redirect()->back()->with('error', 'Session gagal dihapus!');
     }
 }

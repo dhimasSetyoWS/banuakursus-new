@@ -8,6 +8,7 @@ use App\Models\Period;
 use App\Models\Role;
 use App\Models\Course;
 use App\Models\CourseSessions;
+use App\Models\Kategori;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -25,24 +26,44 @@ class DashPageController extends Controller
         ]);
     }
 
-    public function manage_course()
+    public function manage_course(Request $request)
     {
-        $course = Auth::user()->course()->orderBy('created_at', 'desc')->paginate(10); // intelpehense anggap error di course(), kocak
-        $period = Period::all();
+        // intelpehense anggap error di course(), kocak
+        $course = Auth::user()->course()->when($request->search, function ($query) use ($request) {
+            $query->where('title_course', 'like', '%' . $request->search . '%');
+        })->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
         return Inertia::render('Dashboard/ManageCourse', [
             'courses' => $course,
-            'periods' => $period
+            'search' => $request->search,
         ]);
     }
-    public function manage_course_edit(string $slug)
+    public function create_course() {
+        $kategori = Kategori::all();
+        $periods = Period::all();
+        return Inertia::render('Dashboard/Create/CreateCourse', [
+            'kategori' => $kategori,
+            'periods' => $periods
+        ]);
+    }
+    public function manage_course_edit(Request $request, string $slug)
     {
-        $course = Course::firstWhere('slug', $slug);
+        // Mulai satu instance query builder
+        $coursesQuery = Course::query();
+
+        // Kondisi 1: Filter berdasarkan Nama/Judul Kursus
+        // Jika $request->search ada, tambahkan kondisi ke $coursesQuery
+        $coursesQuery->when($request->search, function ($query) use ($request) {
+            $query->where('title_course', 'like', '%' . $request->search . '%');
+        });
+        $kategori = Kategori::all();
+        $course = $coursesQuery->firstWhere('slug', $slug);
         $period = Period::all();
         $sessions = CourseSessions::where('course_id', $course->id)->get();
         return Inertia::render('Dashboard/Edit/EditCourse', [
             'course' => $course,
             'periods' => $period,
-            'sessions' => $sessions
+            'sessions' => $sessions,
+            'kategori' => $kategori
         ]);
     }
 
@@ -57,16 +78,17 @@ class DashPageController extends Controller
     {
         $courseSession = CourseSessions::where('id', $sessionId)->firstOrFail();
         $course = $courseSession->course;
-        if($courseSession->kategori == 'artikel') {
-            $artikel = $courseSession->artikel;
-        } elseif ($courseSession->kategori == 'tugas') {
-            $tugas = $courseSession->tugas;
-        }
+
         return Inertia::render('Dashboard/Edit/EditSession', [
             'course' => $course,
             'session' => $courseSession,
-            'artikel' => isset($artikel) ? $artikel : [],
-            'tugas' => isset($tugas) ? $tugas : []
+        ]);
+    }
+
+    public function material_create($sessionId) {
+        $session = CourseSessions::where('id', $sessionId)->firstOrFail();
+        return Inertia::render('Dashboard/Create/CreateMaterial' , [
+            'session' => $session
         ]);
     }
 
@@ -93,7 +115,11 @@ class DashPageController extends Controller
     }
     public function article()
     {
-        return Inertia::render('Dashboard/Artikel');
+        // $artikel = Artikel::all();
+        $artikel = Artikel::with('course_sessions.course')->get();
+        return Inertia::render('Dashboard/Artikel', [
+            'artikel' => $artikel
+        ]);
     }
     public function article_create()
     {
@@ -104,15 +130,39 @@ class DashPageController extends Controller
         return Inertia::render('Dashboard/Create/CreateTugas');
     }
 
+    public function kategori()
+    {
+        $kategori =  Kategori::all();
+        return Inertia::render('Dashboard/Kategori', [
+            'kategori' => $kategori
+        ]);
+    }
+
     // Student Previlege
-    public function mycourse() {
+    public function mycourse()
+    {
         $user = auth()->user();
 
         if ($user) {
             $registerData = $user->registeredCourses;
         }
-        return Inertia::render('Dashboard/Student/MyCourse' , [
+        return Inertia::render('Dashboard/Student/MyCourse', [
             'courses' => $registerData,
+        ]);
+    }
+    public function study($slug)
+    {
+        $course = Course::where('slug', $slug)
+            ->with(
+                [
+                    'course_sessions' => function ($query) { // di dalam course_sessions ambil query, kemudian ambil query artikel dan tugas, jadi query relation ke artikel dan tugas juga terinclude ke dalam $course
+                        $query->with('artikel', 'tugas');
+                    },
+                    'kategori'
+                ]
+            )->firstOrFail();
+        return Inertia::render('Study/Study', [
+            'course' => $course->only(['id' , 'title_course' , 'slug' , 'kategori', 'course_sessions']),
         ]);
     }
 }

@@ -13,8 +13,8 @@ return new class extends Migration
         Schema::create('course_sessions', function (Blueprint $table) {
             $table->id();
             $table->string('session_name', 80);
-            $table->text('description');
-            $table->enum('kategori' , ['artikel' , 'tugas']);
+            $table->timestamp('start_session');
+            $table->timestamp('end_session');
             $table->foreignId('course_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

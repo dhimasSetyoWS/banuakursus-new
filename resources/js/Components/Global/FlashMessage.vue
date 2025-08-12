@@ -11,7 +11,7 @@ router.on('finish', () => {
     // Ketika navigasi Inertia selesai, periksa flash data yang baru
     const flash = page.props.flash;
 
-    console.log('Inertia Navigation Finished. Checking flash data:', flash); // Debug ini
+    // console.log('Inertia Navigation Finished. Checking flash data:', flash); // Debug ini
 
     if (flash.success) {
         Swal.fire({
