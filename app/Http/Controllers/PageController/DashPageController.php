@@ -78,16 +78,17 @@ class DashPageController extends Controller
     {
         $courseSession = CourseSessions::where('id', $sessionId)->firstOrFail();
         $course = $courseSession->course;
-        if ($courseSession->kategori == 'artikel') {
-            $artikel = $courseSession->artikel;
-        } elseif ($courseSession->kategori == 'tugas') {
-            $tugas = $courseSession->tugas;
-        }
+
         return Inertia::render('Dashboard/Edit/EditSession', [
             'course' => $course,
             'session' => $courseSession,
-            'artikel' => isset($artikel) ? $artikel : [],
-            'tugas' => isset($tugas) ? $tugas : []
+        ]);
+    }
+
+    public function material_create($sessionId) {
+        $session = CourseSessions::where('id', $sessionId)->firstOrFail();
+        return Inertia::render('Dashboard/Create/CreateMaterial' , [
+            'session' => $session
         ]);
     }
 

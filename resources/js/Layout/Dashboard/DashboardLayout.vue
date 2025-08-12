@@ -1,5 +1,5 @@
 <template>
-    <Head :title="title + ' - Dashboard'" />
+    <Head :title="title" />
     <div class="text-slate-800 fadeIn">
         <div class="flex h-screen bg-slate-50">
             <!-- Sidebar -->

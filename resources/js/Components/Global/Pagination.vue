@@ -2,14 +2,14 @@
     <!-- Cek jika data melebihi dari maksimal per halaman -->
 
     <div v-if="links.length > 3">
-        <div class="flex flex-wrap mt-4">
+        <div class="flex flex-wrap mt-4 font-semibold">
             <template v-for="(link, key) in links">
                 <!-- Jika url nya null atau dalam artian di halaman pertama, dia akan tampilkan code html dari link.label -->
                 <div v-if="link.url === null" :key="key"
                     class="mb-1 mr-1 px-4 py-3 text-gray-400 text-sm leading-4 border rounded" v-html="link.label" />
                 <!-- Jika kondisi di atas tidak memenuhi maka dia akan jalankan kondisi dibawah -->
                 <Link v-else :key="`link-${key}`"
-                    class="mb-1 mr-1 px-4 py-3 text-sm leading-4 hover:text-white hover:bg-[#4338CA] border focus:border-gray-600 rounded"
+                    class="mb-1 mr-1 px-4 py-3 text-sm leading-4 hover:text-white hover:bg-[#4338CA] border focus:border-indigo-800 rounded"
                     :class="{ 'bg-[#4338CA] text-white': link.active }" :href="link.url" v-html="link.label"
                     preserve-scroll preserve-state />
             </template>
