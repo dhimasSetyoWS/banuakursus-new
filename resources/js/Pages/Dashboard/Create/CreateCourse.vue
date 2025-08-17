@@ -14,7 +14,7 @@
                 <p class="text-slate-500">Silahkan tambahkan kursus.</p>
             </div>
 
-            <form @submit="submit" class="space-y-8">
+            <form @submit.prevent="submit" class="space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2 space-y-8">
                         <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm h-full">
@@ -23,12 +23,14 @@
                                 <div>
                                     <label for="course_name" class="block text-sm font-medium text-slate-700">Nama
                                         Kursus</label>
+                                        <Alert v-if="form.errors.title_course" :text="form.errors.title_course" type="danger"/>
                                     <input type="text" v-model="form.title_course" id="course_name"
                                         class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 </div>
                                 <div>
                                     <label for="category"
-                                        class="block text-sm font-medium text-slate-700">Kategori</label>
+                                    class="block text-sm font-medium text-slate-700">Kategori</label>
+                                    <Alert v-if="form.errors.kategori_id" :text="'The category field is required'" type="danger"/>
                                     <select id="category" v-model="form.kategori_id"
                                         class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="" selected disabled>Pilih Kategori</option>
@@ -38,6 +40,7 @@
                                 <div>
                                     <label for="period"
                                         class="block text-sm font-medium text-slate-700">Periode</label>
+                                        <Alert v-if="form.errors.period_id" :text="'The period field is required'" type="danger"/>
                                     <select id="period" v-model="form.period_id"
                                         class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="" selected disabled>Pilih Periode</option>
@@ -47,6 +50,7 @@
                                 <div class="h-full">
                                     <label for="description"
                                         class="block text-sm font-medium text-slate-700 mb-1">Deskripsi</label>
+                                        <Alert v-if="form.errors.description" :text="form.errors.description" type="danger"/>
                                         <QuillEditor v-model:content="form.description" style="height:200px;" contentType="html"></QuillEditor>
                                 </div>
                             </div>
@@ -90,6 +94,7 @@
     </Layout>
 </template>
 <script setup>
+import Alert from "@/Components/Global/Alert.vue";
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 
@@ -110,12 +115,8 @@ const submit = async () => {
     const a = await form.post(route('manage-course.store'), {
         onSuccess: () => {
             form.reset()
-            formatter.value = "Rp 0,00"
         }
     });
-    setTimeout(function () {
-        isModal.value = false
-    }, 2000)
 };
 </script>
 <style scoped></style>

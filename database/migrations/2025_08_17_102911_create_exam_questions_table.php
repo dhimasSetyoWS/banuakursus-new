@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('exams_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('questions_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->timestamps();
         });
     }
 

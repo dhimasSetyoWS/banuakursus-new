@@ -32,7 +32,7 @@
 
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
-                            <input id="remember-me" name="remember-me" type="checkbox"
+                            <input id="remember-me" v-model="form.isRemember" type="checkbox"
                                 class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded">
                             <label for="remember-me" class="ml-2 block text-sm text-slate-900">Ingat saya</label>
                         </div>
@@ -66,7 +66,8 @@ import FlashMessage from '@/Components/Global/FlashMessage.vue';
 
 const form = useForm({
     email : '',
-    password : ''
+    password : '',
+    isRemember : false
 })
 
 function submit() {

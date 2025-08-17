@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_tugas');
             $table->text('isi_tugas');
-            $table->dateTime('tenggat_waktu')->nullable();
+            $table->timestamp('start_tugas');
+            $table->timestamp('end_tugas')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tugas');
+        Schema::dropIfExists('assignments');
     }
 };

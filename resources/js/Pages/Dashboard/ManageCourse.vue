@@ -74,7 +74,7 @@
                             <td class="p-3">
                                 <div class="flex items-center justify-center gap-2">
                                     <ButtonEdit @click="editCourse(data.slug)" />
-                                    <ButtonDelete @click="deleteCourse(data.slug)" />
+                                    <ButtonDelete @click="deleteCourse(data.id)" />
                                 </div>
                             </td>
                         </tr>
@@ -115,8 +115,7 @@ import { router } from "@inertiajs/vue3"
 import { debounce } from "lodash";
 import ButtonEdit from "@/Components/Global/ButtonEdit.vue";
 import ButtonDelete from "@/Components/Global/ButtonDelete.vue";
-
-
+import Swal from "sweetalert2";
 
 const props = defineProps({
     courses: {
@@ -170,8 +169,20 @@ function createCourse() {
     router.get(route('manage-course.create'));
 }
 // Delete course
-function deleteCourse(slug) {
-    router.delete(route('manage-course.delete', slug)); // delete course
+function deleteCourse(courseId) {
+    Swal.fire({
+        title: "Yakin ingin menghapus?",
+        text: "Tindakan ini akan menghapus kursus ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, saya yakin!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('manage-course.delete', courseId)); // delete course
+        }
+    });
 }
 // Edit course
 function editCourse(slug) {

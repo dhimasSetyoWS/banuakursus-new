@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_sessions_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('title_exam');
+            $table->foreignId('course_session_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->integer('duration')->nullable();
             $table->timestamps();
         });
     }

@@ -13,6 +13,7 @@ use App\Http\Controllers\PageController\AuthViewController;
 use App\Http\Controllers\PageController\DashPageController;
 use App\Http\Controllers\Logic\TransactionController;
 use App\Http\Controllers\Logic\KategoriController;
+use App\Http\Controllers\Logic\MaterialController;
 use App\Http\Controllers\Logic\TaskController;
 use Illuminate\Contracts\Session\Session;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -68,7 +69,7 @@ Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () 
     Route::post('/dashboard/manage-course/store', [CourseController::class, 'store'])->name('manage-course.store');
     Route::get('/dashboard/manage-course/{slug}', [DashPageController::class, 'manage_course_edit'])->name('manage-course.edit');
     Route::match(['patch', 'put'], '/dashboard/update-course/{slug}', [CourseController::class, 'update'])->name('manage-course.update');
-    Route::delete('/dashboard/manage-course/{slug}/delete', [CourseController::class, 'delete'])->name('manage-course.delete');
+    Route::delete('/dashboard/manage-course/{course}/delete', [CourseController::class, 'delete'])->name('manage-course.delete');
     // Session
     Route::get('/dashboard/session/{slug}/create', [DashPageController::class, 'session_create'])->name('session.create');
     Route::post('/dashboard/session/{id}/store', [SessionController::class, 'store'])->name('session.store');
@@ -77,6 +78,10 @@ Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () 
     Route::delete('/dashboard/session/delete/{id}', [SessionController::class, 'delete'])->name('session.delete');
     // Material
     Route::get('/dashboard/session/{id}/create_material', [DashPageController::class, 'material_create'])->name('material.create');
+    Route::post('/dashboard/session/{session}/store_material', [MaterialController::class, 'store'])->name('material.store');
+    Route::get('/dashboard/session/{session}/edit_material/{material}', [DashPageController::class, 'material_edit'])->name('material.edit');
+    Route::match(['patch' , 'put'],'/dashboard/session/{session}/update_material/{material}', [MaterialController::class, 'update'])->name('material.update');
+    Route::delete('/dashboard/session/{session}/delete_material/{material}', [MaterialController::class, 'delete'])->name('material.delete');
 });
 
 Route::middleware(['auth' , 'role:student'])->group(function () {

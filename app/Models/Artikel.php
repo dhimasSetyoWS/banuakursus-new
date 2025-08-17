@@ -11,7 +11,7 @@ class Artikel extends Model
     //
     protected $table = "artikel";
 
-    protected $fillable = ['judul' , 'konten' , 'course_sessions_id'];
+    protected $fillable = ['judul' , 'konten' , 'course_session_id'];
 
     public function course_sessions() : BelongsTo {
         return $this->belongsTo(CourseSessions::class);
