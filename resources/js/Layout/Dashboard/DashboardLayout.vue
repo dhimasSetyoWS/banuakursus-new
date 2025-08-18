@@ -131,10 +131,12 @@ const adminLinks = [
 const teacherLinks = [
     { name: 'Beranda', routeName: 'dashboard', activeUrls: [`/dashboard`], icon: 'fas fa-home' },
     { name: 'Manajemen Kursus', routeName: 'manage-course', activeUrls: [`/dashboard/manage-course`], icon: 'fas fa-graduation-cap' },
+    { name: 'Artikel', routeName: 'article', activeUrls: ['/dashboard/article', '/dashboard/article/create'], icon: 'fas fa-newspaper' },
 ];
 
 const studentLinks = [
     { name: 'My Course', routeName: 'mycourse', activeUrls: ['/dashboard/mycourse'], icon: 'fas fa-book-open' },
+    { name: 'Artikel', routeName: 'article', activeUrls: ['/dashboard/article', '/dashboard/article/create'], icon: 'fas fa-newspaper' },
 ];
 
 const commonLinks = [

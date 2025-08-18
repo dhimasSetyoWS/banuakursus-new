@@ -26,7 +26,6 @@
                             <th class="px-6 py-4">No</th>
                             <th class="px-6 py-4">Nama siswa</th>
                             <th class="px-6 py-4">Email</th>
-                            <th class="px-6 py-4">Status</th>
                             <th class="px-6 py-4">Tanggal Daftar</th>
                             <th class="px-6 py-4 text-center">Aksi</th>
                         </tr>
@@ -37,10 +36,6 @@
                             <td class="px-6 py-4 font-bold">{{ index + 1 }}</td>
                             <td class="px-6 py-4">{{ student.name }}</td>
                             <td class="px-6 py-4">{{ student.email }}</td>
-                            <td class="px-6 py-4">
-                                <span
-                                    class="inline-block px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">Selesai</span>
-                            </td>
                             <td class="px-6 py-4">{{ getDate(student.created_at) }}</td>
                             <td class="px-6 py-4 text-center">
                                 <button @click="editStudent(student.id)" class="text-gray-500 hover:text-gray-800">
