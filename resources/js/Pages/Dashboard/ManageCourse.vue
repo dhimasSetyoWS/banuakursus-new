@@ -52,8 +52,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="courses.length == 0">
-                            <td class="p-3">Anda belum membuat Courses !</td>
+                        <tr v-if="courses.data.length == 0">
+                            <td class="p-3">Anda belum membuat Kursus !</td>
                         </tr>
                         <tr v-for="data in courses.data" :key="data"
                             class="border-b border-slate-200 hover:bg-slate-50">
@@ -63,7 +63,7 @@
                                     <!-- <img src="https://placehold.co/100x60/8b5cf6/ffffff?text=WEB" alt="Kursus"
                                         class="w-20 h-12 object-cover rounded-md"> -->
                                     <a :href="route('course', data.slug)" class="font-semibold">{{ data.title_course
-                                        }}</a>
+                                    }}</a>
                                 </div>
                             </td>
                             <!-- Desc -->
@@ -84,20 +84,22 @@
             </div>
         </div>
         <div class="grid grid-cols-1 lg:hidden">
-            <div v-for="data in courses.data" :key="data" class="relative flex flex-col my-4 bg-white shadow-sm border border-slate-200 rounded-lg w-full hover:scale-[1.02] transition-all hover:cursor-default">
+            <Alert v-if="courses.data.length == 0" text="Anda belum membuat kursus !" />
+            <div v-for="data in courses.data" :key="data"
+                class="relative flex flex-col my-4 bg-white shadow-sm border border-slate-200 rounded-lg w-full hover:scale-[1.02] transition-all hover:cursor-default">
                 <div class="absolute top-0 right-0 p-3 z-10">
-                    <ButtonEdit/>
-                    <ButtonDelete/>
+                    <ButtonEdit @click="editCourse(data.slug)" />
+                    <ButtonDelete @click="deleteCourse(data.id)" />
                 </div>
                 <div class="p-4 pt-8">
                     <h5 class="mb-2 text-slate-800 text-xl font-semibold">
                         Nama Kursus : {{ data.title_course }}
                     </h5>
-                    <p class="text-slate-600 leading-normal font-light"
-                    v-html="limitString(data.description, 100)">
-                </p>
-                <div class="detail mt-3">
-                    <p class="text-slate-600 text-sm font-semibold">Harga : {{ formatter.format(courses.data[0].price)
+                    <p class="text-slate-600 leading-normal font-light" v-html="limitString(data.description, 100)">
+                    </p>
+                    <div class="detail mt-3">
+                        <p class="text-slate-600 text-sm font-semibold">Harga : {{
+                            formatter.format(courses.data[0].price)
                             }}</p>
                     </div>
                 </div>
@@ -116,6 +118,7 @@ import { debounce } from "lodash";
 import ButtonEdit from "@/Components/Global/ButtonEdit.vue";
 import ButtonDelete from "@/Components/Global/ButtonDelete.vue";
 import Swal from "sweetalert2";
+import Alert from "@/Components/Global/Alert.vue";
 
 const props = defineProps({
     courses: {

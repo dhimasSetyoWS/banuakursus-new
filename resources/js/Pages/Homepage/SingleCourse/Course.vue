@@ -129,8 +129,6 @@
                                             class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
                                             <span class="text-slate-600">Materi : </span>
                                             <div class="flex items-center gap-2">
-                                                <ButtonEdit />
-                                                <ButtonDelete />
                                             </div>
                                         </div>
                                         <div

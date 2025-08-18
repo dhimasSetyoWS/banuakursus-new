@@ -77,11 +77,12 @@ Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () 
     Route::post('/dashboard/session/{id}/update/{sessionId}', [SessionController::class, 'update'])->name('session.update');
     Route::delete('/dashboard/session/delete/{id}', [SessionController::class, 'delete'])->name('session.delete');
     // Material
-    Route::get('/dashboard/session/{id}/create_material', [DashPageController::class, 'material_create'])->name('material.create');
+    Route::get('/dashboard/session/{session}/create_material', [DashPageController::class, 'material_create'])->name('material.create');
     Route::post('/dashboard/session/{session}/store_material', [MaterialController::class, 'store'])->name('material.store');
     Route::get('/dashboard/session/{session}/edit_material/{material}', [DashPageController::class, 'material_edit'])->name('material.edit');
     Route::match(['patch' , 'put'],'/dashboard/session/{session}/update_material/{material}', [MaterialController::class, 'update'])->name('material.update');
     Route::delete('/dashboard/session/{session}/delete_material/{material}', [MaterialController::class, 'delete'])->name('material.delete');
+    Route::get('/dashboard/session/{session}/create_exam', [DashPageController::class , 'exam_create'])->name('exam.create');
 });
 
 Route::middleware(['auth' , 'role:student'])->group(function () {

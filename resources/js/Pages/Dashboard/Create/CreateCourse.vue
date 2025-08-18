@@ -76,9 +76,10 @@
                             <h3 class="text-lg font-semibold text-slate-800 mb-4">Gambar Thumbnail</h3>
                             <img src="https://placehold.co/600x400/3b82f6/ffffff?text=Marketing"
                                 class="w-full rounded-lg object-cover mb-4" alt="Course Thumbnail">
-                            <button type="button"
-                                class="w-full px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg">Ubah
-                                Gambar</button>
+                            <label for="upload-img"
+                                class="cursor-pointer px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded-lg">Ubah
+                                Gambar</label>
+                            <input type="file" id="upload-img" accept="image/png, image/jpeg" class="hidden">
                         </div>
                     </div>
                 </div>
