@@ -77,7 +77,10 @@ Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () 
     Route::delete('/dashboard/session/delete/{id}', [SessionController::class, 'delete'])->name('session.delete');
     // Material
     Route::get('/dashboard/session/{id}/create_material', [DashPageController::class, 'material_create'])->name('material.create');
+    // Assignment
+    Route::get('/dashboard/session/{id}/create_assignment', [DashPageController::class, 'assignment_create'])->name('assignment.create');
 });
+
 
 Route::middleware(['auth' , 'role:student'])->group(function () {
     Route::get('/register_course/{slug}' , [TransactionController::class, 'register_course'])->name('register.course');

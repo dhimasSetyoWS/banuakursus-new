@@ -92,6 +92,13 @@ class DashPageController extends Controller
         ]);
     }
 
+    public function assignment_create($sessionId) {
+        $session = CourseSessions::where('id', $sessionId)->firstOrFail();
+        return Inertia::render('Dashboard/Create/CreateAssignment' , [
+            'session' => $session
+        ]);
+    }
+
     public function teacher()
     {
         $teacher = Role::find(3)->user()->get(); // intelpehense anggap error di course(), kocak

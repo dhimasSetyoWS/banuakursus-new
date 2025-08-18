@@ -70,7 +70,7 @@
                                 </a>
                             </div>
                             <div class="border-slate-200 space-y-2 py-2">
-                                <a href="" class="hover:bg-blue-700 py-2 px-4 rounded-lg mx-2 text-white">
+                                <a :href="route('assignment.create' , session.id)" class="hover:bg-blue-700 py-2 px-4 rounded-lg mx-2 text-white">
                                     Assignment
                                 </a>
                             </div>
