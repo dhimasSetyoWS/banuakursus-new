@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('artikel', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_sessions_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('course_session_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('judul');
             $table->longText('konten');
             $table->timestamps();

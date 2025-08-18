@@ -148,6 +148,8 @@ const props = defineProps({
 })
 // get id user for update parameter
 const UserIdUpdate = ref(null);
+const isEdit = ref(false);
+const isModal = ref(false);
 
 
 const form = useForm({
@@ -159,7 +161,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    if (isEdit) {
+    if (isEdit.value == true) {
         form.patch(route('teacher.update', UserIdUpdate.value), {
             onSuccess: () => {
                 form.reset()
@@ -178,9 +180,7 @@ const submit = () => {
         });
     }
 }
-const isEdit = ref(false);
 // Toggle Modal
-const isModal = ref(false);
 function toggleModal() {
     isModal.value = !isModal.value
 }

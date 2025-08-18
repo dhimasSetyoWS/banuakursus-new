@@ -76,85 +76,92 @@
                             <h3 class="text-lg font-semibold text-slate-800 mb-4">Gambar Thumbnail</h3>
                             <img src="https://placehold.co/600x400/3b82f6/ffffff?text=Marketing"
                                 class="w-full rounded-lg object-cover mb-4" alt="Course Thumbnail">
-                            <button type="button"
-                                class="w-full px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg">Ubah
-                                Gambar</button>
+                            <label for="upload-img"
+                                class="cursor-pointer px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded-lg">Ubah
+                                Gambar</label>
+                            <input type="file" id="upload-img" accept="image/png, image/jpeg" class="hidden">
                         </div>
                     </div>
                 </div>
+                <section id="session_list">
+                    <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-semibold text-slate-800">Manajemen Sesi</h2>
+                            <button type="button" @click.prevent="createSession"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">
+                                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15">
+                                    </path>
+                                </svg>
+                                Tambah Sesi Baru
+                            </button>
+                        </div>
 
-                <div id="session_list" class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-xl font-semibold text-slate-800">Manajemen Sesi</h2>
-                        <button type="button" @click.prevent="createSession"
-                            class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">
-                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-                            </svg>
-                            Tambah Sesi Baru
-                        </button>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div v-if="sessions.length > 0" class="border border-slate-200 rounded-lg" v-for="data, index in sessions" :key="data.id">
-                        <div class="flex items-center justify-between bg-slate-50 p-3">
-                                <div class="flex items-center gap-3">
-                                    <!-- <button type="button" @click="toggleAccordion(index + 1)"
-                                        class="p-1.5 rounded-md hover:bg-slate-200">
-                                        <svg class="w-5 h-5 text-slate-500 transition-transform duration-300"
-                                            :class="{ 'rotate-90': openAccordionId === index + 1 }"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.168 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button> -->
-                                    <div>
-                                        <span class="font-semibold text-sm">{{ data.session_name }}</span>
-                                        <span
-                                            class="ml-2 px-2 py-0.5 text-xs font-medium text-green-700 bg-green-100 rounded-full">Sesi
-                                            {{ index + 1 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <ButtonEdit @click="editSession(data.id)"/>
-                                    <ButtonDelete/>
-                                </div>
-                            </div>
-                            <!-- <div class="px-3 accordion-content" :class="{ 'open': openAccordionId === index + 1 }">
-                                <div class="border-t border-slate-200 space-y-2 pt-3">
-                                    <div
-                                        class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
-                                        <span class="text-slate-600">Materi : </span>
-                                        <div class="flex items-center gap-2">
-                                            <ButtonEdit/>
-                                            <ButtonDelete/>
+                        <div class="space-y-3">
+                            <div v-if="sessions.length > 0" class="border border-slate-200 rounded-lg"
+                                v-for="data, index in sessions" :key="data.id">
+                                <div class="flex items-center justify-between bg-slate-50 p-3">
+                                    <div class="flex items-center gap-3">
+                                        <!-- <button type="button" @click="toggleAccordion(index + 1)"
+                                            class="p-1.5 rounded-md hover:bg-slate-200">
+                                            <svg class="w-5 h-5 text-slate-500 transition-transform duration-300"
+                                                :class="{ 'rotate-90': openAccordionId === index + 1 }"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.168 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button> -->
+                                        <div>
+                                            <span class="font-semibold text-sm">{{ data.session_name }}</span>
+                                            <span
+                                                class="ml-2 px-2 py-0.5 text-xs font-medium text-green-700 bg-green-100 rounded-full">Sesi
+                                                {{ index + 1 }}</span>
                                         </div>
                                     </div>
-                                    <div
-                                        class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
-                                        <span class="text-slate-600">Kuis : </span>
-                                        <span class="text-xs text-slate-400"></span>
+                                    <div class="flex items-center gap-2">
+                                        <ButtonEdit @click="editSession(data.id)" />
+                                        <ButtonDelete @click="deleteSession(data.id)" />
                                     </div>
-                                    <div
-                                        class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
-                                        <span class="text-slate-600">Tugas : </span>
-                                        <span class="text-xs text-slate-400"></span>
-                                    </div>
-                                    <button
-                                        type="button" class="w-full text-center text-sm font-semibold text-blue-600 hover:bg-blue-50 rounded-md p-2">+
-                                        Tambah Konten</button>
                                 </div>
-                            </div> -->
+                                <!-- <div class="px-3 accordion-content" :class="{ 'open': openAccordionId === index + 1 }">
+                                    <div class="border-t border-slate-200 space-y-2 pt-3">
+                                        <div
+                                            class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
+                                            <span class="text-slate-600">Materi : </span>
+                                            <div class="flex items-center gap-2">
+                                                <ButtonEdit/>
+                                                <ButtonDelete/>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
+                                            <span class="text-slate-600">Kuis : </span>
+                                            <span class="text-xs text-slate-400"></span>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between text-sm p-2 rounded-md hover:bg-slate-50">
+                                            <span class="text-slate-600">Tugas : </span>
+                                            <span class="text-xs text-slate-400"></span>
+                                        </div>
+                                        <button
+                                            type="button" class="w-full text-center text-sm font-semibold text-blue-600 hover:bg-blue-50 rounded-md p-2">+
+                                            Tambah Konten</button>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div v-else
+                                class="font-semibold text-sm bg-slate-50 p-3 rounded-lg border border-slate-200">Tidak
+                                ada
+                                sesi saat ini.</div>
                         </div>
-                        <div v-else class="font-semibold text-sm bg-slate-50 p-3 rounded-lg border border-slate-200">Tidak ada
-                            sesi saat ini.</div>
                     </div>
-                </div>
+                </section>
 
                 <div class="mt-8 flex justify-end items-center gap-4">
-                    <button @click="deleteCourse" class="text-sm font-semibold text-red-600 hover:text-red-800">Hapus
+                    <button type='button' @click="deleteCourse"
+                        class="text-sm font-semibold text-red-600 hover:text-red-800">Hapus
                         Kursus</button>
                     <a :href="route('manage-course')"
                         class="px-6 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg">Batal</a>
@@ -171,9 +178,10 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue";
 import { useForm, router } from "@inertiajs/vue3"
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import ButtonEdit from "@/Components/Global/ButtonEdit.vue";
 import ButtonDelete from "@/Components/Global/ButtonDelete.vue";
+import Swal from "sweetalert2";
 
 const props = defineProps({
     course: {
@@ -213,7 +221,19 @@ function editSession(sessionId) {
 }
 
 function deleteSession(sessiondId) {
-    router.delete(route('session.delete', sessiondId));
+    Swal.fire({
+        title: "Yakin ingin menghapus?",
+        text: "Tindakan ini akan menghapus sesi ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, saya yakin!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('session.delete', sessiondId));
+        }
+    });
 }
 
 const formatted = ref(formatter.format(props.course.price))
@@ -233,7 +253,19 @@ function updateCourse() {
 }
 
 function deleteCourse() {
-    router.delete(route('manage-course.delete', props.course.slug));
+    Swal.fire({
+        title: "Yakin ingin menghapus?",
+        text: "Tindakan ini akan menghapus kursus ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, saya yakin!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('manage-course.delete', props.course.slug));
+        }
+    });
 }
 
 // End of section

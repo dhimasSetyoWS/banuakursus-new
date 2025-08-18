@@ -22,7 +22,7 @@
                         <label for="username" class="block text-sm font-medium text-slate-700">Username</label>
                         <span class="mb-2 text-red-600">{{ form.errors.username }}</span>
                         <div class="mt-1">
-                            <input id="username" v-model="form.username" type="text" autocomplete="name" required
+                            <input id="username" v-model="form.username" type="text" required
                                 class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
                     </div>

@@ -9,6 +9,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Auth\Events\Registered;
 class AuthController extends Controller
 {
     // Register Page
@@ -37,7 +38,7 @@ class AuthController extends Controller
         ]);
 
         if ($user) {
-            $request->session()->regenerate();
+            Auth::login($user);
             return redirect()->route('mycourse')->with('success', 'Anda berhasil daftar!');
         }
         return redirect()->back()->with('error', 'Gagal mendaftar!');
@@ -53,15 +54,15 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->isRemember)) {
             $request->session()->regenerate();
             Session::flash('success', 'Anda berhasil Login!');
             if (Auth::user()->role_id != 4) {
-                return redirect()->intended(route('dashboard'))->with('success', 'Anda berhasil login!');
+                return redirect()->intended(route('dashboard'));
             }
-            return redirect()->intended(route('mycourse'))->with('success', 'Anda berhasil login!');
+            return redirect()->intended(route('mycourse'));
         } else {
-            return redirect()->route('login')->with('error' , 'Gagal login!');
+            return redirect()->back()->with('error' , 'Gagal login!');
         }
     }
 

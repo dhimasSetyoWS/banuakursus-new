@@ -2,7 +2,7 @@
     <Layout title="Edit Session">
         <div class="max-w-4xl mx-auto space-y-2">
             <div class="mb-6">
-                <a :href="route('manage-course.edit', course.slug) + '#session-list'"
+                <a :href="route('manage-course.edit', course.slug)"
                     class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center gap-2 w-fit">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </form>
-            <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm h-[350px]">
+            <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
                 <div class="mb-3 flex justify-between items-center">
                     <div class="font-bold text-sm">Manajemen Konten</div>
                     <div class="relative space-y-2">
@@ -65,7 +65,8 @@
                         <div class="absolute accordion-content py-2 text-center rounded-lg w-fit bg-blue-600"
                             :class="{ 'open': openDropdown }">
                             <div class="border-slate-200 space-y-2 py-2 mt-1">
-                                <a :href="route('material.create' , session.id)" class="hover:bg-blue-700 py-2 px-4 rounded-lg mx-2 text-white">
+                                <a :href="route('material.create', session.id)"
+                                    class="hover:bg-blue-700 py-2 px-4 rounded-lg mx-2 text-white">
                                     Materi
                                 </a>
                             </div>
@@ -75,7 +76,7 @@
                                 </a>
                             </div>
                             <div class="border-slate-200 space-y-2 py-2">
-                                <a href="" class="hover:bg-blue-700 py-2 px-4 rounded-lg mx-2 text-white">
+                                <a :href="route('exam.create' , session.id)" class="hover:bg-blue-700 py-2 px-4 rounded-lg mx-2 text-white">
                                     Exam
                                 </a>
                             </div>
@@ -87,7 +88,24 @@
                         </div>
                     </div>
                 </div>
-                <hr>
+                <hr class="mb-3">
+                <section id="content_list" class="space-y-2">
+                    <div id="material" class="space-y-2">
+                        <div class="border border-slate-200 rounded-lg" v-for="data, index in material">
+                            <div class="flex items-center justify-between bg-slate-50 p-3">
+                                <div class="flex items-center gap-3">
+                                    <div>
+                                        <span class="font-semibold text-sm">Materi : {{ data.title }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <ButtonEdit @click="editMaterial(data.id)" />
+                                    <ButtonDelete @click="deleteMaterial(data.id)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
             <div class="flex items-center justify-end gap-4 pt-6">
                 <a :href="route('manage-course.edit', course.slug) + '#session_list'"
@@ -102,26 +120,18 @@
 </template>
 <script setup>
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue"
-import { useForm } from "@inertiajs/vue3";
-import { QuillEditor } from "@vueup/vue-quill";
-import { ref, watch } from "vue";
-import { route } from "../../../../../vendor/tightenco/ziggy/src/js";
+import { useForm, router } from "@inertiajs/vue3";
+import { ref } from "vue";
+import ButtonDelete from "@/Components/Global/ButtonDelete.vue"
+import ButtonEdit from "@/Components/Global/ButtonEdit.vue"
+import Swal from "sweetalert2";
 
 const openDropdown = ref(false)
 const toggleDropdown = () => {
-    // Jika accordion yang diklik sudah terbuka, tutup (set ke null)
+    // Jika dropdown yang diklik sudah terbuka, tutup (set ke null)
     // Jika tidak, buka accordion tersebut (set ke id-nya)
     openDropdown.value = !openDropdown.value
-
 };
-
-watch(openDropdown.value, () => {
-    if (openDropdown.value == true) {
-        document.addEventListener('click' , toggleDropdown)
-    } else {
-        document.removeEventListener('click' , toggleDropdown)
-    }
-})
 
 if (openDropdown.value == true) {
     window.addEventListener("click", function () {
@@ -131,6 +141,7 @@ if (openDropdown.value == true) {
 const props = defineProps({
     course: Object,
     session: Object,
+    material: Array
 })
 
 const form = useForm({
@@ -143,6 +154,26 @@ function submit() {
     form.post(route('session.update', [props.course.id, props.session.id]), {
         onSuccess: () => form.reset()
     })
+}
+
+function editMaterial(materialId) {
+    router.get(route('material.edit', [props.session.id, materialId]))
+}
+
+function deleteMaterial(materialId) {
+    Swal.fire({
+        title: "Yakin ingin menghapus?",
+        text: "Tindakan ini akan menghapus konten ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, saya yakin!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('material.delete', [props.session.id, materialId]));
+        }
+    });
 }
 </script>
 <style scoped>

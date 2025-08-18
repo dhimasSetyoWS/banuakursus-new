@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\Course;
 use App\Models\CourseSessions;
 use App\Models\Kategori;
+use App\Models\Material;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -78,16 +79,32 @@ class DashPageController extends Controller
     {
         $courseSession = CourseSessions::where('id', $sessionId)->firstOrFail();
         $course = $courseSession->course;
+        $material = $courseSession->material;
 
         return Inertia::render('Dashboard/Edit/EditSession', [
             'course' => $course,
             'session' => $courseSession,
+            'material' => isset($material) ? $material->all() : []
         ]);
     }
 
     public function material_create($sessionId) {
         $session = CourseSessions::where('id', $sessionId)->firstOrFail();
         return Inertia::render('Dashboard/Create/CreateMaterial' , [
+            'session' => $session
+        ]);
+    }
+    public function material_edit($sessionId, Material $material) {
+        $session = CourseSessions::where('id', $sessionId)->firstOrFail();
+        return Inertia::render('Dashboard/Edit/EditMaterial' , [
+            'session' => $session,
+            'material' => $material
+        ]);
+    }
+
+    public function exam_create($sessionId) {
+        $session = CourseSessions::where('id', $sessionId)->firstOrFail();
+        return Inertia::render('Dashboard/Create/CreateExam', [
             'session' => $session
         ]);
     }
@@ -159,17 +176,10 @@ class DashPageController extends Controller
     }
     public function study($slug)
     {
-        $course = Course::where('slug', $slug)
-            ->with(
-                [
-                    'course_sessions' => function ($query) { // di dalam course_sessions ambil query, kemudian ambil query artikel dan tugas, jadi query relation ke artikel dan tugas juga terinclude ke dalam $course
-                        $query->with('artikel', 'tugas');
-                    },
-                    'kategori'
-                ]
-            )->firstOrFail();
+        $course = Course::where('slug', $slug)->first()->load('course_sessions.material');
+        // dd($course);
         return Inertia::render('Study/Study', [
-            'course' => $course->only(['id' , 'title_course' , 'slug' , 'kategori', 'course_sessions']),
+            'course' => $course
         ]);
     }
 }

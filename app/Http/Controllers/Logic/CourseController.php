@@ -16,6 +16,8 @@ class CourseController extends Controller
         $request->validate([
             'title_course' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string'],
+            'kategori_id' => ['required'],
+            'period_id' => ['required'],
             'price' => ['required', 'numeric', 'gt:0'],
         ]);
 
@@ -53,9 +55,12 @@ class CourseController extends Controller
         }
     }
 
-    public function delete($slug) {
-        $judulLama = Course::firstWhere('slug', $slug)->title_course;
-        Course::where('slug' , $slug)->delete();
-        return redirect()->back()->with('success' , 'Kursus dengan judul ' . $judulLama . ' telah di hapus!');
+    public function delete(Course $course) {
+        $judulLama = $course->title_course;
+        $deleted = $course->delete();
+        if($deleted) {
+            return redirect()->back()->with('success' , 'Kursus dengan judul ' . $judulLama . ' telah di hapus!');
+        }
+        return redirect()->back()->with('error' , 'Kursus dengan judul ' . $judulLama . ' gagal di hapus!');
     }
 }

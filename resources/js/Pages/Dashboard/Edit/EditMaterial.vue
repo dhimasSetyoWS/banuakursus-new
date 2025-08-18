@@ -11,8 +11,8 @@
                     </svg>
                     Kembali ke Edit Sesi
                 </a>
-                <h1 class="text-3xl font-bold text-slate-800 mt-2">Buat Materi</h1>
-                <p class="text-slate-500">Silahkan buat materi untuk sesi.</p>
+                <h1 class="text-3xl font-bold text-slate-800 mt-2">Edit Materi</h1>
+                <p class="text-slate-500">Silahkan edit materi untuk sesi.</p>
             </div>
 
             <form @submit.prevent="submit" class="space-y-8">
@@ -38,8 +38,7 @@
                     <a :href="route('session.edit', session.id)"
                         class="px-6 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg">Batal</a>
                     <button type="submit"
-                        class="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Buat
-                        Materi</button>
+                        class="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Edit Materi</button>
                 </div>
             </form>
         </div>
@@ -51,16 +50,17 @@ import Layout from "@/Layout/Dashboard/DashboardLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
-    session: Object
+    session: Object,
+    material : Object
 })
 
 const form = useForm({
-    title : null,
-    material: null
+    title : props.material.title,
+    material: props.material.content
 });
 
 function submit() {
-    form.post(route('material.store', props.session.id));
+    form.patch(route('material.update',  [props.session.id , props.material.id]));
 }
 
 </script>
