@@ -18,19 +18,17 @@
                     <label for="judul_ujian" class="font-semibold">Judul Ujian:</label>
                     <input class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" id="judul_ujian" v-model="form.judul_ujian" />
                 </div>
-                <div class="shadow border border-slate-300 p-3 my-3 rounded-lg" v-for="(question, qIndex) in form.questions" :key="qIndex">
-                    <label>Pertanyaan {{ qIndex + 1 }}: </label>
-                    <input class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" v-model="question.text" />
-                    <div v-for="(answer, aIndex) in question.answers" :key="aIndex" class="space-y-2 mb-3">
-                        <input type="radio" class="me-3" :name="`correct_answer_${qIndex}`" :value="aIndex"
-                            v-model="question.correct_answer_index" />
-                        <input class="mt-1 w-1/2 px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" v-model="answer.text" />
+                <div class="mb-3">
+                    <div class="flex flex-col">
+                        <label for="judul_ujian" class="font-semibold">Jenis Ujian :</label>
+                        <select v-model="form.jenis" id="" class="mt-1 w-1/2 px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="1">Pilihan Ganda</option>
+                            <option value="2">Essay</option>
+                        </select>
                     </div>
-                    <button class="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" type="button" @click="addAnswer(qIndex)">Tambah Jawaban</button>
                 </div>
             </div>
-            <div class="space-x-2 text-end">
-                <button class="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" type="button" @click="addQuestion">Tambah Pertanyaan</button>
+            <div class="text-end">
                 <button class="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" type="submit">Buat Ujian</button>
             </div>
         </form>
@@ -38,16 +36,17 @@
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm,router } from '@inertiajs/vue3';
 import Layout from '@/Layout/Dashboard/DashboardLayout.vue';
 
-defineProps({
+const props = defineProps({
     session : Object
 })
 
 // Inisialisasi form state dengan data yang akan dikirim
 const form = useForm({
     judul_ujian: '',
+    jenis : '',
     questions: [
         {
             text: '',
@@ -76,7 +75,6 @@ const addAnswer = (qIndex) => {
 
 // Method yang akan dieksekusi saat form di-submit
 const submit = () => {
-    // Inertia akan secara otomatis mengirim data form sebagai POST request
-    form.post(route('exams.store'));
+    router.get(route('exam.edit', props.session.id));
 };
 </script>

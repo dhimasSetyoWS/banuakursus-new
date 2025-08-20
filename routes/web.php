@@ -31,7 +31,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
     Route::get('/login', [AuthController::class, 'enter'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-
 });
 // Admin Route
 Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
@@ -39,33 +38,27 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/dashboard/task/create', [DashPageController::class, 'task_create'])->name('task.create');
     Route::post('/dashboard/task/store', [TaskController::class, 'store'])->name('task.store');
     Route::get('/dashboard/task/edit/{id}', [TaskController::class, 'edit'])->name('task.edit');
-    Route::match(['put' , 'patch'], '/dashboard/task/update/{tugas}', [TaskController::class, 'update'])->name('task.update');
+    Route::match(['put', 'patch'], '/dashboard/task/update/{tugas}', [TaskController::class, 'update'])->name('task.update');
     Route::delete('/dashboard/task/delete/{tugas}', [TaskController::class, 'delete'])->name('task.delete');
-    Route::get('/dashboard/article', [DashPageController::class, 'article'])->name('article');
-    Route::get('/dashboard/article/create', [DashPageController::class, 'article_create'])->name('article.create');
-    Route::post('/dashboard/article/store', [ArtikelController::class, 'store'])->name('article.store');
-    Route::get('/dashboard/article/edit/{artikel}', [ArtikelController::class, 'edit'])->name('article.edit');
-    Route::match(['put' , 'patch'],'/dashboard/article/update/{artikel}', [ArtikelController::class, 'update'])->name('article.update');
-    Route::delete('/dashboard/article/delete/{artikel}', [ArtikelController::class, 'delete'])->name('article.delete');
     Route::get('/dashboard/teacher', [DashPageController::class, 'teacher'])->name('teacher');
     Route::post('/dashboard/teacher', [AdminController::class, 'store_teacher'])->name('teacher.store');
     Route::match(['patch', 'put'], '/dashboard/teacher/{user}', [AdminController::class, 'update_user'])->name('teacher.update');
     Route::delete('/dashboard/teacher/{user}', [AdminController::class, 'delete_user'])->name('teacher.delete');
     Route::get('/dashboard/student', [DashPageController::class, 'student'])->name('student');
     Route::post('/dashboard/student', [AdminController::class, 'store_student'])->name('student.store');
-    Route::match(['patch' , 'put'],'/dashboard/student/{user}', [AdminController::class, 'update_user'])->name('student.update');
+    Route::match(['patch', 'put'], '/dashboard/student/{user}', [AdminController::class, 'update_user'])->name('student.update');
     Route::delete('/dashboard/student/{user}', [AdminController::class, 'delete_user'])->name('student.delete');
-    Route::get('/dashboard/kategori' , [DashPageController::class , 'kategori'])->name('kategori');
-    Route::post('/dashboard/kategori' , [KategoriController::class , 'store'])->name('kategori.store');
-    Route::delete('/dashboard/kategori/delete/{kategori}', [KategoriController::class , 'delete'])->name('kategori.delete');
-    Route::patch('/dashboard/kategori/update/{kategori}', [KategoriController::class , 'update'])->name('kategori.update');
+    Route::get('/dashboard/kategori', [DashPageController::class, 'kategori'])->name('kategori');
+    Route::post('/dashboard/kategori', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::delete('/dashboard/kategori/delete/{kategori}', [KategoriController::class, 'delete'])->name('kategori.delete');
+    Route::patch('/dashboard/kategori/update/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
 });
 // Teacher and admin Route
 Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () {
     Route::get('/dashboard', [DashPageController::class, 'main'])->name('dashboard');
     // Course
     Route::get('/dashboard/manage-course', [DashPageController::class, 'manage_course'])->name('manage-course');
-    Route::get('/dashboard/manage-course/create' , [DashPageController::class, 'create_course'])->name('manage-course.create');
+    Route::get('/dashboard/manage-course/create', [DashPageController::class, 'create_course'])->name('manage-course.create');
     Route::post('/dashboard/manage-course/store', [CourseController::class, 'store'])->name('manage-course.store');
     Route::get('/dashboard/manage-course/{slug}', [DashPageController::class, 'manage_course_edit'])->name('manage-course.edit');
     Route::match(['patch', 'put'], '/dashboard/update-course/{slug}', [CourseController::class, 'update'])->name('manage-course.update');
@@ -80,18 +73,28 @@ Route::middleware(['auth', 'role:admin,superadmin,teacher'])->group(function () 
     Route::get('/dashboard/session/{session}/create_material', [DashPageController::class, 'material_create'])->name('material.create');
     Route::post('/dashboard/session/{session}/store_material', [MaterialController::class, 'store'])->name('material.store');
     Route::get('/dashboard/session/{session}/edit_material/{material}', [DashPageController::class, 'material_edit'])->name('material.edit');
-    Route::match(['patch' , 'put'],'/dashboard/session/{session}/update_material/{material}', [MaterialController::class, 'update'])->name('material.update');
+    Route::match(['patch', 'put'], '/dashboard/session/{session}/update_material/{material}', [MaterialController::class, 'update'])->name('material.update');
     Route::delete('/dashboard/session/{session}/delete_material/{material}', [MaterialController::class, 'delete'])->name('material.delete');
-    Route::get('/dashboard/session/{session}/create_exam', [DashPageController::class , 'exam_create'])->name('exam.create');
+    Route::get('/dashboard/session/{session}/create_exam', [DashPageController::class, 'exam_create'])->name('exam.create');
+    Route::get('/dashboard/session/{session}/edit_exam', [DashPageController::class, 'exam_edit'])->name('exam.edit');
     // Assignment
     Route::get('/dashboard/session/{id}/create_assignment', [DashPageController::class, 'assignment_create'])->name('assignment.create');
 });
 
+Route::middleware(['auth', 'role:superadmin,admin,teacher,student'])->group(function () {
+    Route::get('/dashboard/article', [DashPageController::class, 'article'])->name('article');
+    Route::get('/dashboard/article/create', [DashPageController::class, 'article_create'])->name('article.create');
+    Route::post('/dashboard/article/store', [ArtikelController::class, 'store'])->name('article.store');
+    Route::get('/dashboard/article/edit/{artikel}', [ArtikelController::class, 'edit'])->name('article.edit');
+    Route::match(['put', 'patch'], '/dashboard/article/update/{artikel}', [ArtikelController::class, 'update'])->name('article.update');
+    Route::delete('/dashboard/article/delete/{artikel}', [ArtikelController::class, 'delete'])->name('article.delete');
+});
 
-Route::middleware(['auth' , 'role:student'])->group(function () {
-    Route::get('/register_course/{slug}' , [TransactionController::class, 'register_course'])->name('register.course');
-    Route::get('/dashboard/mycourse', [DashPageController::class , 'mycourse'])->name('mycourse');
-    Route::get('/study/{slug}', [DashPageController::class , 'study'])->name('study');
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/register_course/{slug}', [TransactionController::class, 'register_course'])->name('register.course');
+    Route::get('/dashboard/mycourse', [DashPageController::class, 'mycourse'])->name('mycourse');
+    Route::get('/study/{slug}', [DashPageController::class, 'study'])->name('study');
 });
 
 Route::middleware('auth')->group(function () {

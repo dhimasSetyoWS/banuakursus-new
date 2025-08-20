@@ -3,7 +3,7 @@
         <div v-if="$page.props.auth.user.role_id != 4">
             <h2 class="text-2xl font-bold mb-6">Selamat Datang, {{ $page.props.auth.user.name }}! 👋</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                <div class="bg-white p-6 rounded-lg border border-slate-200">
+                <div v-if="$page.props.auth.user.role_id == 1 || $page.props.auth.user.role_id == 2" class="bg-white p-6 rounded-lg border border-slate-200">
                     <div class="flex items-start justify-between">
                         <div>
                             <p class="text-sm font-medium text-slate-500">Total Pendapatan</p>
@@ -34,28 +34,6 @@
                                 <circle cx="9" cy="7" r="4" />
                                 <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg border border-slate-200">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-slate-500">Kursus Terjual</p>
-                            <p class="text-2xl font-bold mt-1">320</p>
-                            <p class="text-xs text-slate-500 mt-1">+50 bulan ini</p>
-                        </div>
-                        <div class="p-2 bg-blue-100 rounded-md">
-                            <svg class="w-6 h-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="18" height="18" x="3" y="3" rx="2" />
-                                <path d="M7 3v18" />
-                                <path d="M12 3v18" />
-                                <path d="M17 3v18" />
-                                <path d="M3 7h18" />
-                                <path d="M3 12h18" />
-                                <path d="M3 17h18" />
                             </svg>
                         </div>
                     </div>

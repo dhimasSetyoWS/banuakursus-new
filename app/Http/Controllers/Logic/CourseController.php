@@ -27,7 +27,8 @@ class CourseController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'user_id' => Auth::user()->id,
-            'period_id' => $request->period_id
+            'period_id' => $request->period_id,
+            'kategori_id' => $request->kategori_id
         ]);
 
         return redirect()->route('manage-course')->with('success', 'Kursus Berhasil di tambahkan!');

@@ -109,6 +109,13 @@ class DashPageController extends Controller
         ]);
     }
 
+    public function exam_edit($sessionId) {
+        $session = CourseSessions::where('id', $sessionId)->firstOrFail();
+        return Inertia::render('Dashboard/Edit/EditExam', [
+            'session' => $session
+        ]);
+    }
+
     public function assignment_create($sessionId) {
         $session = CourseSessions::where('id', $sessionId)->firstOrFail();
         return Inertia::render('Dashboard/Create/CreateAssignment' , [
