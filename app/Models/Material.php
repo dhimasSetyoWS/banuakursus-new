@@ -11,7 +11,7 @@ class Material extends Model
     //
     protected $fillable = ['title' , 'content' , 'course_session_id'];
 
-    public function course_sessions() : BelongsTo {
+    public function course_session() : BelongsTo {
         return $this->belongsTo(CourseSessions::class);
     }
 }

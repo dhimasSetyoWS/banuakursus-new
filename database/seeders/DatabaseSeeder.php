@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Pengembangan Diri'),
         ]);
 
-        Course::factory()->count(15)->create();
+        Course::factory()->count(2)->create();
 
     }
 }

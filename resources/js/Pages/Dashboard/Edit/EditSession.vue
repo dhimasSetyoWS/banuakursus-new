@@ -110,10 +110,7 @@
             <div class="flex items-center justify-end gap-4 pt-6">
                 <a :href="route('manage-course.edit', course.slug) + '#session_list'"
                     class="text-sm font-semibold text-slate-600">Batal</a>
-                <button type="submit"
-                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Update Sesi
-                </button>
+                <Button text="Update Sesi" type="blue"/>
             </div>
         </div>
     </Layout>
@@ -122,8 +119,9 @@
 import Layout from "@/Layout/Dashboard/DashboardLayout.vue"
 import { useForm, router } from "@inertiajs/vue3";
 import { ref } from "vue";
-import ButtonDelete from "@/Components/Global/ButtonDelete.vue"
-import ButtonEdit from "@/Components/Global/ButtonEdit.vue"
+import ButtonDelete from "@/Components/Global/ButtonDelete.vue";
+import ButtonEdit from "@/Components/Global/ButtonEdit.vue";
+import Button from "@/Components/Global/Button.vue";
 import Swal from "sweetalert2";
 
 const openDropdown = ref(false)

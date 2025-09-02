@@ -19,10 +19,10 @@ class CourseSessions extends Model
 
     // Relasi ke Material
     public function material() : HasMany {
-        return $this->hasMany(Material::class);
+        return $this->hasMany(Material::class, 'course_session_id');
     }
 
     public function exam() : HasMany {
-        return $this->hasMany(Exam::class);
+        return $this->hasMany(Exam::class, 'course_session_id');
     }
 }

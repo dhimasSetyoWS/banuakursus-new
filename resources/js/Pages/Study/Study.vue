@@ -8,7 +8,7 @@
                 <button @click="toggleSidebar" class="p-2 -ml-2 text-gray-600 hover:text-blue-600">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
-                <h1 class="text-lg font-semibold text-gray-800 ml-4 truncate">{{ course.title_course }}</h1>
+                <h1 class="text-lg font-semibold text-gray-800 ml-4 truncate">Kursus : {{ course.title_course }}</h1>
             </div>
             <template v-if="$page.props.auth.user">
                 <!-- Profile Dropdown -->
@@ -53,11 +53,11 @@
 
             </a>
             <div class="px-4 py-6 border-b text-center">
-                <h2 class="text-2xl font-bold text-blue-600 truncate hidden lg:block">{{ course.title_course }}</h2>
+                <h2 class="text-2xl font-bold text-blue-600 truncate hidden lg:block">Kursus : {{ course.title_course }}</h2>
                 <p class="text-sm text-gray-500 mt-12 lg:mt-0 opacity-0 lg:opacity-100">Daftar Sesi</p>
             </div>
             <div class="space-y-4 py-4">
-                <div class="relative" v-for="value,index in course.course_sessions">
+                <div class="relative" v-for="value, index in course.course_sessions">
                     <button @click="toggleDropdown(value.session_name)"
                         class="toggle-module w-full text-left font-bold text-lg flex items-center justify-between transition-colors duration-200">
                         <span class="text-sm">Sesi {{ index + 1 }} : {{ value.session_name }}</span>
@@ -71,7 +71,7 @@
                                 <li><a href="#" @click="loadData(data)" v-for="data, index in value.material"
                                         class="sub-module-link mb-2" :class="loadedData.id == data.id ? 'active' : ''">
                                         {{
-                                        index + 1 }}. {{ data.title }}</a></li>
+                                            index + 1 }}. {{ data.title }}</a></li>
                             </ul>
                         </div>
                         <!-- <div v-if="value.assignment" class="px-4 py-2 border-l-2 border-purple-500 rounded-md">
@@ -125,7 +125,7 @@
             <div class="p-6">
                 <div class="bg-white p-6 mt-12 lg:mt-0 md:p-10 rounded-2xl shadow-xl min-h-screen">
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                        <div :class="{'fadeInUp' : loadedData.id}" v-if="loadedData.id">
+                        <div :class="{ 'fadeInUp': loadedData.id }" v-if="loadedData.id">
                             {{ loadedData.title }}
                         </div>
                         <div class="fadeInUp text-center text-gray-500 py-20 rounded-2xl flex flex-col items-center justify-center z-0"
@@ -146,70 +146,74 @@
 </template>
 
 <script setup>
-    import { ref, onMounted } from 'vue';
-    const dropdownProfile = ref(false);
-    const props = defineProps({
-        course: Object
-    })
+import { ref, onMounted } from 'vue';
+import { router } from '@inertiajs/vue3';
+const dropdownProfile = ref(false);
+const props = defineProps({
+    course: Object
+})
 
-    const expandedDropdown = ref(null);
-    const isSidebarHidden = ref(true);
-    const loadedData = ref({
-        id: null
-    });
+const expandedDropdown = ref(null);
+const isSidebarHidden = ref(true);
+const loadedData = ref({
+    id: null
+});
 
-    const dropdownProf = () => {
-        dropdownProfile.value = !dropdownProfile.value
-    };
+const dropdownProf = () => {
+    dropdownProfile.value = !dropdownProfile.value
+};
 
-    const toggleDropdown = (sessionName) => {
-        expandedDropdown.value = expandedDropdown.value === sessionName ? null : sessionName;
-    };
+const toggleDropdown = (sessionName) => {
+    expandedDropdown.value = expandedDropdown.value === sessionName ? null : sessionName;
+};
 
-    const loadData = (data) => {
-        loadedData.value = loadedData.value.id ? { id: null } : data
-        console.log(data)
-        if (window.innerWidth < 1024) {
-            toggleSidebar()
-        }
+const loadData = (data) => {
+    loadedData.value = loadedData.value.id ? { id: null } : data
+    console.log(data)
+    if (window.innerWidth < 1024) {
+        toggleSidebar()
     }
+}
 
-    const toggleSidebar = () => {
-        isSidebarHidden.value = !isSidebarHidden.value;
+const toggleSidebar = () => {
+    isSidebarHidden.value = !isSidebarHidden.value;
+};
+function logout() {
+    router.post(route('logout'))
+}
+
+// Lifecycle hook untuk mengatur status sidebar berdasarkan ukuran layar
+onMounted(() => {
+    const handleResize = () => {
+        // Jika layar lebih besar dari 'lg' (1024px), sidebar selalu terlihat
+        if (window.innerWidth >= 1024) {
+            isSidebarHidden.value = false;
+        } else {
+            isSidebarHidden.value = true;
+        }
     };
 
-    // Lifecycle hook untuk mengatur status sidebar berdasarkan ukuran layar
-    onMounted(() => {
-        const handleResize = () => {
-            // Jika layar lebih besar dari 'lg' (1024px), sidebar selalu terlihat
-            if (window.innerWidth >= 1024) {
-                isSidebarHidden.value = false;
-            } else {
-                isSidebarHidden.value = true;
-            }
-        };
+    handleResize(); // Panggil saat komponen pertama kali dimuat
+    window.addEventListener('resize', handleResize); // Tambahkan event listener untuk resize
 
-        handleResize(); // Panggil saat komponen pertama kali dimuat
-        window.addEventListener('resize', handleResize); // Tambahkan event listener untuk resize
-
-        // Bersihkan event listener saat komponen dilepas
-        // return () => {
-        //     window.removeEventListener('resize', handleResize);
-        // };
-    });
+    // Bersihkan event listener saat komponen dilepas
+    // return () => {
+    //     window.removeEventListener('resize', handleResize);
+    // };
+});
 </script>
 
 <style scoped>
-    /* CSS Tambahan untuk Tampilan */
-    .sub-module-link {
-        @apply block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200;
-    }
+/* CSS Tambahan untuk Tampilan */
+.sub-module-link {
+    @apply block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200;
+}
 
-    .sub-module-link.active {
-        @apply bg-blue-200 text-blue-800 font-semibold;
-    }
+.sub-module-link.active {
+    @apply bg-blue-200 text-blue-800 font-semibold;
+}
 
-    .toggle-module {
-        @apply p-3 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-200;
-    }
+.toggle-module {
+    @apply p-3 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-200;
+}
 </style>

@@ -10,6 +10,9 @@
 .fadeInUp {
     animation : fadeInUp 1s;
 }
+.fadeInUp-1 {
+    animation : fadeInUp 3s;
+}
 
 .textinput {
     @apply rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500

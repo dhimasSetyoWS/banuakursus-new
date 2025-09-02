@@ -10,16 +10,16 @@
             <div class="hidden md:flex items-center space-x-12 text-lg font-medium">
                 <ul class="flex items-center space-x-10">
                     <li>
-                        <Link :href="route('beranda')" class="nav-link">Beranda</Link>
+                        <Link :href="route('beranda')" class="nav-link" :class="{active : $page.url == '/'}">Beranda</Link>
                     </li>
                     <li>
-                        <Link :href="route('catalog')" class="nav-link">Katalog Kursus</Link>
+                        <Link :href="route('catalog')" class="nav-link" :class="{active : $page.url == '/catalog'}">Katalog Kursus</Link>
                     </li>
                     <li>
-                        <Link :href="route('aboutus')" class="nav-link">Tentang Kami</Link>
+                        <Link :href="route('aboutus')" class="nav-link" :class="{active : $page.url == '/aboutus'}">Tentang Kami</Link>
                     </li>
                     <li>
-                        <Link :href="route('contact')" class="nav-link">Kontak</Link>
+                        <Link :href="route('contact')" class="nav-link" :class="{active : $page.url == '/contact'}">Kontak</Link>
                     </li>
                 </ul>
 
@@ -190,7 +190,22 @@ function logout() {
     transition: color 0.3s;
 }
 
-.nav-link::after {
+
+.nav-link.active {
+    color: #4f46e5;
+}
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    bottom: 0;
+    background-color: #4f46e5;
+    transition: width 0.3s;
+}
+
+.nav-link::after{
     content: '';
     position: absolute;
     width: 0%;

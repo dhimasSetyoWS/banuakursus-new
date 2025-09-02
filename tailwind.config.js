@@ -14,6 +14,10 @@ export default {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            colors : {
+                primary : '#2AA0E4',
+                secondary : '#ED3A36',
+            }
         },
     },
     plugins: [
