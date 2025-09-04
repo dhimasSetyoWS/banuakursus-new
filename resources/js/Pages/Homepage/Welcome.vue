@@ -1,7 +1,6 @@
 <template>
     <HomeLayout :canLogin="canLogin" :canRegister="canRegister" title="Home">
-        <FloatingButton/>
-        <main class="fadeIn">
+        <main class="fadeIn overflow-x-hidden">
             <section class="bg-gray-50 grid grid-cols-1 lg:grid-cols-3 p-8 lg:p-24">
                 <div class="col-span-2 max-w-2xl fadeInUp">
                     <h1 class="text-5xl font-bold mb-6 leading-[72px]">Tingkatkan Skillmu dan <br /> Raih Karier Impian
@@ -62,12 +61,13 @@
                 </div>
             </section>
 
-            <section class="container mx-auto px-4 lg:px-16 py-16">
+            <section id="whyus" class="container mx-auto px-4 lg:px-16 py-16">
                 <h2 class="text-3xl font-bold mb-12 max-w-lg">Mengapa Memilih Banua Kursus Untuk Belajar?
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div id="column-1" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="md:col-span-2 grid grid-cols-2 grid-rows-2 gap-3">
-                        <div class="bg-slate-200 shadow-sm rounded-lg p-8 space-y-4">
+                        <div
+                            class="group hover:scale-[1.03] transition-all bg-slate-200 hover:bg-secondary hover:text-white shadow-sm rounded-lg p-8 space-y-4">
                             <div class="head">
                                 <svg class="w-8 h-8 rounded-full outline outline-offset-8" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -84,14 +84,15 @@
                                 <div class="card-title">
                                     <h3 class="text-2xl font-semibold mb-2">Kurikulum Relevan</h3>
                                 </div>
-                                <div class="card-detail">
-                                    <p class="text-gray-600">Materi disusun oleh ahli industri untuk menjawab kebutuhan
+                                <div class="card-detail text-gray-600 group-hover:text-white">
+                                    <p>Materi disusun oleh ahli industri untuk menjawab kebutuhan
                                         pasar kerja saat
                                         ini.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-slate-200 shadow-sm rounded-lg p-8 space-y-4">
+                        <div
+                            class="group hover:scale-[1.03] transition-all bg-slate-200 hover:bg-primary hover:text-white shadow-sm rounded-lg p-8 space-y-4">
                             <div class="head">
                                 <svg class="w-8 h-8 rounded-full outline outline-offset-8" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -103,13 +104,14 @@
                                 <div class="card-title">
                                     <h3 class="text-xl font-semibold mb-2">Instruktur Ahli</h3>
                                 </div>
-                                <div class="card-detail">
-                                    <p class="text-gray-600">Belajar langsung dari praktisi terbaik di bidangnya yang
+                                <div class="card-detail text-gray-600 group-hover:text-white">
+                                    <p>Belajar langsung dari praktisi terbaik di bidangnya yang
                                         siap membimbing Anda.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-span-2 bg-slate-200 shadow-sm rounded-lg p-8 space-y-4">
+                        <div
+                            class="group hover:scale-[1.03] transition-all col-span-2 bg-slate-200 hover:bg-secondary hover:text-white shadow-sm rounded-lg p-8 space-y-4">
                             <div class="head">
                                 <svg class="w-8 h-8 rounded-full outline outline-offset-8" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -122,19 +124,20 @@
                                 <div class="card-title">
                                     <h3 class="text-xl font-semibold mb-2">Komunitas Solid</h3>
                                 </div>
-                                <div class="card-detail">
-                                    <p class="text-gray-600">Bergabung dengan jaringan sesama pembelajar untuk
+                                <div class="card-detail text-gray-600 group-hover:text-white">
+                                    <p>Bergabung dengan jaringan sesama pembelajar untuk
                                         berdiskusi dan
                                         berkolaborasi.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-slate-200 shadow-sm rounded-lg p-8 space-y-4">
+                    <div id="column-2"
+                        class="group hover:scale-[1.03] transition-all bg-slate-200 hover:bg-primary hover:text-white shadow-sm rounded-lg p-8 space-y-4">
                         <div class="head">
                             <svg class="w-8 h-8 rounded-full outline outline-offset-8" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
@@ -142,10 +145,13 @@
                             <div class="card-title">
                                 <h3 class="text-xl font-semibold mb-2">Belajar Fleksibel</h3>
                             </div>
-                            <div class="card-detail">
-                                <p class="text-gray-600">Akses materi kapan pun dan di mana pun. Atur ritme belajarmu sendiri sesuai kebutuhan dan kesibukan harianmu. Di Banua Kursus, kami percaya bahwa proses belajar yang baik tidak harus dibatasi oleh ruang dan waktu.</p>
+                            <div class="card-detail text-gray-600 group-hover:text-white">
+                                <p>Akses materi kapan pun dan di mana pun. Atur ritme belajarmu sendiri sesuai kebutuhan
+                                    dan kesibukan harianmu. Di Banua Kursus, kami percaya bahwa proses belajar yang baik
+                                    tidak harus dibatasi oleh ruang dan waktu.</p>
                                 <br>
-                                <p class="text-gray-600">Fleksibilitas ini dirancang untuk mendukung kamu yang punya jadwal padat, pekerjaan sampingan, atau tanggung jawab lain.</p>
+                                <p>Fleksibilitas ini dirancang untuk mendukung kamu yang punya jadwal padat, pekerjaan
+                                    sampingan, atau tanggung jawab lain.</p>
 
                             </div>
                         </div>
@@ -153,7 +159,7 @@
                 </div>
             </section>
 
-            <section class="bg-gray-50">
+            <section id="popular" class="bg-gray-50">
                 <div class="container mx-auto px-6 py-16">
                     <h2 class="text-3xl font-bold text-center mb-12">Jelajahi Kursus Terpopuler Kami</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -224,48 +230,22 @@
                         </div>
                     </div>
                     <div class="text-center mt-12">
-                        <Link :href="('catalog')"
-                            class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold border border-indigo-600 hover:bg-indigo-50 transition-colors">
+                        <Link :href="route('catalog')"
+                            class="glow-kali px-4 py-4 bg-primary rounded-lg font-semibold hover:bg-secondary hover:scale-105 transition-all text-white">
                         Lihat Semua Katalog Kursus
                         </Link>
                     </div>
                 </div>
             </section>
 
-            <section class="container mx-auto px-6 py-16">
-                <h2 class="text-3xl font-bold text-center mb-12">Mulai Belajar dalam 3 Langkah Mudah</h2>
-                <div class="relative">
-                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-200"
-                        style="transform: translateY(-50%);"></div>
+            <section id="package" class="container mx-auto px-6 py-16">
+                <h2 class="text-3xl font-bold text-center mb-12">Paket Program Kursus</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 p-8 min-h-screen">
+                    <CardPack :cardData="basicPlanData" />
 
-                    <div class="relative flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
-                        <div class="text-center w-full md:w-1/3 z-10">
-                            <div
-                                class="mx-auto w-16 h-16 flex items-center justify-center bg-indigo-100 text-indigo-600 text-2xl font-bold rounded-full border-4 border-white">
-                                1</div>
-                            <h3 class="mt-4 text-xl font-semibold">Pilih Kursus</h3>
-                            <p class="text-gray-600 mt-2">Jelajahi katalog dan temukan kursus sesuai minat dan tujuan
-                                karir
-                                Anda.</p>
-                        </div>
-                        <div class="text-center w-full md:w-1/3 z-10">
-                            <div
-                                class="mx-auto w-16 h-16 flex items-center justify-center bg-indigo-100 text-indigo-600 text-2xl font-bold rounded-full border-4 border-white">
-                                2</div>
-                            <h3 class="mt-4 text-xl font-semibold">Proses Belajar</h3>
-                            <p class="text-gray-600 mt-2">Akses materi video, modul, dan kuis melalui platform kami yang
-                                mudah digunakan.</p>
-                        </div>
-                        <div class="text-center w-full md:w-1/3 z-10">
-                            <div
-                                class="mx-auto w-16 h-16 flex items-center justify-center bg-indigo-100 text-indigo-600 text-2xl font-bold rounded-full border-4 border-white">
-                                3</div>
-                            <h3 class="mt-4 text-xl font-semibold">Dapatkan Sertifikat</h3>
-                            <p class="text-gray-600 mt-2">Selesaikan kursus dan dapatkan sertifikat untuk meningkatkan
-                                nilai
-                                profesional Anda.</p>
-                        </div>
-                    </div>
+                    <CardPack :cardData="proPlanData" />
+
+                    <CardPack :cardData="advancedPlanData" />
                 </div>
             </section>
 
@@ -340,6 +320,57 @@
 <script setup>
 import HomeLayout from '@/Layout/Homepage/HomeLayout.vue';
 import { router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import CardPack from '@/Components/Global/CardPack.vue';
+
+const basicPlanData = ref({
+  type: 'basic',
+  title: 'Basic plan',
+  subtitle: 'Perfect for individuals.',
+  price: '500.000',
+  bestChoice: false,
+  features: [
+    'All product features',
+    'Unlimited lists & tasks',
+    'Priority support',
+    'Unlimited tasks',
+    'Unlimited file storage',
+    'Unlimited projects',
+  ],
+});
+
+const proPlanData = ref({
+  type: 'pro',
+  title: 'CPNS',
+  subtitle: 'Ideal for small teams.',
+  price: '900.000',
+  bestChoice: true,
+  features: [
+    'All product features',
+    'Unlimited lists & tasks',
+    'Priority support',
+    'Unlimited tasks',
+    'Unlimited file storage',
+    'Unlimited projects',
+  ],
+});
+
+const advancedPlanData = ref({
+  type: 'advanced',
+  title: 'Sekdin',
+  subtitle: 'Best for large organizations.',
+  price: '100.000',
+  bestChoice: false,
+  features: [
+    'All product features',
+    'Unlimited lists & tasks',
+    'Priority support',
+    'Unlimited tasks',
+    'Unlimited file storage',
+    'Unlimited projects',
+  ],
+});
+
 
 defineProps({
     canLogin: Boolean,

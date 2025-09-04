@@ -67,7 +67,7 @@
                     <template v-else>
                         <Link :href="route('login')"
                             class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
-                        Masuk
+                        Login
                         </Link>
                         <Link v-if="canRegister" :href="route('register')"
                             class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Daftar
